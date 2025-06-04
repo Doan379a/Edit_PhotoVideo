@@ -1,4 +1,4 @@
-package com.example.editphotovideo.ui.dialog
+package com.example.editphotovideo.dialog
 
 import android.app.Activity
 import android.view.LayoutInflater

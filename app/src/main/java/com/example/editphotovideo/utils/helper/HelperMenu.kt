@@ -4,8 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import com.example.editphotovideo.R
-import com.example.editphotovideo.ui.dialog.DialogFeedback
-import com.example.editphotovideo.ui.dialog.RatingDialog
+import com.example.editphotovideo.dialog.DialogFeedback
+import com.example.editphotovideo.dialog.RatingDialog
 
 
 class HelperMenu(private val activity: Activity) {

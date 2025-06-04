@@ -8,24 +8,24 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.example.editphotovideo.R
 
-abstract class BaseAdapter<VB : ViewBinding, M : Any>:
-    RecyclerView.Adapter<RecyclerView.ViewHolder>(){
-        protected var listData: MutableList<M> = arrayListOf()
+abstract class BaseAdapter<VB : ViewBinding, M : Any> :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    protected var listData: MutableList<M> = arrayListOf()
     protected abstract fun createBinding(
-        inflater: LayoutInflater, parent:ViewGroup, viewType: Int
+        inflater: LayoutInflater, parent: ViewGroup, viewType: Int
     ): VB
 
-    protected abstract fun creatVH(binding: VB) : RecyclerView.ViewHolder
+    protected abstract fun creatVH(binding: VB): RecyclerView.ViewHolder
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val binding: VB = createBinding(LayoutInflater.from(parent.context),parent, viewType)
+        val binding: VB = createBinding(LayoutInflater.from(parent.context), parent, viewType)
         return creatVH(binding)
     }
 
     override fun getItemCount(): Int = if (listData.size > 0) listData.size else 1
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (listData.size == 0){
+        if (listData.size == 0) {
             holder.itemView.setOnClickListener {
                 Toast.makeText(
                     holder.itemView.context,
@@ -38,21 +38,20 @@ abstract class BaseAdapter<VB : ViewBinding, M : Any>:
         (holder as BaseVH<M>).bind(listData[position])
     }
 
-    abstract inner class BaseVH<M>(val binding: VB):
-            RecyclerView.ViewHolder(binding.root){
-                open fun onItemClickListener(data: M) = Unit
-        open fun bind(data: M){
+    abstract inner class BaseVH<M>(val binding: VB) :
+        RecyclerView.ViewHolder(binding.root) {
+        open fun onItemClickListener(data: M) = Unit
+        open fun bind(data: M) {
             binding.root.setOnClickListener { onItemClickListener(data) }
         }
-     }
+    }
 
     @SuppressLint("NotifyDataSetChanged")
-   fun addList(newList: MutableList<M>){
-       listData.clear()
-       listData.addAll(newList)
-       notifyDataSetChanged()
-   }
-
-
-
+    fun addList(newList: MutableList<M>) {
+        listData.clear()
+        listData.addAll(newList)
+        notifyDataSetChanged()
     }
+
+
+}

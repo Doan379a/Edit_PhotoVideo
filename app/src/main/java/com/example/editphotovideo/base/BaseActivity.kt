@@ -28,7 +28,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.viewbinding.ViewBinding
-import com.example.editphotovideo.ui.dialog.PermissionDialog
+import com.example.editphotovideo.dialog.PermissionDialog
 import com.example.editphotovideo.utils.SystemUtil
 
 abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
