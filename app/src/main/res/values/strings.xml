@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">EditPhotoVideo</string>
+    <string name="please_send_us">Please send us some feedback!</string>
+    <string name="write_some_feedback">Write some feedback</string>
+    <string name="There_is_no_email">There is no email client installed.</string>
+    <string name="header_warning_permission">Header warning permission</string>
+    <string name="desc_warning_permission_dialog">Desc warning permission dialog</string>
+    <string name="cancel">Cancel</string>
+    <string name="send">Send</string>
+    <string name="this_is_item_sample">This is item sample!</string>
+    <string name="go_to_setting">Go to setting</string>
+    <string name="oh_we_re_sorry">Oh, We’re sorry...</string>
+    <string name="your_feedback_is_welcome">Your feedback is welcome.</string>
+    <string name="rate_us">Rate us</string>
+    <string name="may_be_later">May be later</string>
+
+
+
+
+
+</resources>
