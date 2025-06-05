@@ -47,10 +47,14 @@ android {
     buildFeatures {
         viewBinding true
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
-
+    implementation project(':photoeditor')
+    implementation project(':tedimagepicker')
     implementation libs.androidx.core.ktx
     implementation libs.androidx.lifecycle.runtime.ktx
     implementation libs.androidx.activity.compose
@@ -75,4 +79,9 @@ dependencies {
     // Utility Libraries for Responsive UI
     implementation "com.intuit.ssp:ssp-android:1.1.0"
     implementation "com.intuit.sdp:sdp-android:1.1.0"
+    ///dialog color
+    implementation "com.makeramen:roundedimageview:2.3.0"
+    ////remove backgr
+    implementation "org.pytorch:pytorch_android_lite:1.13.1"
+    implementation "org.pytorch:pytorch_android_torchvision_lite:1.13.1"
 }

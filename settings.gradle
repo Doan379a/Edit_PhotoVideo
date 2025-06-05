@@ -20,4 +20,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "EditPhotoVideo"
-include ':app'
+include ':app', ":photoeditor", ":tedimagepicker"
