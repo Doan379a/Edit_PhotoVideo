@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <RelativeLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/maingadient"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text="arrange_images"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_done"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text="arrange_images"
+            app:srcCompat="@drawable/img_chosse"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_alignParentEnd="true"
+            />
+    </RelativeLayout>
+
+
+    <com.example.editphotovideo.ui.editmovie.EmptyRecyclerView
+        android:id="@+id/rvVideoAlbum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignParentBottom="true" />
+
+    <LinearLayout
+        android:id="@+id/list_empty"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Album not Created yet"
+            android:textColor="#ff999999" />
+    </LinearLayout>
+
+<!--    <ImageView-->
+<!--        android:layout_width="fill_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/toolbar"-->
+<!--        android:background="@drawable/stack_drop_shadow"-->
+<!--        android:minHeight="6.0dip" />-->
+</RelativeLayout>

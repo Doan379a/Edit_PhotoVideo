@@ -84,4 +84,6 @@ dependencies {
     ////remove backgr
     implementation "org.pytorch:pytorch_android_lite:1.13.1"
     implementation "org.pytorch:pytorch_android_torchvision_lite:1.13.1"
+
+    implementation 'com.github.yellowcath:VideoProcessor:2.4.2'
 }
