@@ -53,3 +53,11 @@ fun Context?.showSnackBar(message: String) {
         Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show()
     }
 }
+
+fun Context.spToPx(sp: Float): Float {
+    return sp * resources.displayMetrics.scaledDensity
+}
+
+fun Context.pxToSp(px: Float): Float {
+    return px / resources.displayMetrics.scaledDensity
+}

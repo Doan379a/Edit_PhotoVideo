@@ -3,6 +3,7 @@ package com.example.editphotovideo.utils
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Typeface
 import java.io.IOException
 
 fun Context.getBitmapFromAsset(context: Context, strName: String): Bitmap? {
@@ -13,5 +14,12 @@ fun Context.getBitmapFromAsset(context: Context, strName: String): Bitmap? {
     } catch (e: IOException) {
         e.printStackTrace()
         null
+    }
+}
+fun Context.getTypefaceFromAsset(context: Context,fontPath: String): Typeface? {
+    return if (fontPath == "Default") {
+        Typeface.DEFAULT
+    } else {
+        Typeface.createFromAsset(context.assets, fontPath)
     }
 }

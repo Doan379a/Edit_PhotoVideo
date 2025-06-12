@@ -36,7 +36,7 @@ class BackGroundAdapter(
                     .into(binding.imgFilterView)
             }
             binding.cardBoder.setCardBackgroundColor(
-                if (selectedPosition == position) context.getColor(R.color.purple_500) else Color.WHITE
+                if (selectedPosition == position) context.getColor(R.color.purple_500) else Color.TRANSPARENT
             )
             binding.imgFilterView.setOnClickListener {
                 val previousPosition = selectedPosition

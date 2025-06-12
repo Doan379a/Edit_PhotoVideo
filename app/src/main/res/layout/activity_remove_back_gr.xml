@@ -8,14 +8,6 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/img_background"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@android:color/transparent"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
 
     <Button
         android:id="@+id/btnSave"
@@ -34,14 +26,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btnSave" />
 
-
-    <com.example.editphotovideo.library.zoomimg.views.GestureImageView
-        android:id="@+id/imageView"
+    <FrameLayout
+        android:id="@+id/frame_image"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/rcv_background"
-        app:layout_constraintTop_toBottomOf="@+id/btnSave" />
+        app:layout_constraintTop_toBottomOf="@+id/btnSave">
+
+        <ImageView
+            android:id="@+id/img_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:scaleType="centerCrop" />
+
+        <com.example.editphotovideo.library.zoomimg.views.GestureImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent" />
+
+    </FrameLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -58,6 +63,7 @@
         android:id="@+id/rcv_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

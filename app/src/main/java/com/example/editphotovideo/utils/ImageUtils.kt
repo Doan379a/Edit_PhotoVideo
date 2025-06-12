@@ -2,11 +2,15 @@ package com.example.editphotovideo.utils
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
 import android.graphics.Matrix
 import android.media.ExifInterface
 import android.net.Uri
+import android.os.Build
 import android.provider.MediaStore
 import android.view.Gravity
+import android.widget.ImageView
 import androidx.core.content.FileProvider
 import com.example.editphotovideo.library.zoomimg.Settings
 import com.example.editphotovideo.library.zoomimg.views.GestureImageView
@@ -65,4 +69,22 @@ object ImageUtils {
 
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
     }
+
+    fun uriToBitmap(context: Context, uri: Uri): Bitmap? {
+        return try {
+            val inputStream = context.contentResolver.openInputStream(uri)
+            BitmapFactory.decodeStream(inputStream).also {
+                inputStream?.close()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+    fun resizeBitmapToView(bitmap: Bitmap, view: ImageView): Bitmap {
+        val width = view.width
+        val height = view.height
+        return Bitmap.createScaledBitmap(bitmap, width, height, true)
+    }
+
 }

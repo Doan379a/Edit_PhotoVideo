@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_adjust"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:clickable="true"
+    android:focusable="true"
+    android:visibility="visible">
+
+    <ImageView
+        android:id="@+id/img_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
+        android:src="@drawable/ic_close"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
+        app:layout_constraintEnd_toStartOf="@+id/tv_done_adjust"
+        app:layout_constraintHorizontal_bias="0.054"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_done_adjust"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_done"
+        android:drawablePadding="@dimen/_5sdp"
+        android:gravity="center"
+        android:padding="@dimen/_10sdp"
+        android:text="@string/done"
+        android:textColor="#519FFF"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:paddingVertical="@dimen/_5sdp"
+        app:layout_constraintBottom_toTopOf="@+id/linear_skin_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/tv_skin_color"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/_5sdp"
+            android:gravity="center"
+            android:padding="@dimen/_13sdp"
+            android:text="skin_color"
+            android:textColor="#519FFF"
+            android:textSize="@dimen/_12ssp"
+
+            />
+
+        <TextView
+            android:id="@+id/tv_blur"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/_5sdp"
+            android:gravity="center"
+            android:padding="@dimen/_10sdp"
+            android:text="blur"
+            android:textColor="#A4A4A4"
+            android:textSize="@dimen/_12ssp" />
+
+        <TextView
+            android:id="@+id/tv_acne"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/_5sdp"
+            android:gravity="center"
+            android:padding="@dimen/_10sdp"
+            android:text="acne"
+            android:textColor="#A4A4A4"
+            android:textSize="@dimen/_12ssp" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/linear_skin_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:gravity="center"
+        android:paddingEnd="@dimen/_10sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/seekbar_skin_color"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:max="100"
+            android:min="0"
+            android:maxWidth="6dp"
+            android:maxHeight="6dp"
+            android:minWidth="2dp"
+            android:minHeight="2dp"
+            android:paddingVertical="5dp"
+            android:progressDrawable="@drawable/custom_seekbar_progress"
+            android:thumb="@drawable/ic_thumb_seekbar"
+            android:thumbOffset="0dp" />
+
+        <TextView
+            android:id="@+id/tv_seekbar_skin_color"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:drawablePadding="@dimen/_5sdp"
+            android:gravity="center"
+            android:padding="@dimen/_5sdp"
+            android:text="50"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/linear_blur"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/_10sdp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/seekbar_blur"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:max="100"
+            android:maxWidth="6dp"
+            android:maxHeight="6dp"
+            android:minWidth="2dp"
+            android:min="0"
+            android:minHeight="2dp"
+            android:paddingVertical="5dp"
+            android:progressDrawable="@drawable/custom_seekbar_progress"
+            android:thumb="@drawable/ic_thumb_seekbar"
+            android:thumbOffset="0dp" />
+
+        <TextView
+            android:id="@+id/tv_seekbar_blur"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:drawablePadding="@dimen/_5sdp"
+            android:gravity="center"
+            android:padding="@dimen/_5sdp"
+            android:text="50"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/linear_acne"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/_10sdp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/seekbar_acne"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:max="100"
+            android:maxWidth="6dp"
+            android:maxHeight="6dp"
+            android:minWidth="2dp"
+            android:minHeight="2dp"
+            android:min="0"
+            android:paddingVertical="5dp"
+            android:progressDrawable="@drawable/custom_seekbar_progress"
+            android:thumb="@drawable/ic_thumb_seekbar"
+            android:thumbOffset="0dp" />
+
+        <TextView
+            android:id="@+id/tv_seekbar_acne"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:drawablePadding="@dimen/_5sdp"
+            android:gravity="center"
+            android:padding="@dimen/_5sdp"
+            android:text="50"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp" />
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

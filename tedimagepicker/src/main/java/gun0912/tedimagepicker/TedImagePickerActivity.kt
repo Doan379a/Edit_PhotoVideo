@@ -499,7 +499,7 @@ internal class TedImagePickerActivity
 
 
     companion object {
-        private const val IMAGE_SPAN_COUNT = 5
+        private const val IMAGE_SPAN_COUNT = 3
         private const val EXTRA_BUILDER = "EXTRA_BUILDER"
         private const val EXTRA_SELECTED_URI = "EXTRA_SELECTED_URI"
         private const val EXTRA_SELECTED_URI_LIST = "EXTRA_SELECTED_URI_LIST"

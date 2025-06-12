@@ -1,9 +1,11 @@
 package com.example.editphotovideo.ui.removebackgr
 
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Matrix
 import android.media.ExifInterface
 import android.net.Uri
@@ -11,6 +13,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.widget.FrameLayout
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.GridLayoutManager
@@ -24,14 +27,17 @@ import com.example.editphotovideo.utils.ImageUtils.getCorrectlyOrientedBitmap
 import com.example.editphotovideo.utils.ImageUtils.setUpZoomSettings
 import com.example.editphotovideo.utils.getBitmapFromAsset
 import com.example.editphotovideo.widget.gone
+import com.example.editphotovideo.widget.tap
 import com.example.editphotovideo.widget.visible
 import gun0912.tedimagepicker.builder.TedImagePicker
+import gun0912.tedimagepicker.util.ToastUtil.showToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 class RemoveBackGrActivity : BaseActivity<ActivityRemoveBackGrBinding>() {
     private var outputImage: Bitmap? = null
@@ -63,6 +69,14 @@ class RemoveBackGrActivity : BaseActivity<ActivityRemoveBackGrBinding>() {
             intent.putExtra("image_uri", imgUri)
             launcher.launch(intent)
         }
+        binding.btnSave.tap {
+            saveImageRemoveToFile(binding.frameImage)?.let { uri ->
+                val intent = Intent()
+                intent.putExtra("output_image_uri", uri)
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+            }
+        }
     }
 
     override fun dataObservable() {
@@ -87,7 +101,8 @@ class RemoveBackGrActivity : BaseActivity<ActivityRemoveBackGrBinding>() {
 
         }
         rcvBackground.adapter = adapter
-        rcvBackground.setHasFixedSize(true)
+//        rcvBackground.setHasFixedSize(true)
+//        rcvBackground.setItemViewCacheSize(BackGroundAdapter.backgrList.size)
     }
 
     private fun setUpRemoveBg() = binding.apply {
@@ -139,4 +154,40 @@ class RemoveBackGrActivity : BaseActivity<ActivityRemoveBackGrBinding>() {
             }
     }
 
+    private fun saveImageRemoveToFile(frameLayout:FrameLayout): String? {
+
+        val bitmap =
+            Bitmap.createBitmap(frameLayout.width, frameLayout.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        frameLayout.draw(canvas)
+
+        val fileName = "collage_${System.currentTimeMillis()}.jpg"
+
+        val contentValues = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
+            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+            put(
+                MediaStore.MediaColumns.RELATIVE_PATH,
+                "DCIM/Photo_edit_video" // Change to your desired directory
+            )
+        }
+
+        val resolver = contentResolver
+        val uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+
+        uri?.let {
+            try {
+                resolver.openOutputStream(it)?.use { outputStream ->
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+                }
+                showToast("Saved to HD_camera")
+                return it.toString()
+            } catch (e: IOException) {
+                e.printStackTrace()
+                Log.d("DEBUG", "Error saving image: ${e.message}")
+            }
+        }
+
+        return null
+    }
 }

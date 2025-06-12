@@ -1,5 +1,6 @@
 package ja.burhanrashid52.photoeditor
 
+import android.graphics.Typeface
 import android.view.MotionEvent
 import android.view.View
 
@@ -22,7 +23,12 @@ interface OnPhotoEditorListener {
      * @param text      current text set on the view
      * @param colorCode current color value set on view
      */
-    fun onEditTextChangeListener(rootView: View, text: String, colorCode: Int)
+    fun onEditTextChangeListener( rootView: View,
+                                  text: String,
+                                  colorCode: Int,
+                                  typeface: Typeface,
+                                  textSize: Float,
+                                  gravity: Int)
 
     /**
      * This is a callback when user adds any view on the [PhotoEditorView] it can be

@@ -3,8 +3,10 @@ package com.example.editphotovideo.utils
 import android.app.TimePickerDialog
 import android.content.Context
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.editphotovideo.R
 import com.example.editphotovideo.widget.gone
 import com.example.editphotovideo.widget.visible
@@ -100,4 +102,16 @@ object ViewUtils {
     fun formatTwoDigits(number: Number): String {
         return String.format("%.1f", number.toDouble())
     }
+
+    fun showKeyboard(context: Context,view: View) {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        view.requestFocus()
+        imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+    }
+
+    fun hideKeyboard(context: Context,view: View) {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
 }

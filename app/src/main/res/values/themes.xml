@@ -2,4 +2,12 @@
 <resources>
 
     <style name="Theme.EditPhotoVideo" parent="Theme.Material3.DayNight.NoActionBar" />
+    <style name="SelectableItemBackground">
+        <item name="android:theme">@style/SelectableItemTheme</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="SelectableItemTheme">
+        <item name="colorControlHighlight">@color/white</item>
+    </style>
 </resources>

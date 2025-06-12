@@ -84,4 +84,11 @@ dependencies {
     ////remove backgr
     implementation "org.pytorch:pytorch_android_lite:1.13.1"
     implementation "org.pytorch:pytorch_android_torchvision_lite:1.13.1"
+    ////crop
+    implementation "com.vanniktech:android-image-cropper:4.6.0"
+    ///filter
+    implementation 'jp.co.cyberagent.android:gpuimage:2.1.0'
+    ///viewmodel
+    implementation "androidx.activity:activity-ktx:1.6.0"
+    implementation "androidx.fragment:fragment-ktx:1.6.2"
 }
