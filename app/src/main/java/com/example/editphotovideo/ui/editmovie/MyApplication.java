@@ -1,5 +1,6 @@
 package com.example.editphotovideo.ui.editmovie;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.app.Application;
@@ -28,6 +29,7 @@ public class MyApplication extends Application {
     private static MyApplication instance;
     public static boolean isBreak = false;
     public static boolean islistchanged;
+    private static final String TAG = MyApplication.class.getSimpleName();
     public HashMap<String, ArrayList<ImageData>> allAlbum;
     private ArrayList<String> allFolder;
     int frame = -1;
@@ -145,6 +147,7 @@ public class MyApplication extends Application {
         }
     }
 
+    @SuppressLint("Range")
     public void getFolderList() {
         this.allFolder = new ArrayList();
         this.allAlbum = new HashMap();
@@ -211,6 +214,7 @@ public class MyApplication extends Application {
         return this.onProgressReceiver;
     }
 
+    @SuppressLint("WrongConstant")
     public static boolean isMyServiceRunning(Context context, Class<?> serviceClass) {
         for (RunningServiceInfo service : ((ActivityManager) context.getSystemService("activity")).getRunningServices(Integer.MAX_VALUE)) {
             if (serviceClass.getName().equals(service.service.getClassName())) {

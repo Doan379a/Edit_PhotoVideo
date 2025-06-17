@@ -9,17 +9,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.ViewModelProvider.NewInstanceFactory.Companion.instance
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.editphotovideo.App
-import com.example.editphotovideo.App.Companion.photoApp
+import androidx.recyclerview.widget.RecyclerView
 import com.example.editphotovideo.R
+import com.example.editphotovideo.ui.editmovie.MyApplication
 import com.example.editphotovideo.ui.editor.BottomSheetDismissListener
-import java.lang.NumberFormatException
-import java.util.ArrayList
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class EmojiBSFragment : BottomSheetDialogFragment() {
     private var mEmojiListener: EmojiListener? = null
@@ -106,7 +104,7 @@ class EmojiBSFragment : BottomSheetDialogFragment() {
     }
 
     companion object {
-        private var emojisList = getEmojis(photoApp!!)
+        private var emojisList = getEmojis(MyApplication.getInstance())
 
         /**
          * Provide the list of emoji in form of unicode string
@@ -114,7 +112,7 @@ class EmojiBSFragment : BottomSheetDialogFragment() {
          * @param context context
          * @return list of emoji unicode
          */
-        fun getEmojis(context: App): ArrayList<String> {
+        fun getEmojis(context: MyApplication): ArrayList<String> {
             val convertedEmojiList = ArrayList<String>()
             val emojiList = context!!.resources.getStringArray(R.array.photo_editor_emoji)
             for (emojiUnicode in emojiList) {
