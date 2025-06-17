@@ -135,4 +135,11 @@
         <attr format="boolean" name="civShowEdgeMidPoint"/>
         <attr format="boolean" name="civAutoScanEnable"/>
     </declare-styleable>
+    <declare-styleable name="ScaleCardLayout">
+
+        <attr name="aspectRatioHeight" format="integer" />
+        <attr name="aspectRatioWidth" format="integer" />
+
+
+    </declare-styleable>
 </resources>

@@ -5,9 +5,12 @@
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
     <application
         android:name=".App"
+        android:name="com.example.editphotovideo.ui.editmovie.MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -46,6 +49,16 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.EditPhotoVideo" />
 
+        <activity
+            android:name=".ui.editmovie.ImageEditActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.editmovie.PreviewActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <service android:name="com.example.editphotovideo.service.ImageCreatorService" />
+        <service android:name="com.example.editphotovideo.service.CreateVideoService" />
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
