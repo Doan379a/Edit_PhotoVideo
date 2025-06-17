@@ -9,6 +9,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -124,6 +125,10 @@ class TedImagePickerBottomSheet : BottomSheetDialogFragment(), PartialAccessMana
     private fun setupTitle() {
         val title = builder.title ?: getString(builder.titleResId)
         binding.toolbar.title = title
+        binding.toolbar.setTitleTextColor(
+            ContextCompat.getColor(requireActivity(), R.color.white)
+        )
+
     }
 
     private fun setupButton() {
@@ -138,13 +143,25 @@ class TedImagePickerBottomSheet : BottomSheetDialogFragment(), PartialAccessMana
         setupButtonVisibility()
     }
 
+//    private fun setupButtonVisibility() {
+//        binding.showButton = when {
+//            builder.selectType == SelectType.SINGLE -> false
+//            else -> mediaAdapter.selectedUriList.isNotEmpty()
+//        }
+//    }
     private fun setupButtonVisibility() {
-        binding.showButton = when {
-            builder.selectType == SelectType.SINGLE -> false
-            else -> mediaAdapter.selectedUriList.isNotEmpty()
+        val selectedCount = mediaAdapter.selectedUriList.size
+        Log.d("TedImagePicker22", "Selected count: $selectedCount")
+        binding.buttonText = if (builder.selectType == SelectType.SINGLE) {
+            builder.buttonText ?: getString(builder.buttonTextResId)
+        } else {
+            val baseText = builder.buttonText ?: getString(builder.buttonTextResId)
+            "$baseText (${selectedCount})"
         }
-    }
 
+        // Hiện/ẩn button
+        binding.showButton = selectedCount > 0
+    }
     private fun loadMedia(isRefresh: Boolean = false) {
         disposable = GalleryUtil.getMedia(requireActivity(), builder.mediaType)
             .subscribeOn(Schedulers.io())

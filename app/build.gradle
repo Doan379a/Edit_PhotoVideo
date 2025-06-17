@@ -91,4 +91,6 @@ dependencies {
     ///viewmodel
     implementation "androidx.activity:activity-ktx:1.6.0"
     implementation "androidx.fragment:fragment-ktx:1.6.2"
+    ///scoll tab
+    implementation "io.github.ahmad-hamwi:tabsync:1.0.1"
 }

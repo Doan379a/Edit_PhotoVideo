@@ -12,11 +12,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.editphotovideo.R
 import java.util.ArrayList
 
-class EditingToolsAdapter(val context: Context,private val mOnItemSelected: OnItemSelected) :
+class EditingToolsAdapter(val context: Context, private val mOnItemSelected: OnItemSelected) :
     RecyclerView.Adapter<EditingToolsAdapter.ViewHolder>() {
 
-     var selectedIndex = -1
+    var selectedIndex = -1
     private val mToolList = ToolModel.values().toList()
+
     interface OnItemSelected {
         fun onToolSelected(toolType: ToolType)
     }
@@ -32,12 +33,12 @@ class EditingToolsAdapter(val context: Context,private val mOnItemSelected: OnIt
         holder.txtTool.text = context.getString(item.titleResId)
         holder.imgToolIcon.setImageResource(item.iconResId)
         holder.imgToolIcon.setColorFilter(
-            if (selectedIndex == position) Color.parseColor("#FF8594") else
-                Color.parseColor("#5D5D5D")
+            if (selectedIndex == position) Color.parseColor("#A0E12E") else
+                Color.parseColor("#FFFFFF")
         )
         holder.txtTool.setTextColor(
-            if (selectedIndex == position) Color.parseColor("#FF8594") else
-                Color.parseColor("#5D5D5D")
+            if (selectedIndex == position) Color.parseColor("#A0E12E") else
+                Color.parseColor("#FFFFFF")
         )
     }
 
@@ -51,28 +52,29 @@ class EditingToolsAdapter(val context: Context,private val mOnItemSelected: OnIt
 
         init {
             itemView.setOnClickListener { _: View? ->
+                val previousIndex = selectedIndex
                 selectedIndex = layoutPosition
-                mOnItemSelected.onToolSelected(
-                    mToolList[layoutPosition].toolType
-                )
-                notifyDataSetChanged()
+                mOnItemSelected.onToolSelected(mToolList[layoutPosition].toolType)
+                notifyItemChanged(previousIndex)
+                notifyItemChanged(selectedIndex)
             }
         }
     }
+
     fun resetSelection() {
         selectedIndex = -1
         notifyDataSetChanged()
     }
 
     enum class ToolModel(val titleResId: Int, val iconResId: Int, val toolType: ToolType) {
+        BEAUTY(R.string.beauty, R.drawable.ic_beauty, ToolType.BEAUTY),
+        CROP(R.string.crop, R.drawable.ic_crop, ToolType.CROP),
+        LIGHTING(R.string.lighting, R.drawable.ic_light, ToolType.LIGHTING),
         SHAPE(R.string.shape, R.drawable.ic_shape, ToolType.SHAPE),
         TEXT(R.string.text, R.drawable.ic_text, ToolType.TEXT),
         ERASER(R.string.eraser, R.drawable.ic_eraser, ToolType.ERASER),
         FILTER(R.string.filter, R.drawable.ic_photo_filter, ToolType.FILTER),
         EMOJI(R.string.emoji, R.drawable.ic_insert_emoticon, ToolType.EMOJI),
         STICKER(R.string.sticker, R.drawable.ic_sticker, ToolType.STICKER),
-        CROP(R.string.crop, R.drawable.ic_crop, ToolType.CROP),
-        BEAUTY(R.string.beauty, R.drawable.ic_beauty, ToolType.BEAUTY),
-        LIGHTING(R.string.lighting, R.drawable.ic_light, ToolType.LIGHTING),
     }
 }

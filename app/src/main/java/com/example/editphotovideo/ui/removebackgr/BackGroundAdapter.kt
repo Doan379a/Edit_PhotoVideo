@@ -11,23 +11,30 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.editphotovideo.R
 import com.example.editphotovideo.databinding.ItemBackgrImageBinding
+import com.example.editphotovideo.ui.main.template.model.DisplayTemplate
 import com.example.editphotovideo.utils.getBitmapFromAsset
 
 class BackGroundAdapter(
     private val context: Context,
-    val list: List<String>,
-    private val onItemClick: (String, Int) -> Unit
-) :
-    RecyclerView.Adapter<BackGroundAdapter.ViewBackgroundHolder>() {
+    val list: List<DisplayTemplate>,
+    private val onItemClick: (DisplayTemplate, Int) -> Unit
+) : RecyclerView.Adapter<BackGroundAdapter.ViewBackgroundHolder>() {
+
+    private var selectedId: Int? = null
+
     inner class ViewBackgroundHolder(val binding: ItemBackgrImageBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        private var selectedPosition: Int = -1
 
+        fun bind(item: DisplayTemplate, position: Int) {
+            val isSelected = item.id == selectedId
+            val fromAsset = context.getBitmapFromAsset(context, item.imagePath)
 
-        fun bind(imageUrl: String, position: Int) {
-            val fromAsset = context.getBitmapFromAsset(context, imageUrl)
             if (position == 0) {
-                binding.imgFilterView.setImageResource(R.drawable.img_chosse)
+                if (isSelected) {
+                    binding.imgFilterView.setImageResource(R.drawable.img_chosse_selected)
+                } else {
+                    binding.imgFilterView.setImageResource(R.drawable.img_chosse)
+                }
             } else {
                 Glide.with(context)
                     .asBitmap()
@@ -35,38 +42,39 @@ class BackGroundAdapter(
                     .placeholder(R.drawable.img_loadding)
                     .into(binding.imgFilterView)
             }
+
             binding.cardBoder.setCardBackgroundColor(
-                if (selectedPosition == position) context.getColor(R.color.purple_500) else Color.TRANSPARENT
+                if (isSelected) context.getColor(R.color.color_selector_tab) else Color.parseColor("#939393")
             )
-            binding.imgFilterView.setOnClickListener {
-                val previousPosition = selectedPosition
-                selectedPosition = adapterPosition
-                notifyItemChanged(previousPosition)
-                notifyItemChanged(selectedPosition)
-                onItemClick(imageUrl, position)
+
+            binding.root.setOnClickListener {
+                if (selectedId != item.id) {
+                    val oldIndex = list.indexOfFirst { it.id == selectedId }
+                    selectedId = item.id
+                    notifyItemChanged(oldIndex)
+                    notifyItemChanged(position)
+                    onItemClick(item, position)
+                }
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewBackgroundHolder {
-        val binding = ItemBackgrImageBinding.inflate(
-            parent.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater,
-            parent,
-            false
-        )
+        val binding = ItemBackgrImageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewBackgroundHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ViewBackgroundHolder, position: Int) {
+        holder.bind(list[position], position)
     }
 
     override fun getItemCount(): Int = list.size
 
-    override fun onBindViewHolder(holder: ViewBackgroundHolder, position: Int) {
-        val image = list[position]
-        holder.bind(image, position)
-    }
-
-    companion object {
-        val backgrList: List<String> = (1..9).map { i ->
-            "anh_backgr/img_$i.png"
-        }
+    fun setSelectedId(id: Int) {
+        val oldIndex = list.indexOfFirst { it.id == selectedId }
+        val newIndex = list.indexOfFirst { it.id == id }
+        selectedId = id
+        notifyItemChanged(oldIndex)
+        notifyItemChanged(newIndex)
     }
 }

@@ -18,12 +18,13 @@
     <color name="ted_image_picker_primary">#FF8594</color>
     <color name="ted_image_picker_primary_pressed">#0956b2</color>
     <color name="ted_image_picker_empty_selected_background">#dedede</color>
-    <color name="ted_image_picker_toolbar_background">@color/white</color>
+    <color name="ted_image_picker_toolbar_background">#2F2F2F</color>
     <color name="ted_image_picker_selected_media_clear_background">#d0909090</color>
     <color name="ted_image_picker_scroller">@color/ted_image_picker_primary</color>
     <color name="ted_image_picker_scroller_background">#fafafa</color>
 
     <color name="ted_image_picker_zoom_background">#defafafa</color>
+    <color name="color_9ad92c">#9ad92c</color>
 
 
 </resources>

@@ -11,10 +11,10 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/card_boder"
         android:layout_width="@dimen/_60sdp"
-        android:layout_height="@dimen/_60sdp"
+        android:layout_height="@dimen/_70sdp"
         android:elevation="0dp"
         app:cardElevation="0dp"
-        app:cardBackgroundColor="@android:color/transparent"
+        app:cardBackgroundColor="#939393"
         android:background="@android:color/transparent"
         app:cardCornerRadius="16dp">
 

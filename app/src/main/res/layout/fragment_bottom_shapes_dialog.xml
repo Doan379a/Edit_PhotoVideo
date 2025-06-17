@@ -4,25 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/bg_shape"
     android:padding="@dimen/_5sdp">
 
     <HorizontalScrollView
         android:id="@+id/scoll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_20sdp"
         android:fillViewport="true"
         android:scrollbars="none"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_done">
+        app:layout_constraintTop_toBottomOf="@+id/shapeType">
 
         <RadioGroup
             android:id="@+id/shapeRadioGroup"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/_10sdp"
             android:orientation="horizontal"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -36,9 +37,11 @@
                 android:checked="true"
                 android:includeFontPadding="false"
                 android:text="@string/label_brush"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
+                android:fontFamily="@font/polly_regular_400"
                 android:textSize="@dimen/_14ssp"
-                app:buttonTint="@color/custom_radio" />
+                app:buttonTint="@color/custom_radio"
+             />
 
             <RadioButton
                 android:id="@+id/lineRadioButton"
@@ -47,8 +50,9 @@
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:includeFontPadding="false"
                 android:text="@string/label_line"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_14ssp"
+                android:fontFamily="@font/polly_regular_400"
                 app:buttonTint="@color/custom_radio" />
 
             <RadioButton
@@ -58,8 +62,9 @@
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:includeFontPadding="false"
                 android:text="@string/label_arrow"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_14ssp"
+                android:fontFamily="@font/polly_regular_400"
                 app:buttonTint="@color/custom_radio" />
 
             <RadioButton
@@ -69,8 +74,9 @@
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:includeFontPadding="false"
                 android:text="@string/label_oval"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_14ssp"
+                android:fontFamily="@font/polly_regular_400"
                 app:buttonTint="@color/custom_radio" />
 
             <RadioButton
@@ -80,8 +86,9 @@
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:includeFontPadding="false"
                 android:text="@string/label_rectangle"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_14ssp"
+                android:fontFamily="@font/polly_regular_400"
                 app:buttonTint="@color/custom_radio" />
 
         </RadioGroup>
@@ -125,8 +132,9 @@
         android:includeFontPadding="false"
         android:paddingHorizontal="@dimen/_8sdp"
         android:text="@string/brush"
+        android:fontFamily="@font/polly_bold_700"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="#616161"
+        android:textColor="@color/white"
         android:textSize="@dimen/_14ssp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -139,9 +147,10 @@
         android:includeFontPadding="false"
         android:paddingHorizontal="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_10sdp"
-        android:text="Opacity"
+        android:text="@string/opacity"
+        android:fontFamily="@font/polly_bold_700"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="#616161"
+        android:textColor="@color/white"
         android:textSize="@dimen/_14ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -152,38 +161,19 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:drawableStart="@drawable/ic_shape"
         android:drawablePadding="@dimen/_10sdp"
         android:gravity="center_vertical"
         android:includeFontPadding="false"
+        android:paddingVertical="@dimen/_10sdp"
         android:paddingHorizontal="@dimen/_8sdp"
         android:text="@string/shape"
+        android:fontFamily="@font/polly_bold_700"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="#5D5D5D"
-        android:textSize="@dimen/_20ssp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_done"
-        style="@style/SelectableItemBackground"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:drawableStart="@drawable/ic_done"
-        android:drawablePadding="@dimen/_5sdp"
-        android:includeFontPadding="false"
-        android:paddingHorizontal="@dimen/_15sdp"
-        android:gravity="center_vertical"
-        android:paddingVertical="@dimen/_10sdp"
-        android:text="@string/done"
-        android:textColor="#FF8594"
-        android:textSize="@dimen/_13ssp"
-        app:layout_constraintBottom_toBottomOf="@+id/shapeType"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/shapeType" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/shapeColors"
@@ -201,7 +191,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/shapeOpacity"
-        tools:background="@android:color/black"
+        tools:background="#303030"
         tools:listitem="@layout/color_picker_item_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

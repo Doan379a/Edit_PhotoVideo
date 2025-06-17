@@ -4,9 +4,10 @@
     android:id="@+id/layout_adjust"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
+    android:background="#101014"
     android:clickable="true"
     android:focusable="true"
+    android:paddingTop="@dimen/_10sdp"
     android:visibility="visible">
 
     <ImageView
@@ -15,6 +16,7 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/_10sdp"
         android:src="@drawable/ic_close"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintEnd_toStartOf="@+id/tv_done_adjust"
         app:layout_constraintHorizontal_bias="0.054"
@@ -32,6 +34,7 @@
         android:text="@string/done"
         android:textColor="#519FFF"
         android:textSize="@dimen/_12ssp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -40,9 +43,8 @@
         android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_15sdp"
         android:paddingVertical="@dimen/_5sdp"
-        app:layout_constraintBottom_toTopOf="@+id/linear_skin_color"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -53,35 +55,46 @@
             android:layout_weight="1"
             android:drawablePadding="@dimen/_5sdp"
             android:gravity="center"
+            style="@style/SelectableItemBackground"
+            android:fontFamily="@font/polly_regular_400"
+            android:drawableTop="@drawable/ic_skin_color"
+            android:includeFontPadding="false"
             android:padding="@dimen/_13sdp"
-            android:text="skin_color"
-            android:textColor="#519FFF"
+            android:text="@string/skin_color"
+            android:textColor="#A0E12E"
             android:textSize="@dimen/_12ssp"
-
             />
 
         <TextView
             android:id="@+id/tv_blur"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:drawablePadding="@dimen/_5sdp"
             android:gravity="center"
             android:padding="@dimen/_10sdp"
-            android:text="blur"
-            android:textColor="#A4A4A4"
+            android:text="@string/blur"
+            style="@style/SelectableItemBackground"
+            android:textColor="#CFCFD0"
+            android:fontFamily="@font/polly_regular_400"
+            android:drawableTop="@drawable/ic_blur"
+            android:includeFontPadding="false"
             android:textSize="@dimen/_12ssp" />
 
         <TextView
             android:id="@+id/tv_acne"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:drawablePadding="@dimen/_5sdp"
             android:gravity="center"
+            style="@style/SelectableItemBackground"
             android:padding="@dimen/_10sdp"
-            android:text="acne"
-            android:textColor="#A4A4A4"
+            android:fontFamily="@font/polly_regular_400"
+            android:drawableTop="@drawable/ic_acne"
+            android:includeFontPadding="false"
+            android:text="@string/acne"
+            android:textColor="#CFCFD0"
             android:textSize="@dimen/_12ssp" />
 
     </LinearLayout>
@@ -90,10 +103,10 @@
         android:id="@+id/linear_skin_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_20sdp"
         android:gravity="center"
-        android:paddingEnd="@dimen/_10sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingHorizontal="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -101,16 +114,15 @@
             android:id="@+id/seekbar_skin_color"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginEnd="@dimen/_20sdp"
             android:max="100"
-            android:min="0"
             android:maxWidth="6dp"
-            android:maxHeight="6dp"
+            android:maxHeight="3dp"
+            android:min="0"
             android:minWidth="2dp"
-            android:minHeight="2dp"
-            android:paddingVertical="5dp"
-            android:progressDrawable="@drawable/custom_seekbar_progress"
-            android:thumb="@drawable/ic_thumb_seekbar"
+            android:minHeight="1dp"
+            android:paddingVertical="8dp"
+            android:progressDrawable="@drawable/custom_seekbar_progress2"
+            android:thumb="@drawable/ic_thumb_seekbar2"
             android:thumbOffset="0dp" />
 
         <TextView
@@ -123,7 +135,8 @@
             android:padding="@dimen/_5sdp"
             android:text="50"
             android:textColor="@color/black"
-            android:textSize="@dimen/_12ssp" />
+            android:textSize="@dimen/_12ssp"
+            android:visibility="gone" />
     </FrameLayout>
 
     <FrameLayout
@@ -134,7 +147,7 @@
         android:gravity="center"
         android:paddingHorizontal="@dimen/_10sdp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -142,16 +155,16 @@
             android:id="@+id/seekbar_blur"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginEnd="@dimen/_20sdp"
+
             android:max="100"
             android:maxWidth="6dp"
-            android:maxHeight="6dp"
-            android:minWidth="2dp"
+            android:maxHeight="3dp"
             android:min="0"
+            android:minWidth="2dp"
             android:minHeight="2dp"
-            android:paddingVertical="5dp"
-            android:progressDrawable="@drawable/custom_seekbar_progress"
-            android:thumb="@drawable/ic_thumb_seekbar"
+            android:paddingVertical="8dp"
+            android:progressDrawable="@drawable/custom_seekbar_progress2"
+            android:thumb="@drawable/ic_thumb_seekbar2"
             android:thumbOffset="0dp" />
 
         <TextView
@@ -164,7 +177,8 @@
             android:padding="@dimen/_5sdp"
             android:text="50"
             android:textColor="@color/black"
-            android:textSize="@dimen/_12ssp" />
+            android:textSize="@dimen/_12ssp"
+            android:visibility="gone" />
     </FrameLayout>
 
     <FrameLayout
@@ -175,7 +189,7 @@
         android:gravity="center"
         android:paddingHorizontal="@dimen/_10sdp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -183,16 +197,15 @@
             android:id="@+id/seekbar_acne"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginEnd="@dimen/_20sdp"
             android:max="100"
             android:maxWidth="6dp"
-            android:maxHeight="6dp"
+            android:maxHeight="3dp"
+            android:min="0"
             android:minWidth="2dp"
             android:minHeight="2dp"
-            android:min="0"
-            android:paddingVertical="5dp"
-            android:progressDrawable="@drawable/custom_seekbar_progress"
-            android:thumb="@drawable/ic_thumb_seekbar"
+            android:paddingVertical="8dp"
+            android:progressDrawable="@drawable/custom_seekbar_progress2"
+            android:thumb="@drawable/ic_thumb_seekbar2"
             android:thumbOffset="0dp" />
 
         <TextView
@@ -205,6 +218,7 @@
             android:padding="@dimen/_5sdp"
             android:text="50"
             android:textColor="@color/black"
-            android:textSize="@dimen/_12ssp" />
+            android:textSize="@dimen/_12ssp"
+            android:visibility="gone" />
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

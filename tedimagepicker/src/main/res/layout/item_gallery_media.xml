@@ -50,91 +50,100 @@
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
             android:elevation="0dp"
-            app:cardBackgroundColor="@android:color/transparent"
+            android:layout_margin="2dp"
+            app:cardBackgroundColor="@{isSelected? @color/color_9ad92c : @android:color/transparent}"
             app:cardCornerRadius="10dp"
             app:cardElevation="0dp">
 
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:layout_margin="1dp"
+                android:background="@android:color/transparent"
+                android:elevation="0dp"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="0dp">
 
-                <ImageView
-                    android:id="@+id/iv_image"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    bind:imageUri="@{media.uri}" />
-
-                <FrameLayout
-                    android:id="@+id/view_zoom_out"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/default_padding_xsmall"
-                    android:clickable="@{!isSelected}"
-                    android:elevation="5dp"
-                    android:padding="5dp"
-                    android:visibility="@{showZoom}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                     <ImageView
-                        android:layout_width="@dimen/ted_image_picker_zoom_size"
-                        android:layout_height="@dimen/ted_image_picker_zoom_size"
-                        android:adjustViewBounds="true"
-                        android:background="@android:color/transparent"
-                        android:src="@drawable/ic_zoom_out_24dp" />
-                </FrameLayout>
+                        android:id="@+id/iv_image"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        bind:imageUri="@{media.uri}" />
 
-                <TextView
-                    style="@style/TextAppearance.TedImagePicker.Caption"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/default_padding_small"
-                    android:background="@color/black_54"
-                    android:padding="@dimen/default_padding_xsmall"
-                    android:text="@{duration}"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
-                    android:visibility="@{showDuration}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    tools:text="00:11" />
+                    <FrameLayout
+                        android:id="@+id/view_zoom_out"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/default_padding_xsmall"
+                        android:clickable="@{!isSelected}"
+                        android:elevation="5dp"
+                        android:padding="5dp"
+                        android:visibility="@{showZoom}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
 
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:visibility="@{selectType == SelectType.MULTI}"
-                    app:layout_constraintBottom_toBottomOf="@id/iv_image"
-                    app:layout_constraintEnd_toEndOf="@id/iv_image"
-                    app:layout_constraintStart_toStartOf="@id/iv_image"
-                    app:layout_constraintTop_toTopOf="@id/iv_image">
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/ted_image_picker_selected_foreground"
-                        android:visibility="@{isSelected}" />
+                        <ImageView
+                            android:layout_width="@dimen/ted_image_picker_zoom_size"
+                            android:layout_height="@dimen/ted_image_picker_zoom_size"
+                            android:adjustViewBounds="true"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/ic_zoom_out_24dp" />
+                    </FrameLayout>
 
                     <TextView
-                        style="@style/TextAppearance.TedImagePicker.Body1"
-                        android:layout_width="@dimen/list_item_avatar_size_small"
-                        android:layout_height="@dimen/list_item_avatar_size_small"
-                        android:layout_gravity="end"
+                        style="@style/TextAppearance.TedImagePicker.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_margin="@dimen/default_padding_small"
-                        android:background="@{isSelected? @drawable/bg_multi_image_selected : @drawable/bg_multi_image_unselected}"
-                        android:gravity="center"
-                        android:text="@{isSelected? String.valueOf(selectedNumber) : ``}"
+                        android:background="@color/black_54"
+                        android:padding="@dimen/default_padding_xsmall"
+                        android:text="@{duration}"
                         android:textColor="@color/white"
-                        tools:background="@drawable/bg_multi_image_selected"
-                        tools:text="5" />
-                </FrameLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:textStyle="bold"
+                        android:visibility="@{showDuration}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:text="00:11" />
+
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:visibility="@{selectType == SelectType.MULTI}"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_image"
+                        app:layout_constraintEnd_toEndOf="@id/iv_image"
+                        app:layout_constraintStart_toStartOf="@id/iv_image"
+                        app:layout_constraintTop_toTopOf="@id/iv_image">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/ted_image_picker_selected_foreground"
+                            android:visibility="@{isSelected}" />
+
+                        <TextView
+                            style="@style/TextAppearance.TedImagePicker.Body1"
+                            android:layout_width="@dimen/list_item_avatar_size_small"
+                            android:layout_height="@dimen/list_item_avatar_size_small"
+                            android:layout_gravity="end"
+                            android:layout_margin="@dimen/default_padding_small"
+                            android:background="@{isSelected? @drawable/bg_multi_image_selected : @drawable/bg_multi_image_unselected}"
+                            android:gravity="center"
+                            android:textColor="@color/white"
+                            tools:background="@drawable/bg_multi_image_selected" />
+                    </FrameLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
         </androidx.cardview.widget.CardView>
     </FrameLayout>
 </layout>

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_adjust"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:visibility="visible"
-    android:background="#16FF3D00"
+    android:background="#101014"
     android:clickable="true"
-    android:focusable="true">
+    android:paddingTop="@dimen/_10sdp"
+    android:focusable="true"
+    android:visibility="visible">
 
     <ImageView
         android:id="@+id/img_close"
@@ -16,12 +16,13 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/_10sdp"
         android:src="@drawable/ic_close"
-        app:tint="@color/black"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintEnd_toStartOf="@+id/tv_done_Lighting"
         app:layout_constraintHorizontal_bias="0.054"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/black" />
 
     <TextView
         android:id="@+id/tv_done_Lighting"
@@ -34,6 +35,7 @@
         android:text="@string/done"
         android:textColor="#519FFF"
         android:textSize="@dimen/_12ssp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -44,113 +46,154 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_15sdp"
         android:paddingVertical="@dimen/_5sdp"
-        app:layout_constraintBottom_toTopOf="@+id/linear_Britness"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/tv_Britness"
+            style="@style/SelectableItemBackground"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:drawableTop="@drawable/ic_britness"
             android:drawablePadding="@dimen/_5sdp"
+            android:fontFamily="@font/polly_regular_400"
             android:gravity="center"
+            android:includeFontPadding="false"
             android:padding="@dimen/_13sdp"
-            android:text="Britness"
-            android:textColor="#519FFF"
-            android:textSize="@dimen/_12ssp"
-
-            />
+            android:text="@string/britness"
+            android:textColor="#A0E12E"
+            android:textSize="@dimen/_12ssp" />
 
         <TextView
             android:id="@+id/tv_saturation"
+            style="@style/SelectableItemBackground"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:drawableTop="@drawable/ic_saturation"
             android:drawablePadding="@dimen/_5sdp"
+            android:fontFamily="@font/polly_regular_400"
             android:gravity="center"
+            android:includeFontPadding="false"
             android:padding="@dimen/_10sdp"
-            android:text="saturation"
-            android:textColor="#A4A4A4"
+            android:text="@string/saturation"
+            android:textColor="#CFCFD0"
             android:textSize="@dimen/_12ssp" />
 
     </LinearLayout>
 
-    <FrameLayout
+    <RelativeLayout
         android:id="@+id/linear_Britness"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingEnd="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_20sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/tv_seekbar_start_Britness"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="start"
+            android:drawablePadding="@dimen/_5sdp"
+            android:fontFamily="@font/polly_regular_400"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:padding="@dimen/_5sdp"
+            android:text="50%"
+            android:textColor="#9F9F9F"
+            android:textSize="@dimen/_10ssp" />
 
         <androidx.appcompat.widget.AppCompatSeekBar
             android:id="@+id/seekbar_Britness"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/tv_seekbar_end_Britness"
+            android:layout_toEndOf="@+id/tv_seekbar_start_Britness"
             android:max="100"
             android:maxWidth="6dp"
-            android:maxHeight="6dp"
+            android:maxHeight="3dp"
             android:minWidth="2dp"
             android:minHeight="2dp"
             android:paddingVertical="5dp"
-            android:progressDrawable="@drawable/custom_seekbar_progress"
-            android:thumb="@drawable/ic_thumb_seekbar"
+            android:progressDrawable="@drawable/custom_seekbar_progress2"
+            android:thumb="@drawable/ic_thumb_seekbar2"
             android:thumbOffset="0dp" />
 
         <TextView
-            android:id="@+id/tv_seekbar_Britness"
+            android:id="@+id/tv_seekbar_end_Britness"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:drawablePadding="@dimen/_5sdp"
+            android:layout_alignParentEnd="true"
             android:gravity="center"
             android:padding="@dimen/_5sdp"
-            android:text="50"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_12ssp"/>
-    </FrameLayout>
-    <FrameLayout
+            android:text="100%"
+            android:fontFamily="@font/polly_regular_400"
+            android:includeFontPadding="false"
+            android:textColor="#9F9F9F"
+            android:textSize="@dimen/_10ssp" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/linear_saturation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:visibility="gone"
-        android:paddingHorizontal="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_20sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/tv_seekbar_Start_saturation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="end"
+            android:drawablePadding="@dimen/_5sdp"
+            android:fontFamily="@font/polly_regular_400"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:padding="@dimen/_5sdp"
+            android:text="50%"
+            android:textColor="#9F9F9F"
+            android:textSize="@dimen/_10ssp" />
 
         <androidx.appcompat.widget.AppCompatSeekBar
             android:id="@+id/seekbar_saturation"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/tv_seekbar_end_saturation"
+            android:layout_toEndOf="@+id/tv_seekbar_Start_saturation"
             android:max="100"
             android:maxWidth="6dp"
-            android:maxHeight="6dp"
+            android:maxHeight="3dp"
             android:minWidth="2dp"
             android:minHeight="2dp"
             android:paddingVertical="5dp"
-            android:progressDrawable="@drawable/custom_seekbar_progress"
-            android:thumb="@drawable/ic_thumb_seekbar"
+            android:progressDrawable="@drawable/custom_seekbar_progress2"
+            android:thumb="@drawable/ic_thumb_seekbar2"
             android:thumbOffset="0dp" />
 
         <TextView
-            android:id="@+id/tv_seekbar_saturation"
+            android:id="@+id/tv_seekbar_end_saturation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawablePadding="@dimen/_5sdp"
-            android:gravity="center"
+            android:layout_alignParentEnd="true"
             android:layout_gravity="end"
+            android:drawablePadding="@dimen/_5sdp"
+            android:fontFamily="@font/polly_regular_400"
+            android:gravity="center"
+            android:includeFontPadding="false"
             android:padding="@dimen/_5sdp"
-            android:text="50"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_12ssp"/>
-    </FrameLayout>
+            android:text="100%"
+            android:textColor="#9F9F9F"
+            android:textSize="@dimen/_10ssp" />
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

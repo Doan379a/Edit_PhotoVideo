@@ -43,7 +43,6 @@ class ShapeBSFragment : BottomSheetDialogFragment(), SeekBar.OnSeekBarChangeList
         val sbOpacity = view.findViewById<SeekBar>(R.id.shapeOpacity)
         val sbBrushSize = view.findViewById<SeekBar>(R.id.shapeSize)
         val shapeGroup = view.findViewById<RadioGroup>(R.id.shapeRadioGroup)
-        val doneShape = view.findViewById<TextView>(R.id.tv_done)
         view.setBackgroundResource(R.drawable.bg_sticker)
 
         // shape picker
@@ -101,9 +100,6 @@ class ShapeBSFragment : BottomSheetDialogFragment(), SeekBar.OnSeekBarChangeList
             }
         })
         rvColor.adapter = colorPickerAdapter
-        doneShape.setOnClickListener {
-            dismiss()
-        }
     }
 
     fun setPropertiesChangeListener(properties: Properties?) {

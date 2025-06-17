@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@android:color/transparent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_create_video"
+        style="@style/SelectableItemBackground"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_120sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:background="@drawable/bg_create_video"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+     >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_create_video" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/polly_regular_400"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/create_video"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_18ssp"
+            app:layout_constraintTop_toBottomOf="@+id/layout_header" />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ctl_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/_30sdp"
+        app:layout_constraintTop_toBottomOf="@+id/ll_create_video">
+
+        <ImageView
+            android:id="@+id/img_remove_backgr"
+            style="@style/SelectableItemBackground"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:src="@drawable/ic_remove_backgr"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/polly_regular_400"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/remove_background"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintEnd_toEndOf="@+id/img_remove_backgr"
+            app:layout_constraintStart_toStartOf="@+id/img_remove_backgr"
+            app:layout_constraintTop_toBottomOf="@+id/img_remove_backgr" />
+
+        <ImageView
+            android:id="@+id/img_enhance_beauty"
+            style="@style/SelectableItemBackground"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:src="@drawable/ic_enhance_beauty"
+            app:layout_constraintBottom_toBottomOf="@+id/img_remove_backgr"
+            app:layout_constraintEnd_toStartOf="@+id/img_tools"
+            app:layout_constraintStart_toEndOf="@+id/img_remove_backgr"
+            app:layout_constraintTop_toTopOf="@+id/img_remove_backgr" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/polly_regular_400"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/enhance_beauty2"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintEnd_toEndOf="@+id/img_enhance_beauty"
+            app:layout_constraintStart_toStartOf="@+id/img_enhance_beauty"
+            app:layout_constraintTop_toBottomOf="@+id/img_enhance_beauty" />
+
+        <ImageView
+            android:id="@+id/img_tools"
+            style="@style/SelectableItemBackground"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:src="@drawable/ic_tools"
+            app:layout_constraintBottom_toBottomOf="@+id/img_enhance_beauty"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/img_enhance_beauty" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/polly_regular_400"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/tools"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintEnd_toEndOf="@+id/img_tools"
+            app:layout_constraintStart_toStartOf="@+id/img_tools"
+            app:layout_constraintTop_toBottomOf="@+id/img_tools" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

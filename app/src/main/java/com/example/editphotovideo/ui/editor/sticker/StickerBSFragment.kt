@@ -77,13 +77,7 @@ class StickerBSFragment : BottomSheetDialogFragment() {
         binding.rvEmoji.setHasFixedSize(true)
         binding.rvEmoji.setItemViewCacheSize(stickerPathList.size)
         binding.tvTitle.text=getString(R.string.sticker)
-        binding.tvTitle.setCompoundDrawablesRelativeWithIntrinsicBounds(
-          R.drawable.ic_sticker_2,
-            0,
-            0,
-            0
-        )
-        binding.tvDone.tap {
+        binding.imgDone.tap {
             dismiss()
         }
     }

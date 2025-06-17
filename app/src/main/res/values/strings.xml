@@ -444,6 +444,29 @@
     <string name="crop">Crop</string>
     <string name="beauty">Beauty</string>
     <string name="lighting">Lighting</string>
+    <string name="save">Save</string>
+    <string name="enhance_beauty">Enhance Beauty</string>
+    <string name="output_ratio">Output Ratio</string>
+    <string name="skin_color">Skin color</string>
+    <string name="blur">Blur</string>
+    <string name="acne">Acne</string>
+    <string name="britness">Britness</string>
+    <string name="saturation">saturation</string>
+    <string name="opacity">Opacity</string>
+    <string name="create_video">Create Video</string>
+    <string name="remove_background">Remove\nbackground</string>
+    <string name="enhance_beauty2">Enhance\nbeauty</string>
+    <string name="tools">Tools</string>
+    <string name="editor">Editor</string>
+    <string name="template">Template</string>
+    <string name="my_folder">My folder</string>
+    <string name="trending">Trending</string>
+    <string name="autumn">Autumn</string>
+    <string name="noel">Noel</string>
+    <string name="haloween">Haloween</string>
+    <string name="neon">Neon</string>
+    <string name="wedding">Wedding</string>
+    <string name="select_template">Select template</string>
 
 
 </resources>

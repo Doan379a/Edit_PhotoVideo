@@ -39,12 +39,12 @@ class FilterViewAdapter(private val mFilterListener: FilterListener) :
         val isNoneFilter = filterPair.second == PhotoFilter.NONE
         if (position == 0 && isItem0Modified) {
             holder.binding.imgFilterView.setImageResource(R.drawable.img_none_selected) // Ảnh thay đổi
-            holder.binding.txtFilterName.setTextColor(Color.parseColor("#FF8594"))
+            holder.binding.txtFilterName.setTextColor(Color.parseColor("#A0E12E"))
         } else if (isNoneFilter) {
             val drawableResId =
                 if (isSelected) R.drawable.img_none_selected else R.drawable.img_none
             holder.binding.imgFilterView.setImageResource(drawableResId)
-            holder.binding.txtFilterName.setTextColor(Color.parseColor("#FF8594"))
+            holder.binding.txtFilterName.setTextColor(Color.parseColor("#A0E12E"))
         } else {
             if (fromAsset != null) {
                 holder.binding.imgFilterView.setImageBitmap(fromAsset)
@@ -52,15 +52,25 @@ class FilterViewAdapter(private val mFilterListener: FilterListener) :
                 holder.binding.imgFilterView.setImageResource(R.drawable.img_none)
             }
         }
-        val textColor = if (isSelected) Color.parseColor("#FF8594") else Color.parseColor("#585858")
+        val textColor = if (isSelected) Color.parseColor("#A0E12E") else Color.parseColor("#FFFFFF")
         holder.binding.txtFilterName.setTextColor(textColor)
 
         holder.binding.txtFilterName.text =
             filterPair.second.name.replace("_", " ").lowercase().replaceFirstChar { it.uppercase() }
 
         holder.binding.cardBoder.setCardBackgroundColor(
-            if (isSelected && !isNoneFilter) Color.parseColor("#FF8594") else Color.TRANSPARENT
+            if (isSelected && !isNoneFilter) Color.parseColor("#A0E12E") else Color.parseColor("#939393")
         )
+//        val params = holder.binding.card.layoutParams
+//        if (params is ViewGroup.MarginLayoutParams) {
+//            if (isNoneFilter && isSelected) {
+//                params.setMargins(0, 0, 0, 0)
+//            } else {
+//                val margin = holder.binding.card.context.resources.getDimensionPixelSize(R.dimen.mg_filter)
+//                params.setMargins(margin, margin, margin, margin)
+//            }
+//            holder.binding.card.layoutParams = params
+//        }
 
     }
 

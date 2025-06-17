@@ -49,7 +49,6 @@
             android:layout_height="@dimen/ted_image_picker_selected_image_clear_size"
             android:background="@drawable/bg_selected_media_clear"
             android:padding="2dp"
-            android:src="@drawable/ic_clear_24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

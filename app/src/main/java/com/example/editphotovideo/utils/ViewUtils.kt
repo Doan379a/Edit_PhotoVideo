@@ -7,6 +7,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import com.example.editphotovideo.R
 import com.example.editphotovideo.widget.gone
 import com.example.editphotovideo.widget.visible

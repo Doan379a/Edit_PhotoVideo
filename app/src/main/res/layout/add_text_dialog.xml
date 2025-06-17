@@ -10,7 +10,7 @@
         android:id="@+id/layout_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="#101014"
         android:orientation="horizontal"
         android:paddingVertical="@dimen/_5sdp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,8 +24,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_marginStart="0dp"
-            android:paddingHorizontal="@dimen/_15sdp"
-            android:paddingVertical="@dimen/_10sdp"
+            android:padding="@dimen/_15sdp"
+            app:tint="#A0E12E"
+            android:layout_centerVertical="true"
             android:src="@drawable/ic_back" />
 
         <TextView
@@ -36,25 +37,22 @@
             android:gravity="center"
             android:includeFontPadding="false"
             android:paddingStart="@dimen/_10sdp"
-            android:text="@string/edit"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_20ssp" />
+            android:text="@string/enhance_beauty"
+            android:fontFamily="@font/polly_bold_700"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_18ssp" />
 
-        <TextView
+        <ImageView
             android:id="@+id/add_text_done_tv"
             style="@style/SelectableItemBackground"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:drawableStart="@drawable/ic_done"
-            android:gravity="center_vertical"
-            android:includeFontPadding="false"
-            android:paddingHorizontal="@dimen/_15sdp"
-            android:paddingVertical="@dimen/_10sdp"
-            android:text="@string/done"
-            android:textColor="#FF8594"
-            android:textSize="@dimen/_13ssp" />
+            android:src="@drawable/ic_check"
+            app:tint="#A0E12E"
+            android:padding="@dimen/_15sdp"
+         />
     </RelativeLayout>
 
 
@@ -244,7 +242,7 @@
             android:layout_height="wrap_content"
             android:max="100"
             android:maxWidth="6dp"
-            android:maxHeight="6dp"
+            android:maxHeight="4dp"
             android:min="16"
             android:layout_gravity="bottom"
             android:minWidth="2dp"

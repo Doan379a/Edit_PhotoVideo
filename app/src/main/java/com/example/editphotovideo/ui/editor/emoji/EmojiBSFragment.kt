@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -61,7 +62,7 @@ class EmojiBSFragment : BottomSheetDialogFragment() {
         (contentView.parent as View).setBackgroundColor(resources.getColor(android.R.color.transparent))
         contentView.setBackgroundResource(R.drawable.bg_sticker)
         val rvEmoji: RecyclerView = contentView.findViewById(R.id.rvEmoji)
-        val tvDone: TextView = contentView.findViewById(R.id.tv_done)
+        val tvDone: ImageView = contentView.findViewById(R.id.img_done)
         val gridLayoutManager = GridLayoutManager(activity, 5)
         rvEmoji.layoutManager = gridLayoutManager
         val emojiAdapter = EmojiAdapter()

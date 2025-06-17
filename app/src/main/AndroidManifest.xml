@@ -41,6 +41,10 @@
             android:name=".ui.editor.EditImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.EditPhotoVideo" />
+        <activity
+            android:name=".ui.main.template.select.SelectTemplateActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.EditPhotoVideo" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

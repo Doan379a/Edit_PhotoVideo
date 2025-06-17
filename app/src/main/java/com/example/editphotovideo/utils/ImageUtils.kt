@@ -27,7 +27,7 @@ object ImageUtils {
             isDoubleTapEnabled = true
             isPanEnabled = true
             maxZoom = 5f
-            minZoom = 0.7f
+            minZoom = 0.02f
             setFitMethod(Settings.Fit.NONE)
             setBoundsType(Settings.Bounds.INSIDE)
             setGravity(Gravity.CENTER)

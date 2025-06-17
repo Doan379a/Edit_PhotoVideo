@@ -3,58 +3,136 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/design_default_color_primary">
+    android:background="#303030">
 
-    <Button
-        android:id="@+id/btn_save_crop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="crop save"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <com.canhub.cropper.CropImageView
         android:id="@+id/cropImageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:cropShape="rectangle"
-        app:layout_constraintBottom_toTopOf="@+id/layoutAspectRatios"
+        app:layout_constraintBottom_toTopOf="@+id/layout_header"
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_save_crop" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/layout_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#222222"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/layoutAspectRatios">
+
+        <ImageView
+            android:id="@+id/img_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:src="@drawable/ic_close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/polly_bold_700"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/output_ratio"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp" />
+
+        <ImageView
+            android:id="@+id/img_save_crop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:src="@drawable/ic_check"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#A0E12E" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layoutAspectRatios"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#222222"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <Button
-            android:id="@+id/btnRatio1_1"
+        <TextView
+            android:id="@+id/tvRatio1_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1:1" />
+            android:drawableTop="@drawable/ic_1_1"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/polly_regular_400"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:padding="@dimen/_10sdp"
+            android:text="1:1"
+            android:textColor="#D9D9D9"
+            android:textSize="@dimen/_10ssp" />
 
-        <Button
-            android:id="@+id/btnRatio4_3"
+        <TextView
+            android:id="@+id/tvRatio2_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="4:3" />
+            android:drawableTop="@drawable/ic_2_3"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/polly_regular_400"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:padding="@dimen/_10sdp"
+            android:text="2:3"
+            android:textColor="#D9D9D9"
+            android:textSize="@dimen/_10ssp" />
 
-        <Button
-            android:id="@+id/btnRatio16_9"
+        <TextView
+            android:id="@+id/tvRatio3_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="16:9" />
+            android:drawableTop="@drawable/ic_3_2"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/polly_regular_400"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:padding="@dimen/_10sdp"
+            android:text="3:2"
+            android:textColor="#D9D9D9"
+            android:textSize="@dimen/_10ssp" />
 
-        <Button
-            android:id="@+id/btnRatioFree"
+        <TextView
+            android:id="@+id/tvRatio4_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tự do" />
+            android:drawableTop="@drawable/ic_4_5"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/polly_regular_400"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:padding="@dimen/_10sdp"
+            android:text="4:5"
+            android:textColor="#D9D9D9"
+            android:textSize="@dimen/_10ssp" />
+        <TextView
+            android:id="@+id/tvRatio9_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_9_16"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/polly_regular_400"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:padding="@dimen/_10sdp"
+            android:text="9:16"
+            android:textColor="#D9D9D9"
+            android:textSize="@dimen/_10ssp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

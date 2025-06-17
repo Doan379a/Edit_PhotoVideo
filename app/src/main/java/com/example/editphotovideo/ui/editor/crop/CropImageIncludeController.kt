@@ -3,8 +3,15 @@ package com.example.editphotovideo.ui.editor.crop
 import android.app.Activity
 import android.graphics.Bitmap
 import android.widget.Toast
+import com.canhub.cropper.CropImageContractOptions
+import com.canhub.cropper.CropImageOptions
+import com.canhub.cropper.CropImageView
+import com.example.editphotovideo.R
 import com.example.editphotovideo.databinding.ActivityEditImageBinding
+import com.example.editphotovideo.ui.editor.sealed.CropResult
+import com.example.editphotovideo.utils.setDrawableTopWithTint
 import com.example.editphotovideo.widget.gone
+import com.example.editphotovideo.widget.invisible
 import com.example.editphotovideo.widget.tap
 import com.example.editphotovideo.widget.visible
 
@@ -12,7 +19,7 @@ class CropImageIncludeController(
     private val activity: Activity,
     private var imageToCrop: Bitmap? = null,
     private val binding: ActivityEditImageBinding,
-    private val onImageCropped: (Bitmap) -> Unit
+    private val onImageCropped: (CropResult) -> Unit
 ) {
 
 
@@ -32,33 +39,89 @@ class CropImageIncludeController(
     private fun setUpCropView() = binding.apply {
         includeCropImage.cropImageView.setImageBitmap(imageToCrop)
 
-        includeCropImage.btnRatio11.tap {
+        includeCropImage.tvRatio11.tap {
+            setUpColorTab(1)
             includeCropImage.cropImageView.setFixedAspectRatio(true)
             includeCropImage.cropImageView.setAspectRatio(1, 1)
         }
 
-        includeCropImage.btnRatio43.tap {
+        includeCropImage.tvRatio23.tap {
+            setUpColorTab(2)
             includeCropImage.cropImageView.setFixedAspectRatio(true)
-            includeCropImage.cropImageView.setAspectRatio(4, 3)
+            includeCropImage.cropImageView.setAspectRatio(2, 3)
         }
 
-        includeCropImage.btnRatio169.tap {
+        includeCropImage.tvRatio32.tap {
+            setUpColorTab(3)
             includeCropImage.cropImageView.setFixedAspectRatio(true)
-            includeCropImage.cropImageView.setAspectRatio(16, 9)
+            includeCropImage.cropImageView.setAspectRatio(3, 2)
+        }
+        includeCropImage.tvRatio45.tap {
+            setUpColorTab(4)
+            includeCropImage.cropImageView.setFixedAspectRatio(true)
+            includeCropImage.cropImageView.setAspectRatio(4, 5)
+        }
+        includeCropImage.tvRatio916.tap {
+            setUpColorTab(5)
+            includeCropImage.cropImageView.setFixedAspectRatio(true)
+            includeCropImage.cropImageView.setAspectRatio(9, 16)
         }
 
-        includeCropImage.btnRatioFree.tap {
-            includeCropImage.cropImageView.setFixedAspectRatio(false)
-        }
 
-        includeCropImage.btnSaveCrop.tap {
+        includeCropImage.imgSaveCrop.tap {
             val cropped = includeCropImage.cropImageView.getCroppedImage()
             if (cropped != null) {
                 imageToCrop = cropped
-                onImageCropped(cropped)
+                onImageCropped(CropResult.Success(cropped))
                 includeCropImage.root.gone()
             } else {
-                Toast.makeText(activity, "Không thể cắt ảnh", Toast.LENGTH_SHORT).show()
+                onImageCropped(CropResult.Error("Không thể cắt ảnh"))
+            }
+        }
+        includeCropImage.imgClose.tap {
+            includeCropImage.root.gone()
+            onImageCropped(CropResult.Canceled)
+        }
+    }
+
+    private fun setUpColorTab(selectedTab: Int) = binding.apply {
+        val activeColor = activity.getColor(R.color.color_selector_tab)
+        val inactiveColor = activity.getColor(R.color.color_selector_none_tab)
+        includeCropImage.tvRatio11.setTextColor(inactiveColor)
+        includeCropImage.tvRatio11.setDrawableTopWithTint(R.drawable.ic_1_1, inactiveColor)
+        includeCropImage.tvRatio23.setTextColor(inactiveColor)
+        includeCropImage.tvRatio23.setDrawableTopWithTint(R.drawable.ic_2_3, inactiveColor)
+        includeCropImage.tvRatio32.setTextColor(inactiveColor)
+        includeCropImage.tvRatio32.setDrawableTopWithTint(R.drawable.ic_3_2, inactiveColor)
+        includeCropImage.tvRatio45.setTextColor(inactiveColor)
+        includeCropImage.tvRatio45.setDrawableTopWithTint(R.drawable.ic_4_5, inactiveColor)
+        includeCropImage.tvRatio916.setTextColor(inactiveColor)
+        includeCropImage.tvRatio916.setDrawableTopWithTint(R.drawable.ic_9_16, inactiveColor)
+
+        when (selectedTab) {
+            1 -> {
+                includeCropImage.tvRatio11.setTextColor(activeColor)
+                includeCropImage.tvRatio11.setDrawableTopWithTint(R.drawable.ic_1_1, activeColor)
+            }
+
+            2 -> {
+                includeCropImage.tvRatio23.setTextColor(activeColor)
+                includeCropImage.tvRatio23.setDrawableTopWithTint(R.drawable.ic_2_3, activeColor)
+            }
+
+            3 -> {
+                includeCropImage.tvRatio32.setTextColor(activeColor)
+                includeCropImage.tvRatio32.setDrawableTopWithTint(R.drawable.ic_3_2, activeColor)
+            }
+
+            4 -> {
+                includeCropImage.tvRatio45.setTextColor(activeColor)
+                includeCropImage.tvRatio45.setDrawableTopWithTint(R.drawable.ic_4_5, activeColor)
+            }
+
+            5 -> {
+                includeCropImage.tvRatio916.setTextColor(activeColor)
+                includeCropImage.tvRatio916.setDrawableTopWithTint(R.drawable.ic_9_16, activeColor)
             }
         }
     }

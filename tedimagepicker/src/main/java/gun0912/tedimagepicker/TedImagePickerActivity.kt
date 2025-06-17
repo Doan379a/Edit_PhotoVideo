@@ -9,6 +9,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
@@ -122,6 +123,9 @@ internal class TedImagePickerActivity
     private fun setupTitle() {
         val title = builder.title ?: getString(builder.titleResId)
         setTitle(title)
+        binding.toolbar.setTitleTextColor(
+            ContextCompat.getColor(this, R.color.white)
+        )
     }
 
     private fun setupButton() {
@@ -137,13 +141,25 @@ internal class TedImagePickerActivity
         setupButtonVisibility()
     }
 
-    private fun setupButtonVisibility() {
-        binding.showButton = when {
-            builder.selectType == SelectType.SINGLE -> false
-            else -> mediaAdapter.selectedUriList.isNotEmpty()
-        }
+//    private fun setupButtonVisibility() {
+//        binding.showButton = when {
+//            builder.selectType == SelectType.SINGLE -> false
+//            else -> mediaAdapter.selectedUriList.isNotEmpty()
+//        }
+//    }
+private fun setupButtonVisibility() {
+    val selectedCount = mediaAdapter.selectedUriList.size
+    Log.d("TedImagePicker22", "Selected count: $selectedCount")
+    binding.buttonText = if (builder.selectType == SelectType.SINGLE) {
+        builder.buttonText ?: getString(builder.buttonTextResId)
+    } else {
+        val baseText = builder.buttonText ?: getString(builder.buttonTextResId)
+        "$baseText (${selectedCount})"
     }
 
+    // Hiện/ẩn button
+    binding.showButton = selectedCount > 0
+}
     private fun loadMedia(isRefresh: Boolean = false) {
         disposable = GalleryUtil.getMedia(this, builder.mediaType)
             .subscribeOn(Schedulers.io())

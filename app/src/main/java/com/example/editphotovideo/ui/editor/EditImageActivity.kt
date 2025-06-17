@@ -35,6 +35,7 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.ChangeBounds
 import androidx.transition.TransitionManager
 import com.bumptech.glide.Glide
@@ -50,6 +51,8 @@ import com.example.editphotovideo.ui.editor.filters.FilterListener
 import com.example.editphotovideo.ui.editor.filters.FilterViewAdapter
 import com.example.editphotovideo.ui.editor.lighting.LightingFilterController
 import com.example.editphotovideo.ui.editor.properties.PropertiesBSFragment
+import com.example.editphotovideo.ui.editor.sealed.CropResult
+import com.example.editphotovideo.ui.editor.sealed.ImageFilterResult
 import com.example.editphotovideo.ui.editor.shape.ShapeBSFragment
 import com.example.editphotovideo.ui.editor.sticker.StickerBSFragment
 import com.example.editphotovideo.ui.editor.text.TextEditorDialogFragment
@@ -67,6 +70,7 @@ import com.example.editphotovideo.widget.gone
 import com.example.editphotovideo.widget.invisible
 import com.example.editphotovideo.widget.tap
 import com.example.editphotovideo.widget.visible
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ja.burhanrashid52.photoeditor.OnPhotoEditorListener
 import ja.burhanrashid52.photoeditor.PhotoEditor
@@ -158,8 +162,21 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
                 imageApplyFilter = imageApplyFilter!!,
                 brightnessFilter = GPUImageBrightnessFilter(),
                 saturationFilter = GPUImageSaturationFilter()
-            ) {
-                mEditingToolsAdapter.resetSelection()
+            ) {result->
+                when (result) {
+                    is ImageFilterResult.Success -> {
+                        imageApplyFilter = result.bitmap
+                        result.bitmap?.let { beautyFilterController.updateImage(it) }
+                    }
+
+                    is ImageFilterResult.Canceled -> {
+//                    Toast.makeText(this, "Người dùng đã huỷ crop", Toast.LENGTH_SHORT).show()
+                    }
+
+                    is ImageFilterResult.Error -> {
+                        Toast.makeText(this, "Lỗi crop: ${result.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
         beautyFilterController = BeautyFilterController(
@@ -176,23 +193,48 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
             brightnessFilter = GPUImageBrightnessFilter(),
             contrastFilter = GPUImageContrastFilter(),
             blurFilter = GPUImageGaussianBlurFilter()
-        ) {
-            mEditingToolsAdapter.resetSelection()
+        ) {result->
+            when (result) {
+                is ImageFilterResult.Success -> {
+                    imageApplyFilter = result.bitmap
+                    result.bitmap?.let { lightingFilterController.updateImage(it) }
+                }
+
+                is ImageFilterResult.Canceled -> {
+//                    Toast.makeText(this, "Người dùng đã huỷ crop", Toast.LENGTH_SHORT).show()
+                }
+
+                is ImageFilterResult.Error -> {
+                    Toast.makeText(this, "Lỗi crop: ${result.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
         cropImageIncludeController = CropImageIncludeController(
             activity = this,
             imageToCrop = imageApplyFilter,
             binding = binding,
-        ) { croppedBitmap ->
-            imageApplyFilter = croppedBitmap
-            binding.photoEditorView.source.setImageBitmap(croppedBitmap)
-            lightingFilterController.updateImage(croppedBitmap)
-            beautyFilterController.updateImage(croppedBitmap)
-            imgCrop?.let{cropImageIncludeController.updateImage(it)}
+        ) { result ->
+            when (result) {
+                is CropResult.Success -> {
+                    imageApplyFilter = result.bitmap
+                    binding.photoEditorView.source.setImageBitmap(resizeBitmapToView(result.bitmap, binding.photoEditorView.source))
+                    lightingFilterController.updateImage(result.bitmap)
+                    beautyFilterController.updateImage(result.bitmap)
+                    imgCrop?.let { cropImageIncludeController.updateImage(it) }
+                    mEditingToolsAdapter.resetSelection()
+                }
+
+                is CropResult.Canceled -> {
+                    Toast.makeText(this, "Người dùng đã huỷ crop", Toast.LENGTH_SHORT).show()
+                }
+
+                is CropResult.Error -> {
+                    Toast.makeText(this, "Lỗi crop: ${result.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
             mEditingToolsAdapter.resetSelection()
         }
-
         val llmTools = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rvConstraintTools.layoutManager = llmTools
         binding.rvConstraintTools.adapter = mEditingToolsAdapter
@@ -260,10 +302,10 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
         imgSave.setOnClickListener(this@EditImageActivity)
         imgClose.setOnClickListener(this@EditImageActivity)
         imgShare.setOnClickListener(this@EditImageActivity)
-        tvDoneFilter.setOnClickListener {
-            mEditingToolsAdapter.resetSelection()
-            showFilter(false)
-        }
+//        imgDoneFilter.setOnClickListener {
+//            mEditingToolsAdapter.resetSelection()
+//            showFilter(false)
+//        }
     }
 
     override fun onEditTextChangeListener(
@@ -498,7 +540,6 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
                     withTextSize(mTextSize)
                     withTextFont(typeface)
                     withGravity(gravity)
-                    withTextFlag(Paint.UNDERLINE_TEXT_FLAG)
                 }
                 mPhotoEditor.addText(inputText, styleBuilder)
                 mEditingToolsAdapter.resetSelection()
@@ -581,8 +622,6 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
         val rvFilterId: Int = binding.rvFilterView.id
 
         if (isVisible) {
-            binding.tvDoneFilter.visible()
-            binding.imgSave.gone()
             mConstraintSet.clear(rvFilterId, ConstraintSet.START)
             mConstraintSet.connect(
                 rvFilterId, ConstraintSet.START,
@@ -593,8 +632,6 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
                 ConstraintSet.PARENT_ID, ConstraintSet.END
             )
         } else {
-            binding.tvDoneFilter.gone()
-            binding.imgSave.visible()
             mConstraintSet.connect(
                 rvFilterId, ConstraintSet.START,
                 ConstraintSet.PARENT_ID, ConstraintSet.END

@@ -2,30 +2,30 @@ package com.example.editphotovideo.ui.removebackgr
 
 import android.app.Activity
 import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.Matrix
-import android.media.ExifInterface
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
-import android.view.MotionEvent
-import android.view.View
+import android.view.Gravity
 import android.widget.FrameLayout
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.RecyclerView
+import com.ahmadhamwi.tabsync.TabbedListMediator
 import com.bumptech.glide.Glide
 import com.example.editphotovideo.base.BaseActivity
 import com.example.editphotovideo.databinding.ActivityRemoveBackGrBinding
 import com.example.editphotovideo.library.removebackgr.RemoveBg
-import com.example.editphotovideo.ui.main.MainActivity
+import com.example.editphotovideo.ui.main.template.model.TemplateType
+import com.example.editphotovideo.ui.main.template.model.getAllSection
+import com.example.editphotovideo.ui.main.template.model.getAllTemplate
 import com.example.editphotovideo.utils.ImageUtils.getCorrectlyOrientedBitmap
 import com.example.editphotovideo.utils.ImageUtils.setUpZoomSettings
 import com.example.editphotovideo.utils.getBitmapFromAsset
+import com.example.editphotovideo.widget.getTagDebug
 import com.example.editphotovideo.widget.gone
 import com.example.editphotovideo.widget.tap
 import com.example.editphotovideo.widget.visible
@@ -44,6 +44,8 @@ class RemoveBackGrActivity : BaseActivity<ActivityRemoveBackGrBinding>() {
     private var imgUri: Uri? = null
     private val removeBg by lazy { RemoveBg(context = this) }
     private lateinit var adapter: BackGroundAdapter
+    private lateinit var mediator: TabbedListMediator
+    private var templateId: String? = null
 
     override fun setViewBinding(): ActivityRemoveBackGrBinding {
         return ActivityRemoveBackGrBinding.inflate(layoutInflater)
@@ -58,6 +60,9 @@ class RemoveBackGrActivity : BaseActivity<ActivityRemoveBackGrBinding>() {
         }
 
     override fun initView() {
+        Log.d(getTagDebug(), ",sizeeeee ${getAllTemplate().size},,,,kkkkkk ${getAllTemplate()}")
+        templateId = intent.getStringExtra("templateId")
+        Log.d(getTagDebug(), ",iddddddd22222 $templateId")
         setUpZoomSettings(binding.imageView)
         setUpRemoveBg()
         setUpRecyclerView()
@@ -83,26 +88,59 @@ class RemoveBackGrActivity : BaseActivity<ActivityRemoveBackGrBinding>() {
     }
 
     private fun setUpRecyclerView() = binding.apply {
+        val sectionTypes = TemplateType.values()
+        val listTemplates = getAllTemplate()
+        getAllSection(this@RemoveBackGrActivity).forEach {
+            tabLayout.addTab(tabLayout.newTab().setText(it.title.capitalize()))
+        }
         val layoutManager =
-            LinearLayoutManager(this@RemoveBackGrActivity, LinearLayoutManager.HORIZONTAL, false)
+            LinearLayoutManager(this@RemoveBackGrActivity, RecyclerView.HORIZONTAL, false)
         rcvBackground.layoutManager = layoutManager
+
         adapter = BackGroundAdapter(
             context = this@RemoveBackGrActivity,
-            list = BackGroundAdapter.backgrList
-        ) { imgString, position ->
-            if (position == 0) {
+            list = listTemplates
+        ) { list, position ->
+            val bitmap = if (position == 0) {
                 selectImageBackgr()
-            } else {
-                val fromAsset = getBitmapFromAsset(this@RemoveBackGrActivity, imgString)
+                null
+            } else getBitmapFromAsset(this@RemoveBackGrActivity, list.imgbackgr)
+
+            bitmap?.let {
                 Glide.with(this@RemoveBackGrActivity)
-                    .load(fromAsset)
+                    .load(it)
                     .into(imgBackground)
             }
-
         }
+
         rcvBackground.adapter = adapter
-//        rcvBackground.setHasFixedSize(true)
-//        rcvBackground.setItemViewCacheSize(BackGroundAdapter.backgrList.size)
+        val selectedTemplateId = templateId?.toIntOrNull()
+        selectedTemplateId?.let { id ->
+            val index = listTemplates.indexOfFirst { it.id == id }
+            if (index != -1) {
+                rcvBackground.scrollToPosition(index)
+                val bitmap =
+                    getBitmapFromAsset(this@RemoveBackGrActivity, listTemplates[index].imgbackgr)
+                bitmap?.let {
+                    Glide.with(this@RemoveBackGrActivity)
+                        .load(it)
+                        .into(imgBackground)
+                }
+                val section = listTemplates[index].sectionType
+                val tabIndex = TemplateType.values().indexOf(section)
+                if (tabIndex != -1) {
+                    binding.tabLayout.getTabAt(tabIndex)?.select()
+                }
+            }
+            adapter.setSelectedId(id)
+        }
+
+        val indices = sectionTypes.map { type ->
+            listTemplates.indexOfFirst { it.sectionType == type }
+        }
+        mediator = TabbedListMediator(binding.rcvBackground, binding.tabLayout, indices, false)
+        mediator.attach()
+
     }
 
     private fun setUpRemoveBg() = binding.apply {
@@ -154,7 +192,7 @@ class RemoveBackGrActivity : BaseActivity<ActivityRemoveBackGrBinding>() {
             }
     }
 
-    private fun saveImageRemoveToFile(frameLayout:FrameLayout): String? {
+    private fun saveImageRemoveToFile(frameLayout: FrameLayout): String? {
 
         val bitmap =
             Bitmap.createBitmap(frameLayout.width, frameLayout.height, Bitmap.Config.ARGB_8888)

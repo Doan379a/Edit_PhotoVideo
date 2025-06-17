@@ -5,7 +5,7 @@
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#101014"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <RelativeLayout
@@ -27,47 +27,36 @@
             android:layout_marginStart="0dp"
             android:paddingHorizontal="@dimen/_15sdp"
             android:paddingVertical="@dimen/_10sdp"
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/ic_back"
+            app:tint="#A0E12E" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:gravity="center"
+            android:layout_toEndOf="@+id/imgClose"
+            android:fontFamily="@font/polly_bold_700"
+            android:gravity="start"
             android:includeFontPadding="false"
-            android:paddingStart="@dimen/_10sdp"
-            android:text="@string/edit"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_20ssp" />
-
-        <ImageView
-            android:id="@+id/imgSave"
-            style="@style/SelectableItemBackground"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:paddingHorizontal="@dimen/_15sdp"
-            android:paddingVertical="@dimen/_10sdp"
-            android:src="@drawable/ic_dowload" />
+            android:text="@string/enhance_beauty"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_17ssp" />
 
         <TextView
-            android:id="@+id/tv_done_filter"
+            android:id="@+id/imgSave"
             style="@style/SelectableItemBackground"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_25sdp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:drawableStart="@drawable/ic_done"
-            android:gravity="center_vertical"
-            android:includeFontPadding="false"
-            android:paddingHorizontal="@dimen/_15sdp"
-            android:paddingVertical="@dimen/_10sdp"
-            android:text="@string/done"
-            android:textColor="#FF8594"
-            android:textSize="@dimen/_13ssp"
-            android:visibility="gone" />
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:background="@drawable/btn_done_button"
+            android:fontFamily="@font/polly_bold_700"
+            android:gravity="center"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp" />
+
 
     </RelativeLayout>
 
@@ -76,6 +65,8 @@
         android:id="@+id/photoEditorView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="#303030"
         app:layout_constraintBottom_toTopOf="@+id/layout_undo_redo"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -87,10 +78,10 @@
         android:id="@+id/layout_undo_redo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingVertical="@dimen/_30sdp"
+        android:paddingTop="@dimen/_75sdp"
+        android:paddingBottom="@dimen/_15sdp"
         app:layout_constraintBottom_toTopOf="@+id/rvConstraintTools"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
             android:id="@+id/imgUndo"
@@ -123,20 +114,20 @@
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:src="@drawable/ic_gallery"
-        app:layout_constraintBottom_toTopOf="@+id/rvConstraintTools"
+        app:layout_constraintBottom_toBottomOf="@+id/imgCamera"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/photoEditorView" />
+        app:layout_constraintTop_toTopOf="@+id/imgCamera" />
 
     <ImageView
         android:id="@+id/imgCamera"
         style="@style/SelectableItemBackground"
         android:layout_width="@dimen/top_tool_icon_width"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_15sdp"
         android:padding="8dp"
         android:src="@drawable/ic_camera_edit"
-        app:layout_constraintBottom_toTopOf="@+id/rvConstraintTools"
-        app:layout_constraintStart_toEndOf="@id/imgGallery"
-        app:layout_constraintTop_toBottomOf="@+id/photoEditorView" />
+        app:layout_constraintBottom_toBottomOf="@+id/layout_undo_redo"
+        app:layout_constraintStart_toEndOf="@id/imgGallery" />
 
     <ImageView
         android:id="@+id/imgShare"
@@ -145,6 +136,7 @@
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:src="@drawable/ic_share_edit"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/layout_undo_redo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/photoEditorView" />
@@ -154,10 +146,10 @@
         layout="@layout/include_crop_image"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/layout_undo_redo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_header" />
 
@@ -174,17 +166,20 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:listitem="@layout/row_editing_tools" />
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvFilterView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/tool_bg"
+        android:background="#101014"
         android:orientation="horizontal"
+        android:paddingVertical="@dimen/_10sdp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="@+id/layout_undo_redo"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/layout_undo_redo"
         tools:listitem="@layout/row_filter_view" />
+
 
     <include
         android:id="@+id/include_Lighting"
@@ -192,7 +187,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/rvConstraintTools" />
+        app:layout_constraintBottom_toTopOf="@+id/rvConstraintTools" />
 
     <include
         android:id="@+id/include_beauty"
@@ -200,5 +195,5 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/rvConstraintTools" />
+        app:layout_constraintBottom_toTopOf="@+id/rvConstraintTools" />
 </androidx.constraintlayout.widget.ConstraintLayout>

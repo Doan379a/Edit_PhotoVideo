@@ -4,52 +4,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:layout_margin="5dp"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:layout_marginEnd="@dimen/_8sdp"
+    android:gravity="center">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_boder"
-        android:layout_width="@dimen/_60sdp"
-        android:layout_height="@dimen/_60sdp"
-        android:elevation="0dp"
-        app:cardElevation="0dp"
-        app:cardBackgroundColor="@android:color/transparent"
-        android:background="@android:color/transparent"
-        app:cardCornerRadius="16dp">
+        android:layout_width="@dimen/_55sdp"
+        android:layout_height="@dimen/_55sdp"
+        android:layout_gravity="center_vertical"
+        app:cardBackgroundColor="#939393"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/card"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:elevation="0dp"
-            app:cardElevation="0dp"
-            android:layout_margin="2dp"
-            app:cardBackgroundColor="@android:color/transparent"
+            android:layout_gravity="center"
+            android:layout_margin="1dp"
             android:background="@android:color/transparent"
-            app:cardCornerRadius="16dp">
+            android:elevation="0dp"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/imgFilterView"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                tools:src="@tools:sample/backgrounds/scenic" />
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imgFilterView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@tools:sample/backgrounds/scenic" />
+
+
+                <TextView
+                    android:id="@+id/txtFilterName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="#90000000"
+                    android:fontFamily="@font/polly_regular_400"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:padding="4dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/_8ssp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imgFilterView"
+                    app:layout_constraintEnd_toEndOf="@+id/imgFilterView"
+                    app:layout_constraintStart_toStartOf="@+id/imgFilterView"
+                    tools:text="@tools:sample/full_names" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>
-
-
-    <TextView
-        android:id="@+id/txtFilterName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_5sdp"
-
-        android:gravity="center"
-        android:includeFontPadding="false"
-        android:padding="4dp"
-        android:textAllCaps="false"
-        android:textColor="#585858"
-        android:textSize="@dimen/_12ssp"
-        tools:text="@tools:sample/full_names" />
-
 </LinearLayout>

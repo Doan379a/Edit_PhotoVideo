@@ -1,28 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/img_backgr_home">
 
-    <Button
-        android:id="@+id/btn_remove_backgr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="remove background"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btn_edit_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Edit image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_remove_backgr"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/image_background"
+    <RelativeLayout
+        android:id="@+id/layout_header"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/img_setting"
+            android:fontFamily="@font/prata_regular_400"
+            android:includeFontPadding="false"
+            android:paddingStart="@dimen/_15sdp"
+            android:text="Photo &amp; Video Edit"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_20ssp" />
+
+        <ImageView
+            android:id="@+id/img_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:padding="@dimen/_10sdp"
+            android:src="@drawable/ic_setting2" />
+    </RelativeLayout>
+
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_20sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_header" />
+
+    <LinearLayout
+        android:id="@+id/ll_footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_25sdp"
+        android:paddingHorizontal="@dimen/_15sdp"
+        android:background="@drawable/bg_tab_home"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/tv_editor"
+            style="@style/SelectableItemBackground"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_editor"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/polly_regular_400"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:paddingVertical="@dimen/_5sdp"
+            android:text="@string/editor"
+            android:textColor="#A0E12E"
+            android:textSize="@dimen/_10ssp" />
+
+        <TextView
+            android:id="@+id/tv_Template"
+            style="@style/SelectableItemBackground"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_template"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/polly_regular_400"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:paddingVertical="@dimen/_5sdp"
+            android:text="@string/template"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10ssp" />
+
+        <TextView
+            android:id="@+id/tv_My_folder"
+            style="@style/SelectableItemBackground"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_my_folder"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/polly_regular_400"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:paddingVertical="@dimen/_5sdp"
+            android:text="@string/my_folder"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10ssp" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
