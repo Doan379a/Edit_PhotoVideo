@@ -1,0 +1,38 @@
+{
+    "logs": [
+        {
+            "outputFile": "gun0912.tedimagepicker.test.tedimagepicker-mergeDebugAndroidTestResources-29:/values-land/values-land.xml",
+            "map": [
+                {
+                    "source": "/Users/macbook/.gradle/caches/transforms-4/f1ca32516a8c56a6d51ada8687883bf6/transformed/appcompat-1.3.1/res/values-land/values-land.xml",
+                    "from": {
+                        "startLines": "2,3,4",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,125,196",
+                        "endColumns": "69,70,67",
+                        "endOffsets": "120,191,259"
+                    }
+                },
+                {
+                    "source": "/Users/macbook/.gradle/caches/transforms-4/3abf6743d0fad06b168bbded747e2ebb/transformed/material-1.1.0-alpha07/res/values-land/values-land.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6",
+                        "startColumns": "4,4,4,4,4",
+                        "startOffsets": "55,128,198,270,340",
+                        "endLines": "2,3,4,5,9",
+                        "endColumns": "72,69,71,69,10",
+                        "endOffsets": "123,193,265,335,507"
+                    },
+                    "to": {
+                        "startLines": "5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4",
+                        "startOffsets": "264,337,407,479,549",
+                        "endLines": "5,6,7,8,12",
+                        "endColumns": "72,69,71,69,10",
+                        "endOffsets": "332,402,474,544,716"
+                    }
+                }
+            ]
+        }
+    ]
+}

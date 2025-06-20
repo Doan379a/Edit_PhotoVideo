@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "gun0912.tedimagepicker.test.tedimagepicker-mergeDebugAndroidTestResources-29:/values-sw360dp-v13/values-sw360dp-v13.xml",
+            "map": [
+                {
+                    "source": "/Users/macbook/.gradle/caches/transforms-4/3abf6743d0fad06b168bbded747e2ebb/transformed/material-1.1.0-alpha07/res/values-sw360dp-v13/values-sw360dp-v13.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,109",
+                        "endColumns": "53,60",
+                        "endOffsets": "104,165"
+                    }
+                }
+            ]
+        }
+    ]
+}

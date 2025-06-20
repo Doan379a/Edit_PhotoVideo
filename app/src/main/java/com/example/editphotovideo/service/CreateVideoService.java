@@ -19,7 +19,6 @@ import android.provider.MediaStore.Audio.Media;
 import android.text.TextUtils;
 import android.util.Log;
 
-
 import com.example.editphotovideo.R;
 import com.example.editphotovideo.libffmpeg.FileUtils;
 import com.example.editphotovideo.libffmpeg.Util;
@@ -41,7 +40,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CreateVideoService extends IntentService {
-    public static final int NOTIFICATION_ID = 1001;
     MyApplication application;
     private File audioFile;
     private File audioIp;
@@ -118,7 +116,6 @@ public class CreateVideoService extends IntentService {
                         line = bufferedReader.readLine();
                         Log.e("process", "process_" + line + "");
                         this.mBuilder.setProgress(100, ((int) ((75.0f * ((float) durationToprogtess(line + ""))) / 100.0f)) + 25, false);
-                        this.mNotifyManager.notify(1001, this.mBuilder.build());
                     }
                 }
             }
@@ -128,7 +125,6 @@ public class CreateVideoService extends IntentService {
             Util.destroyProcess(process);
         }
         this.mBuilder.setContentText("Video created :" + FileUtils.getDuration(System.currentTimeMillis() - startTime)).setProgress(0, 0, false);
-        this.mNotifyManager.notify(1001, this.mBuilder.build());
         try {
             long fileSize = new File(videoPath).length();
             String artist = getResources().getString(R.string.app_name);
@@ -147,7 +143,6 @@ public class CreateVideoService extends IntentService {
             e4.printStackTrace();
         }
         this.application.clearAllSelection();
-      //  buildNotification(videoPath);
         final String str = videoPath;
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             public void run() {
@@ -166,20 +161,6 @@ public class CreateVideoService extends IntentService {
         stopSelf();
     }
 
-//    @SuppressLint({"WrongConstant"})
-//    private void buildNotification(String videoPath) {
-//        Intent notificationIntent = new Intent(this, PlayVideoFromMyCreationActivity.class);
-//        notificationIntent.setFlags(268435456);
-//        notificationIntent.addFlags(67108864);
-//        notificationIntent.putExtra("video_path", videoPath);
-//        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 268435456);
-//        Resources res = getResources();
-//        Builder builder = new Builder(this);
-//        builder.setContentIntent(contentIntent).setSmallIcon(R.mipmap.ic_launcher).setLargeIcon(BitmapFactory.decodeResource(res, R.mipmap.ic_launcher)).setWhen(System.currentTimeMillis()).setAutoCancel(true).setContentTitle(getResources().getString(R.string.app_name)).setContentText("Video Created");
-//        Notification n = builder.build();
-//        n.defaults |= -1;
-//        this.mNotifyManager.notify(1001, n);
-//    }
 
     private int durationToprogtess(String input) {
         int progress = 0;
@@ -257,12 +238,15 @@ public class CreateVideoService extends IntentService {
         return "video_" + new SimpleDateFormat("yyyy_MMM_dd_HH_mm_ss", Locale.ENGLISH).format(new Date()) + ".mp4";
     }
 
-    public static void appendVideoLog(String text) {
+    public void appendVideoLog(String text) {
         if (!FileUtils.TEMP_DIRECTORY.exists()) {
             FileUtils.TEMP_DIRECTORY.mkdirs();
         }
-        File logFile = new File(FileUtils.TEMP_DIRECTORY, "video.txt");
+        File logFile = new File(getExternalFilesDir(null), "video.txt");
+
         Log.d("FFMPEG", "File append " + text);
+        Log.d("TEMP_PATHVideoLog", FileUtils.TEMP_DIRECTORY.getAbsolutePath());
+
         if (!logFile.exists()) {
             try {
                 logFile.createNewFile();
@@ -280,11 +264,13 @@ public class CreateVideoService extends IntentService {
         }
     }
 
-    public static void appendAudioLog(String text) {
+    public void appendAudioLog(String text) {
         if (!FileUtils.TEMP_DIRECTORY.exists()) {
             FileUtils.TEMP_DIRECTORY.mkdirs();
         }
-        File logFile = new File(FileUtils.TEMP_DIRECTORY, "audio.txt");
+      //  File logFile = new File(getCacheDir(), ".temp");
+        File logFile = new File(getExternalFilesDir(null), "audio.txt");
+        Log.d("TEMP_PATHAudioLog", FileUtils.TEMP_DIRECTORY.getAbsolutePath());
         if (!logFile.exists()) {
             try {
                 logFile.createNewFile();

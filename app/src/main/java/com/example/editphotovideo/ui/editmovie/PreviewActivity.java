@@ -35,6 +35,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog.Builder;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -59,6 +60,7 @@ import com.example.editphotovideo.service.CreateVideoService;
 import com.example.editphotovideo.service.ImageCreatorService;
 import com.example.editphotovideo.ui.editmovie.themes.THEMES;
 import com.example.editphotovideo.ui.main.MainActivity;
+import com.example.editphotovideo.ui.songedit.SongEditActivity;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback;
 
@@ -73,7 +75,7 @@ import java.util.List;
 import gun0912.tedimagepicker.builder.TedImagePicker;
 
 
-public class PreviewActivity extends AppCompatActivity implements OnClickListener, OnSeekBarChangeListener {
+public class PreviewActivity extends AppCompatActivity implements OnClickListener, OnSeekBarChangeListener, OnProgressReceiver {
     private final int REQUEST_PICK_AUDIO = 101;
     private final int REQUEST_PICK_EDIT = 103;
     private final int REQUEST_PICK_IMAGES = 102;
@@ -106,9 +108,9 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
     private MoviewThemeAdapter themeAdapter;
     private TextView tvEndTime;
     private TextView tvTime;
-
+    private String videoPath;
     private ArrayList<Uri> selectedUris;
-
+private AppCompatImageView ivDone;
     class C05853 implements Runnable {
         C05853() {
         }
@@ -367,6 +369,7 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
         Exception e;
         MusicData musicData = this.application.getMusicData();
         if (musicData != null) {
+            Log.d("reinitMusic", String.valueOf(musicData));
             this.mPlayer = MediaPlayer.create(this, Uri.parse(musicData.track_data));
             this.mPlayer.setLooping(true);
             try {
@@ -422,8 +425,7 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
         this.rvThemes = (RecyclerView) findViewById(R.id.rvThemes);
         this.rvDuration = (RecyclerView) findViewById(R.id.rvDuration);
         this.rvFrame = (RecyclerView) findViewById(R.id.rvFrame);
-//        getSupportActionBar().setHomeButtonEnabled(true);
-//        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        this.ivDone = (AppCompatImageView) findViewById(R.id.iv_done_preview);
     }
 
     private void init() {
@@ -467,6 +469,7 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
         findViewById(R.id.ibAddMusic).setOnClickListener(this);
         findViewById(R.id.ibAddDuration).setOnClickListener(this);
         findViewById(R.id.ibEditMode).setOnClickListener(this);
+        findViewById(R.id.iv_done_preview).setOnClickListener(this);
     }
 
     private synchronized void displayImage() {
@@ -529,12 +532,6 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
             this.application.isEditModeEnable = true;
             this.lastData.clear();
             this.lastData.addAll(this.arrayList);
-//            List<Uri> selectedUris = new ArrayList<>();
-//            for (ImageData data : application.getSelectedImages()) {
-//                if (data.getImagePath() != null) {
-//                    selectedUris.add(Uri.fromFile(new File(data.getImagePath())));
-//                }
-//            }
             TedImagePicker.with(PreviewActivity.this)
                     .selectedUri(selectedUris)
                     .startMultiImage(uriList -> {
@@ -548,11 +545,8 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
                             data.setImageCount(1);
                             application.addSelectedImage(data);
                         }
-                            resetPreview();
+                        resetPreview();
                     });
-
-//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//            startActivityForResult (intent, 102);
         } else if (id == R.id.ibAddMusic) {
             this.flLoader.setVisibility(View.GONE);
             this.id = R.id.ibAddMusic;
@@ -570,7 +564,7 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
             } else {
                 this.lockRunnable.pause();
             }
-        }else if (id == R.id.iv_done){
+        } else if (id == R.id.iv_done_preview) {
             loadProgress();
         }
     }
@@ -737,13 +731,13 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
             this.llEdit.setVisibility(View.VISIBLE);
             this.application.isEditModeEnable = false;
         } else {
-          //  onBackDialog();
+              onBackDialog();
         }
     }
 
-//    private void onBackDialog() {
-//        new Builder(this, R.style.Theme_MovieMaker_AlertDialog).setTitle((int) R.string.app_name).setMessage((CharSequence) "Are you sure ? \nYour video is not prepared yet!").setPositiveButton((CharSequence) "Go Back", new C05875()).setNegativeButton((CharSequence) "Stay here", null).create().show();
-//    }
+    private void onBackDialog() {
+        new Builder(this, R.style.Theme_MovieMaker_AlertDialog).setTitle((int) R.string.app_name).setMessage((CharSequence) "Are you sure ? \nYour video is not prepared yet!").setPositiveButton((CharSequence) "Go Back", new C05875()).setNegativeButton((CharSequence) "Stay here", null).create().show();
+    }
 
     public void setTheme() {
         if (this.application.isFromSdCardAudio) {
@@ -786,17 +780,32 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
     }
 
     private void loadSongSelection() {
-        // startActivityForResult(new Intent(this, SongEditActivity.class), 101);
+        startActivityForResult(new Intent(this, SongEditActivity.class), 101);
     }
 
     @SuppressLint({"WrongConstant"})
     private void loadProgress() {
         this.handler.removeCallbacks(this.lockRunnable);
         startService(new Intent(this, CreateVideoService.class));
+
 //        Intent intent2 = new Intent(this.application, ProgressActivity.class);
 //        intent2.setFlags(268468224);
 //        startActivity(intent2);
-        finish();
+    }
+
+    @Override
+    public void onImageProgressFrameUpdate(float f) {
+
+    }
+
+    public void onProgressFinish(String videoPath) {
+        this.videoPath = videoPath;
+        Log.d("loadProgress", videoPath);
+    }
+
+    @Override
+    public void onVideoProgressFrameUpdate(float f) {
+
     }
 
 
