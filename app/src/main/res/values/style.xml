@@ -17,6 +17,15 @@
         <!--        <item name="colorAccent">@color/colorAccent</item>-->
         <item name="android:windowFullscreen">true</item>
     </style>
-
-
+    <style name="Theme.MovieMaker.AlertDialog" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:textColorPrimary">#ff333333</item>
+        <item name="android:windowAnimationStyle">@style/PauseDialogAnimation</item>
+        <item name="colorAccent">#fff44336</item>
+        <item name="colorPrimary">#fff44336</item>
+        <item name="colorPrimaryDark">#fff44336</item>
+    </style>
+    <style name="PauseDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/anim_scale_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_scale_out</item>
+    </style>
 </resources>

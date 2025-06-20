@@ -560,13 +560,20 @@ public class FileUtils {
         }
     }
 
+
+
     static File getFilesDirectory(Context context) {
         return context.getFilesDir();
     }
 
     public static String getFFmpeg(Context context) {
+        File ffmpeg = new File(getFilesDirectory(context), ffmpegFileName);
+        Log.d("FFMPEG_PATH", ffmpeg.getAbsolutePath());
+        Log.d("FFMPEG_EXECUTABLE", String.valueOf(ffmpeg.canExecute()));
         return new StringBuilder(String.valueOf(getFilesDirectory(context).getAbsolutePath())).append(File.separator).append(ffmpegFileName).toString();
     }
+
+
 
     static String getFFmpeg(Context context, Map<String, String> environmentVars) {
         String ffmpegCommand = "";

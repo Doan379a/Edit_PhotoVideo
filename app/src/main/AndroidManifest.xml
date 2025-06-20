@@ -1,15 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32"/>
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+            <data android:mimeType="image/*" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+            <data android:mimeType="video/*" />
+        </intent>
+
+        <package android:name="com.facebook.katana" />
+        <package android:name="com.facebook.orca" />
+        <package android:name="com.whatsapp" />
+        <package android:name="com.instagram.android" />
+        <package android:name="com.ss.android.ugc.trill" />
+        <package android:name="com.zhiliaoapp.musically" />
+        <package android:name="com.google.android.youtube" />
+    </queries>
+
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
+
+
     <application
-        android:name="com.example.editphotovideo.ui.editmovie.MyApplication"
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -18,7 +43,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EditPhotoVideo"
-        tools:targetApi="31" >
+        tools:targetApi="31">
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@xml/file_paths_edit_image" />
@@ -26,7 +51,7 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.EditPhotoVideo" >
+            android:theme="@style/Theme.EditPhotoVideo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,7 +65,7 @@
             android:name=".ui.removebackgr.FreeHandCropperActivity"
             android:theme="@style/Theme.EditPhotoVideo" />
         <activity
-            android:name=".ui.editor.EditImageActivity"
+            android:name=".ui.editorimage.EditImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.EditPhotoVideo" />
         <activity
@@ -56,14 +81,40 @@
             android:name=".ui.editmovie.PreviewActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.songedit.SongEditActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.save.SaveImageActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mywork.MyWorkActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.tools.ToolsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.tools.compressvideo.CompressVideoActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.tools.trim.TrimActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
         <service android:name="com.example.editphotovideo.service.ImageCreatorService" />
         <service android:name="com.example.editphotovideo.service.CreateVideoService" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true"
-            tools:replace="android:authorities" >
+            tools:replace="android:authorities">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths_image"

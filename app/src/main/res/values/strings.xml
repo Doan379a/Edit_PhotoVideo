@@ -467,6 +467,34 @@
     <string name="neon">Neon</string>
     <string name="wedding">Wedding</string>
     <string name="select_template">Select template</string>
-
+    <string name="progress_dialog_saving">Saving ringtone...</string>
+    <string name="alert_title_failure">Save Failed</string>
+    <string name="too_small_error">The file is too small to save.</string>
+    <string name="alert_ok_button">OK</string>
+    <string name="artist_name">Unknown Artist</string>
+    <string name="write_error">Error writing file</string>
+    <string name="no_space_error">No space left on device</string>
+    <string name="remove_bg">Remove BG</string>
+    <string name="saved_image">Saved Image</string>
+    <string name="my_work">My Work</string>
+    <string name="new_project">New project</string>
+    <string name="video">Video</string>
+    <string name="picture">Picture</string>
+    <string name="share_image">Share Image</string>
+    <string name="share_video">Share Video</string>
+    <string name="share">Share</string>
+    <string name="compress_video">Compress \nVideo</string>
+    <string name="speed">Speed</string>
+    <string name="extract_audio">Extract Audio</string>
+    <string name="trim">Trim</string>
+    <string name="reverse_video">Reverse Video</string>
+    <string name="compress_video2">Compress Video</string>
+    <string name="compress">Compress</string>
+    <string name="quality">Quality:</string>
+    <string name="approximate_size">Approximate Size:</string>
+    <string name="start">Start</string>
+    <string name="low">Low</string>
+    <string name="medium">Medium</string>
+    <string name="high">High</string>
 
 </resources>

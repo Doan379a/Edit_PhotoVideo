@@ -16,17 +16,17 @@
         app:cardElevation="0dp"
         app:cardBackgroundColor="#939393"
         android:background="@android:color/transparent"
-        app:cardCornerRadius="16dp">
+        app:cardCornerRadius="10dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="0dp"
             app:cardElevation="0dp"
-            android:layout_margin="2dp"
+            android:layout_margin="1dp"
             app:cardBackgroundColor="@android:color/transparent"
             android:background="@android:color/transparent"
-            app:cardCornerRadius="16dp">
+            app:cardCornerRadius="10dp">
 
             <ImageView
                 android:id="@+id/imgFilterView"

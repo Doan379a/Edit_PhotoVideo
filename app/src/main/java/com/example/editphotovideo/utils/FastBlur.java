@@ -13,7 +13,7 @@ import android.renderscript.ScriptIntrinsicBlur;
 import androidx.core.view.MotionEventCompat;
 
 
-import com.example.editphotovideo.ui.editmovie.MyApplication;
+import com.example.editphotovideo.MyApplication;
 
 import java.lang.reflect.Array;
 

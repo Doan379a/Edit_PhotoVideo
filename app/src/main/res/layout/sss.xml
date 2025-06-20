@@ -170,7 +170,7 @@
         android:id="@+id/ctl_filter"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/backgr_filiter"
+        android:background="@drawable/bg_filter"
         android:paddingHorizontal="@dimen/_10sdp"
         android:paddingVertical="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_10sdp"

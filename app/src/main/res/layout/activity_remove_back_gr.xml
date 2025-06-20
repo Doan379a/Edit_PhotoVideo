@@ -8,30 +8,51 @@
     android:gravity="center"
     android:orientation="vertical">
 
-
-    <Button
-        android:id="@+id/btnSave"
+    <ImageView
+        android:id="@+id/img_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="save "
+        android:layout_marginTop="10dp"
+        android:padding="@dimen/_10sdp"
+        style="@style/SelectableItemBackground"
+        android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="#A0E12E" />
 
-    <Button
-        android:id="@+id/btn_remove_pain"
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="@font/polly_bold_700"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:text="@string/remove_bg"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_18ssp"
+        app:layout_constraintBottom_toBottomOf="@+id/img_back"
+        app:layout_constraintEnd_toStartOf="@+id/img_dowload"
+        app:layout_constraintStart_toEndOf="@+id/img_back"
+        app:layout_constraintTop_toTopOf="@+id/img_back" />
+
+    <ImageView
+        android:id="@+id/img_dowload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Remove Pain"
-        app:layout_constraintBottom_toBottomOf="@+id/btnSave"
+        android:padding="@dimen/_10sdp"
+        android:src="@drawable/ic_dowload"
+        style="@style/SelectableItemBackground"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnSave" />
+        app:layout_constraintTop_toTopOf="@+id/tv_title" />
 
     <FrameLayout
         android:id="@+id/frame_image"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/tabLayout"
-        app:layout_constraintTop_toBottomOf="@+id/btnSave">
+        android:layout_marginVertical="@dimen/_20sdp"
+        app:layout_constraintBottom_toTopOf="@+id/ctl_footer"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
         <ImageView
             android:id="@+id/img_background"
@@ -59,32 +80,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ctl_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        app:tabIndicatorHeight="2dp"
-        app:tabIndicatorColor="@android:color/holo_green_light"
-        app:tabSelectedTextColor="#ffffff"
-        app:tabTextColor="#888888"
-        app:tabMode="scrollable"
-        app:tabGravity="start"
-        app:layout_constraintBottom_toTopOf="@+id/rcv_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcv_background"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:orientation="horizontal"
-        tools:itemCount="10"
-        tools:listitem="@layout/item_backgr_image"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:background="@android:color/transparent"
+        android:background="@drawable/bg_filter"
+        android:paddingTop="@dimen/_10sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toTopOf="@+id/rcv_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tabGravity="start"
+            app:tabIndicatorColor="@android:color/holo_green_light"
+            app:tabIndicatorHeight="2dp"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="#ffffff"
+            app:tabTextColor="#888888" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:paddingVertical="@dimen/_10sdp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:itemCount="10"
+            tools:listitem="@layout/item_backgr_image" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

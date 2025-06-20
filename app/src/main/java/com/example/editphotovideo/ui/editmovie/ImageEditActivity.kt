@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.editphotovideo.MyApplication
 import com.example.editphotovideo.base.BaseActivity
 import com.example.editphotovideo.databinding.ActivityImageAlbumBinding
 import com.example.editphotovideo.widget.tap

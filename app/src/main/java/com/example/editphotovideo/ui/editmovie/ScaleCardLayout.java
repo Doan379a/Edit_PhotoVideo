@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 
 import androidx.cardview.widget.CardView;
 
+import com.example.editphotovideo.MyApplication;
 import com.example.editphotovideo.R;
 
 

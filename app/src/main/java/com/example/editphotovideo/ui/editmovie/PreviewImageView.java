@@ -5,6 +5,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
+import com.example.editphotovideo.MyApplication;
+
 @SuppressLint({"AppCompatCustomView"})
 public class PreviewImageView extends ImageView {
     public static int mAspectRatioHeight = 360;

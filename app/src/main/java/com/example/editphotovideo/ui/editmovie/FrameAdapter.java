@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.example.editphotovideo.MyApplication;
 import com.example.editphotovideo.R;
 import com.example.editphotovideo.libffmpeg.FileUtils;
 import com.example.editphotovideo.utils.ScalingUtilities;
