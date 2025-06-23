@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
@@ -31,16 +32,13 @@ public class MoviewThemeAdapter extends Adapter<MoviewThemeAdapter.Holder> {
         CheckBox cbSelect;
         private View clickableView;
         private ImageView ivThumb;
-        private View mainView;
         private TextView tvThemeName;
 
         public Holder(View v) {
             super(v);
-            this.cbSelect = (CheckBox) v.findViewById(R.id.cbSelect);
             this.ivThumb = (ImageView) v.findViewById(R.id.ivThumb);
-            this.tvThemeName = (TextView) v.findViewById(R.id.tvThemeName);
             this.clickableView = v.findViewById(R.id.clickableView);
-            this.mainView = v;
+            this.tvThemeName = (TextView) v.findViewById(R.id.tvThemeName);
         }
     }
 
@@ -57,8 +55,23 @@ public class MoviewThemeAdapter extends Adapter<MoviewThemeAdapter.Holder> {
     public void onBindViewHolder(Holder holder, final int pos) {
         THEMES themes = (THEMES) this.list.get(pos);
         Glide.with(this.application).load(Integer.valueOf(themes.getThemeDrawable())).into(holder.ivThumb);
-        holder.tvThemeName.setText(themes.toString());
-        holder.cbSelect.setChecked(themes == this.application.selectedTheme);
+        if (pos == 0){
+            holder.tvThemeName.setVisibility(View.VISIBLE);
+            holder.tvThemeName.setText(previewActivity.getString(R.string.neon));
+        }
+        if (themes == this.application.selectedTheme) {
+            if (pos == 0) {
+                holder.tvThemeName.setVisibility(View.VISIBLE);
+            } else {
+                holder.tvThemeName.setVisibility(View.GONE);
+            }
+            holder.clickableView.setBackgroundResource(R.drawable.bg_width_radius_green_selected);
+            holder.tvThemeName.setTextColor(ContextCompat.getColor(previewActivity, R.color.color_selector_tab));
+        } else {
+            holder.clickableView.setBackgroundResource(R.drawable.bg_width_radius_green_unselected);
+            holder.tvThemeName.setTextColor(ContextCompat.getColor(previewActivity, R.color.white));
+        }
+
         holder.clickableView.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 if (MoviewThemeAdapter.this.list.get(pos) != MoviewThemeAdapter.this.application.selectedTheme) {

@@ -31,6 +31,9 @@ class ImageEditActivity : BaseActivity<ActivityImageAlbumBinding>() {
         binding.ivDone.tap {
             done()
         }
+        binding.ivBack.tap {
+            finish()
+        }
     }
 
     override fun dataObservable() {
@@ -72,7 +75,7 @@ class ImageEditActivity : BaseActivity<ActivityImageAlbumBinding>() {
 
     private fun setupRecyclerView() {
         binding.rvVideoAlbum.apply {
-            layoutManager = GridLayoutManager(this@ImageEditActivity, 2)
+            layoutManager = GridLayoutManager(this@ImageEditActivity, 3)
             itemAnimator = DefaultItemAnimator()
             imageEditAdapter = ImageEditAdapter(this@ImageEditActivity)
             adapter = imageEditAdapter

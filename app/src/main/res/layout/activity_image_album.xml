@@ -1,55 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+    android:background="@color/black">
 
     <RelativeLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@drawable/maingadient"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        >
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            app:srcCompat="@drawable/ic_back" />
 
         <TextView
             android:id="@+id/toolbar_title"
-            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_gravity="left"
-            android:text="arrange_images"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            />
-        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_toEndOf="@+id/iv_back"
+            android:fontFamily="@font/polly_bold_700"
+            android:text="@string/arrange_photos"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <TextView
             android:id="@+id/iv_done"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:text="arrange_images"
-            app:srcCompat="@drawable/img_chosse"
-            android:textColor="@color/black"
-            android:textSize="18sp"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
             android:layout_alignParentEnd="true"
-            />
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/btn_done_button"
+            android:fontFamily="@font/polly_bold_700"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/next"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
     </RelativeLayout>
 
+    <TextView
+        android:layout_marginTop="15dp"
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/polly_regular_400"
+        android:text="@string/hold_drag_and_drop_to_arrange"
+        android:textColor="@color/color_727272"
+        android:textSize="14sp"
+        android:layout_marginHorizontal="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <com.example.editphotovideo.ui.editmovie.EmptyRecyclerView
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/rvVideoAlbum"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_below="@+id/linearLayout"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <LinearLayout
         android:id="@+id/list_empty"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <TextView
@@ -60,10 +90,10 @@
             android:textColor="#ff999999" />
     </LinearLayout>
 
-<!--    <ImageView-->
-<!--        android:layout_width="fill_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@+id/toolbar"-->
-<!--        android:background="@drawable/stack_drop_shadow"-->
-<!--        android:minHeight="6.0dip" />-->
-</RelativeLayout>
+    <!--    <ImageView-->
+    <!--        android:layout_width="fill_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@+id/toolbar"-->
+    <!--        android:background="@drawable/stack_drop_shadow"-->
+    <!--        android:minHeight="6.0dip" />-->
+</androidx.constraintlayout.widget.ConstraintLayout>

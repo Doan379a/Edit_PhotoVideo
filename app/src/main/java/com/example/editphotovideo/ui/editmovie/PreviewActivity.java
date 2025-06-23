@@ -37,6 +37,7 @@ import androidx.appcompat.app.AlertDialog.Builder;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -76,12 +77,8 @@ import gun0912.tedimagepicker.builder.TedImagePicker;
 
 
 public class PreviewActivity extends AppCompatActivity implements OnClickListener, OnSeekBarChangeListener, OnProgressReceiver {
-    private final int REQUEST_PICK_AUDIO = 101;
-    private final int REQUEST_PICK_EDIT = 103;
-    private final int REQUEST_PICK_IMAGES = 102;
     private MyApplication application;
     private ArrayList<ImageData> arrayList;
-    private BottomSheetBehavior<View> behavior;
     private Float[] duration = new Float[]{Float.valueOf(1.0f), Float.valueOf(1.5f), Float.valueOf(2.0f), Float.valueOf(2.5f), Float.valueOf(3.0f), Float.valueOf(3.5f), Float.valueOf(4.0f)};
     int f21i = 0;
     private View flLoader;
@@ -94,10 +91,9 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
     LayoutInflater inflater;
     boolean isFromTouch = false;
     private ImageView ivFrame;
-    private View ivPlayPause;
+    private ImageView ivPlayPause;
     private ImageView ivPreview;
     ArrayList<ImageData> lastData = new ArrayList();
-    private LinearLayout llEdit;
     private LockRunnable lockRunnable = new LockRunnable();
     private MediaPlayer mPlayer;
     private RecyclerView rvDuration;
@@ -106,11 +102,12 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
     private float seconds = 2.0f;
     private SeekBar seekBar;
     private MoviewThemeAdapter themeAdapter;
-    private TextView tvEndTime;
-    private TextView tvTime;
     private String videoPath;
     private ArrayList<Uri> selectedUris;
-private AppCompatImageView ivDone;
+    private TextView ivDone;
+    private TextView btnAddPhoto, btnTransition, btnMusic,btnDuration,btnFrame,btnEditPhoto,tvTime,tvEndTime;
+    private LinearLayout llMusic,ivDeviceMusic,ivDemoMusic;
+
     class C05853 implements Runnable {
         C05853() {
         }
@@ -210,14 +207,17 @@ private AppCompatImageView ivDone;
             }
 
             public void onAnimationStart(Animation animation) {
-                PreviewActivity.this.ivPlayPause.setVisibility(View.VISIBLE);
+                ivPlayPause.setImageDrawable(
+                        ContextCompat.getDrawable(PreviewActivity.this, R.drawable.ic_pause_white)
+                );
             }
 
             public void onAnimationRepeat(Animation animation) {
             }
 
             public void onAnimationEnd(Animation animation) {
-                PreviewActivity.this.ivPlayPause.setVisibility(View.INVISIBLE);
+
+
             }
         }
 
@@ -226,13 +226,16 @@ private AppCompatImageView ivDone;
             }
 
             public void onAnimationStart(Animation animation) {
-                PreviewActivity.this.ivPlayPause.setVisibility(View.VISIBLE);
+                ivPlayPause.setImageDrawable(
+                        ContextCompat.getDrawable(PreviewActivity.this, R.drawable.ic_play_white)
+                );
             }
 
             public void onAnimationRepeat(Animation animation) {
             }
 
             public void onAnimationEnd(Animation animation) {
+
             }
         }
 
@@ -259,23 +262,17 @@ private AppCompatImageView ivDone;
             this.isPause = false;
             PreviewActivity.this.playMusic();
             PreviewActivity.this.handler.postDelayed(PreviewActivity.this.lockRunnable, (long) Math.round(50.0f * PreviewActivity.this.seconds));
-            Animation animation = new AlphaAnimation(1.0f, 0.0f);
+            Animation animation = new AlphaAnimation(1.0f, 1.0f);
             animation.setDuration(500);
             animation.setFillAfter(true);
             animation.setAnimationListener(new C05921());
             PreviewActivity.this.ivPlayPause.startAnimation(animation);
-            if (PreviewActivity.this.llEdit.getVisibility() != View.VISIBLE) {
-                PreviewActivity.this.llEdit.setVisibility(View.VISIBLE);
                 PreviewActivity.this.application.isEditModeEnable = false;
                 if (ImageCreatorService.isImageComplate) {
                     Intent intent = new Intent(PreviewActivity.this.getApplicationContext(), ImageCreatorService.class);
                     intent.putExtra(ImageCreatorService.EXTRA_SELECTED_THEME, PreviewActivity.this.application.getCurrentTheme());
                     PreviewActivity.this.startService(intent);
                 }
-            }
-            if (PreviewActivity.this.behavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-                PreviewActivity.this.behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-            }
         }
 
         public void pause() {
@@ -420,12 +417,21 @@ private AppCompatImageView ivDone;
         this.seekBar = (SeekBar) findViewById(R.id.sbPlayTime);
         this.tvEndTime = (TextView) findViewById(R.id.tvEndTime);
         this.tvTime = (TextView) findViewById(R.id.tvTime);
-        this.llEdit = (LinearLayout) findViewById(R.id.llEdit);
-        this.ivPlayPause = findViewById(R.id.ivPlayPause);
+     //   this.llEdit = (LinearLayout) findViewById(R.id.llEdit);
+        this.ivPlayPause =(ImageView) findViewById(R.id.ivPlayPause);
         this.rvThemes = (RecyclerView) findViewById(R.id.rvThemes);
         this.rvDuration = (RecyclerView) findViewById(R.id.rvDuration);
         this.rvFrame = (RecyclerView) findViewById(R.id.rvFrame);
-        this.ivDone = (AppCompatImageView) findViewById(R.id.iv_done_preview);
+        this.ivDone = (TextView) findViewById(R.id.iv_done_preview);
+        btnAddPhoto = (TextView) findViewById(R.id.ibAddImages);
+        btnMusic = (TextView) findViewById(R.id.ibAddMusic);
+        btnDuration = (TextView) findViewById(R.id.ibAddDuration);
+        btnTransition = (TextView) findViewById(R.id.ibAddTransition);
+        btnFrame = (TextView) findViewById(R.id.ibAddFrame);
+        btnEditPhoto = (TextView) findViewById(R.id.ibEditMode);
+        llMusic = (LinearLayout) findViewById(R.id.llmusic);
+        ivDeviceMusic = (LinearLayout) findViewById(R.id.iv_deviceMusic);
+        ivDemoMusic = (LinearLayout) findViewById(R.id.iv_demoMusic);
     }
 
     private void init() {
@@ -440,10 +446,8 @@ private AppCompatImageView ivDone;
         this.tvEndTime.setText(String.format("%02d:%02d", new Object[]{Integer.valueOf(total / 60), Integer.valueOf(total % 60)}));
         setUpThemeAdapter();
         this.glide.load(((ImageData) this.application.getSelectedImages().get(0)).imagePath).into(this.ivPreview);
-        this.behavior = BottomSheetBehavior.from(findViewById(R.id.bottom_sheet));
-        this.behavior.setBottomSheetCallback(new C10211());
-        this.behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         setTheme();
+        rvThemes.setVisibility(View.VISIBLE);
     }
 
     private void setUpThemeAdapter() {
@@ -470,6 +474,10 @@ private AppCompatImageView ivDone;
         findViewById(R.id.ibAddDuration).setOnClickListener(this);
         findViewById(R.id.ibEditMode).setOnClickListener(this);
         findViewById(R.id.iv_done_preview).setOnClickListener(this);
+        findViewById(R.id.ibAddFrame).setOnClickListener(this);
+        findViewById(R.id.ibAddTransition).setOnClickListener(this);
+        findViewById(R.id.iv_deviceMusic).setOnClickListener(this);
+        findViewById(R.id.iv_demoMusic).setOnClickListener(this);
     }
 
     private synchronized void displayImage() {
@@ -523,9 +531,11 @@ private AppCompatImageView ivDone;
     @SuppressLint({"WrongConstant"})
     public void onClick(View v) {
         int id = v.getId();
-
         if (id == R.id.ibAddDuration) {
-            this.behavior.setState(3);
+            resetButtonColors();
+            btnDuration.setTextColor(getResources().getColor(R.color.color_selector_tab));
+            btnDuration.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.ic_duration_editvideo,0,0);
+           // this.behavior.setState(3);
         } else if (id == R.id.ibAddImages) {
             this.flLoader.setVisibility(View.GONE);
             MyApplication.isBreak = true;
@@ -548,16 +558,33 @@ private AppCompatImageView ivDone;
                         resetPreview();
                     });
         } else if (id == R.id.ibAddMusic) {
+            resetButtonColors();
+            btnMusic.setTextColor(getResources().getColor(R.color.color_selector_tab));
+            btnMusic.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.ic_music_selected_editvideo,0,0);
+            llMusic.setVisibility(View.VISIBLE);
+        }else if (id == R.id.iv_deviceMusic){
             this.flLoader.setVisibility(View.GONE);
-            this.id = R.id.ibAddMusic;
             loadSongSelection();
-        } else if (id == R.id.ibEditMode) {
+        }else if (id == R.id.iv_demoMusic){
+
+        }
+        else if (id == R.id.ibEditMode) {
             this.flLoader.setVisibility(View.GONE);
             this.application.isEditModeEnable = true;
             this.lockRunnable.pause();
             Intent intent = new Intent(this, ImageEditActivity.class);
             intent.putExtra("extra_from_preview", true);
             startActivityForResult(intent, 103);
+        }else if (id == R.id.ibAddTransition){
+            resetButtonColors();
+            btnTransition.setTextColor(getResources().getColor(R.color.color_selector_tab));
+            btnTransition.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.ic_transition_selected_editvideo,0,0);
+            rvThemes.setVisibility(View.VISIBLE);
+        }else if (id == R.id.ibAddFrame){
+            resetButtonColors();
+            btnFrame.setTextColor(getResources().getColor(R.color.color_selector_tab));
+            btnFrame.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.ic_frame_selected_editvideo,0,0);
+            rvFrame.setVisibility(View.VISIBLE);
         } else if (id == R.id.video_clicker) {
             if (this.lockRunnable.isPause()) {
                 this.lockRunnable.play();
@@ -725,14 +752,17 @@ private AppCompatImageView ivDone;
     }
 
     public void onBackPressed() {
-        if (this.behavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-            this.behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-        } else if (this.llEdit.getVisibility() != View.VISIBLE) {
-            this.llEdit.setVisibility(View.VISIBLE);
-            this.application.isEditModeEnable = false;
-        } else {
+        this.application.isEditModeEnable = false;
+//        if (this.behavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+//            this.behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+//        }
+//        else if (this.llEdit.getVisibility() != View.VISIBLE) {
+//            this.llEdit.setVisibility(View.VISIBLE);
+//            this.application.isEditModeEnable = false;
+//        }
+      //  else {
               onBackDialog();
-        }
+       // }
     }
 
     private void onBackDialog() {
@@ -807,6 +837,23 @@ private AppCompatImageView ivDone;
     public void onVideoProgressFrameUpdate(float f) {
 
     }
+    public void resetButtonColors(){
+             rvFrame.setVisibility(View.GONE);
+             rvThemes.setVisibility(View.GONE);
+             llMusic.setVisibility(View.GONE);
 
+            btnMusic.setTextColor(getResources().getColor(R.color.white));
+            btnDuration.setTextColor(getResources().getColor(R.color.white));
+            btnTransition.setTextColor(getResources().getColor(R.color.white));
+            btnFrame.setTextColor(getResources().getColor(R.color.white));
+
+
+            btnMusic.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_music_editvideo, 0, 0);
+            btnDuration.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_duration_editvideo, 0, 0);
+            btnTransition.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_transition_editvideo, 0, 0);
+            btnFrame.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_frame_editvideo, 0, 0);
+
+
+    }
 
 }

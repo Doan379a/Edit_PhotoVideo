@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 
 import androidx.cardview.widget.CardView;
 
@@ -12,7 +13,7 @@ import com.example.editphotovideo.R;
 
 public class ScaleCardLayout extends CardView {
     public int mAspectRatioHeight = 360;
-    public int mAspectRatioWidth = 640;
+    public int mAspectRatioWidth = 1040;
 
     public ScaleCardLayout(Context context) {
         super(context);
@@ -55,4 +56,6 @@ public class ScaleCardLayout extends CardView {
         }
         super.onMeasure(MeasureSpec.makeMeasureSpec(finalWidth, 1073741824), MeasureSpec.makeMeasureSpec(finalHeight, 1073741824));
     }
+
+
 }
