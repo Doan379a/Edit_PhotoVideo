@@ -15,6 +15,7 @@ import android.provider.MediaStore.Audio.Media;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.arthenica.ffmpegkit.FFmpegKit;
 import com.example.editphotovideo.MyApplication;
 import com.example.editphotovideo.R;
 import com.example.editphotovideo.libffmpeg.FileUtils;
@@ -103,7 +104,8 @@ public class CreateVideoService extends IntentService {
         System.gc();
         Process process = null;
         try {
-            process = Runtime.getRuntime().exec(inputCode);
+//            process = Runtime.getRuntime().exec(inputCode);
+            FFmpegKit.execute("-i input.mp3 -filter:a volume=2 output.mp3");
             while (!Util.isProcessCompleted(process)) {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
                 String line = bufferedReader.readLine();
@@ -209,7 +211,8 @@ public class CreateVideoService extends IntentService {
         Log.e("in_joinAudio1", String.valueOf(this.toatalSecond) + "in_joinAudio1");
         Process process = null;
         try {
-            process = Runtime.getRuntime().exec(new String[]{FileUtils.getFFmpeg(this), "-f", "concat", "-safe", "0", "-i", this.audioIp.getAbsolutePath(), "-c", "copy", "-preset", "ultrafast", "-ac", "2", this.audioFile.getAbsolutePath()});
+//            process = Runtime.getRuntime().exec(new String[]{FileUtils.getFFmpeg(this), "-f", "concat", "-safe", "0", "-i", this.audioIp.getAbsolutePath(), "-c", "copy", "-preset", "ultrafast", "-ac", "2", this.audioFile.getAbsolutePath()});
+            FFmpegKit.execute("-i input.mp3 -filter:a volume=2 output.mp3");
             while (!Util.isProcessCompleted(process)) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
                 String line = reader.readLine();

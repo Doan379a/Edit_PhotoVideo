@@ -105,6 +105,18 @@
             android:name=".ui.tools.trim.TrimActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.tools.speed.SpeedActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.save.SaveVideoActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.tools.reversevideo.ReverseVideoActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <service android:name="com.example.editphotovideo.service.ImageCreatorService" />
         <service android:name="com.example.editphotovideo.service.CreateVideoService" />

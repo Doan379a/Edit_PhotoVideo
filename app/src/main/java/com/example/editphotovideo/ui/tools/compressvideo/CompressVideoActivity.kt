@@ -1,5 +1,6 @@
 package com.example.editphotovideo.ui.tools.compressvideo
 
+import android.content.Intent
 import android.media.MediaMetadataRetriever
 import android.media.MediaMetadataRetriever.METADATA_KEY_DURATION
 import android.media.MediaScannerConnection
@@ -12,20 +13,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.editphotovideo.R
 import com.example.editphotovideo.base.BaseActivity
+import com.example.editphotovideo.data.entity.MediaEntity
+import com.example.editphotovideo.data.entity.MediaType
+import com.example.editphotovideo.data.viewmodel.MediaViewModel
 import com.example.editphotovideo.databinding.ActivityCompressVideoBinding
+import com.example.editphotovideo.ui.save.SaveVideoActivity
 import com.example.editphotovideo.utils.ImageUtils.getRealPathFromUri
 import com.example.editphotovideo.utils.ImageUtils.getTempMovieDir
+import com.example.editphotovideo.utils.ViewUtils.formatTime
 import com.example.editphotovideo.widget.tap
 import com.example.editphotovideo.widget.visible
 import com.hw.videoprocessor.VideoProcessor
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
-
+@AndroidEntryPoint
 class CompressVideoActivity : BaseActivity<ActivityCompressVideoBinding>() {
     private var videoUri: String? = null
     private var isPlaying = false
@@ -35,6 +43,7 @@ class CompressVideoActivity : BaseActivity<ActivityCompressVideoBinding>() {
     private var originWidth: Int = 0
     private var originHeight: Int = 0
     private var originBitrate: Int = 0
+    private  val mediaViewModel: MediaViewModel by viewModels()
 
     override fun setViewBinding(): ActivityCompressVideoBinding {
         return ActivityCompressVideoBinding.inflate(layoutInflater)
@@ -46,7 +55,7 @@ class CompressVideoActivity : BaseActivity<ActivityCompressVideoBinding>() {
             Log.d("URI_VIDEO_INPUT", videoUri!!)
             setupVideoView(videoUri!!)
         }
-        getVideoMetadata(Uri.parse(videoUri!!))
+        getVideoMetadata(Uri.parse(videoUri))
     }
 
     override fun viewListener() {
@@ -111,7 +120,7 @@ class CompressVideoActivity : BaseActivity<ActivityCompressVideoBinding>() {
                         getRealPathFromUri(this@CompressVideoActivity, Uri.parse(videoUri))
                             ?: return@withContext
 
-                    VideoProcessor.processor(applicationContext)
+                    VideoProcessor.processor(this@CompressVideoActivity)
                         .input(realPath)
                         .output(filePath)
                         .outWidth(outWidth)
@@ -130,6 +139,14 @@ class CompressVideoActivity : BaseActivity<ActivityCompressVideoBinding>() {
                             null
                         )
                         Log.d("ItemVideoPlayerFragment", "Video processed: $filePath")
+                        val entity = MediaEntity(
+                            filePath = filePath,
+                            mediaType = MediaType.VIDEO
+                        )
+                        mediaViewModel.insertMedia(entity)
+                        val intent = Intent(this@CompressVideoActivity, SaveVideoActivity::class.java)
+                        intent.putExtra("URI_VIDEO_INPUT", filePath)
+                        startActivity(intent)
                         Toast.makeText(
                             this@CompressVideoActivity,
                             "Xử lý video xong!",
@@ -249,12 +266,7 @@ class CompressVideoActivity : BaseActivity<ActivityCompressVideoBinding>() {
         handler.post(updateRunnable)
     }
 
-    private fun formatTime(millis: Int): String {
-        val totalSeconds = millis / 1000
-        val minutes = totalSeconds / 60
-        val seconds = totalSeconds % 60
-        return String.format("%02d:%02d", minutes, seconds)
-    }
+
 
     override fun onDestroy() {
         super.onDestroy()

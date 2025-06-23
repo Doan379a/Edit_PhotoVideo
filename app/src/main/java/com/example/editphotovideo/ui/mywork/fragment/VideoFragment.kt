@@ -1,5 +1,6 @@
 package com.example.editphotovideo.ui.mywork.fragment
 
+import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,8 @@ import com.example.editphotovideo.base.BaseFragment
 import com.example.editphotovideo.data.entity.MediaType
 import com.example.editphotovideo.data.viewmodel.MediaViewModel
 import com.example.editphotovideo.databinding.FragmentVideoBinding
+import com.example.editphotovideo.ui.save.SaveImageActivity
+import com.example.editphotovideo.ui.save.SaveVideoActivity
 import com.example.editphotovideo.widget.getTagDebug
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,6 +31,9 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>() {
     override fun initView() {
         adapter = MediaAdapter(mutableListOf()) {path->
             Log.d(getTagDebug(), "path: $path")
+            val intent = Intent(requireActivity(), SaveVideoActivity::class.java)
+            intent.putExtra("URI_VIDEO_INPUT", path)
+            startActivity(intent)
         }
         binding.recyclerView.layoutManager = GridLayoutManager(requireActivity(),2)
         binding.recyclerView.adapter = adapter

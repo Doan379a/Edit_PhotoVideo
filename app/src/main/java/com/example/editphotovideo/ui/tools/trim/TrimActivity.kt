@@ -1,19 +1,27 @@
 package com.example.editphotovideo.ui.tools.trim
 
+import android.content.Intent
 import android.media.MediaMetadataRetriever
 import android.media.MediaMetadataRetriever.METADATA_KEY_DURATION
+import android.media.MediaScannerConnection
 import android.net.Uri
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import com.amp.trimmy.interfaces.VideoTrimmingListener
 import com.example.editphotovideo.base.BaseActivity
+import com.example.editphotovideo.data.entity.MediaEntity
+import com.example.editphotovideo.data.entity.MediaType
+import com.example.editphotovideo.data.viewmodel.MediaViewModel
 import com.example.editphotovideo.databinding.ActivityTrimBinding
+import com.example.editphotovideo.ui.save.SaveVideoActivity
 import com.example.editphotovideo.utils.ImageUtils.getTempMovieDir
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
-
+@AndroidEntryPoint
 class TrimActivity : BaseActivity<ActivityTrimBinding>(), VideoTrimmingListener {
 
     private var dstTrimmedFile: File? = null
@@ -21,6 +29,7 @@ class TrimActivity : BaseActivity<ActivityTrimBinding>(), VideoTrimmingListener 
 
     private val timeFormat = SimpleDateFormat("mm:ss", Locale.getDefault())
     private var durationSec: Long = 0
+    private  val mediaViewModel: MediaViewModel by viewModels()
 
     override fun setViewBinding() = ActivityTrimBinding.inflate(layoutInflater)
 
@@ -46,20 +55,18 @@ class TrimActivity : BaseActivity<ActivityTrimBinding>(), VideoTrimmingListener 
             post { setVideoURI(inputUri!!) }
         }
 
-        binding.btnStart.setOnClickListener {
+        binding.tvSave.setOnClickListener {
             binding.videoTrimmerView.initiateTrimming()
         }
     }
 
-    override fun viewListener() { /* nếu có thêm UI khác */ }
+    override fun viewListener() { }
 
-    override fun dataObservable() { /* nếu dùng ViewModel/DataBinding */ }
+    override fun dataObservable() { }
 
-    // Video loaded, nút trim giờ đã sẵn sàng
     override fun onVideoPrepared() {
         binding.progressBar.post {
             Toast.makeText(this, "Video sẵn sàng", Toast.LENGTH_SHORT).show()
-            updateRangeText()
         }
     }
 
@@ -75,13 +82,26 @@ class TrimActivity : BaseActivity<ActivityTrimBinding>(), VideoTrimmingListener 
         binding.progressBar.post {
             binding.progressBar.visibility = View.VISIBLE
             Log.d("TrimActivity", "Progress: ${progress * 100}%")
-            updateRangeText()
         }
     }
 
     override fun onFinishedTrimming(uri: Uri?) {
         binding.progressBar.post {
             binding.progressBar.visibility = View.GONE
+            MediaScannerConnection.scanFile(
+                this@TrimActivity,
+                arrayOf(uri?.path),
+                arrayOf("video/mp4"),
+                null
+            )
+            val entity = MediaEntity(
+                filePath = uri.toString(),
+                mediaType = MediaType.VIDEO
+            )
+            mediaViewModel.insertMedia(entity)
+            val intent = Intent(this@TrimActivity, SaveVideoActivity::class.java)
+            intent.putExtra("URI_VIDEO_INPUT", uri.toString())
+            startActivity(intent)
             Toast.makeText(
                 this,
 
@@ -109,10 +129,4 @@ class TrimActivity : BaseActivity<ActivityTrimBinding>(), VideoTrimmingListener 
         Toast.makeText(this, "Lỗi khi xem video: what=$what, extra=$extra", Toast.LENGTH_LONG).show()
     }
 
-    private fun updateRangeText() {
-        val startMs = binding.videoTrimmerView.left
-        val endMs = binding.videoTrimmerView.right
-        binding.tvRange.text = "${timeFormat.format(Date(startMs.toLong()))} - " +
-                "${timeFormat.format(Date(endMs.toLong()))}"
-    }
 }

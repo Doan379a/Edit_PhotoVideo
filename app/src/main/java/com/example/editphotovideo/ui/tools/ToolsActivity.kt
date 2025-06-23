@@ -6,6 +6,8 @@ import com.example.editphotovideo.base.BaseActivity
 import com.example.editphotovideo.databinding.ActivityToolsBinding
 import com.example.editphotovideo.ui.editorimage.EditImageActivity
 import com.example.editphotovideo.ui.tools.compressvideo.CompressVideoActivity
+import com.example.editphotovideo.ui.tools.reversevideo.ReverseVideoActivity
+import com.example.editphotovideo.ui.tools.speed.SpeedActivity
 import com.example.editphotovideo.ui.tools.trim.TrimActivity
 import com.example.editphotovideo.widget.tap
 import gun0912.tedimagepicker.builder.TedImagePicker
@@ -21,11 +23,20 @@ class ToolsActivity : BaseActivity<ActivityToolsBinding>() {
     }
 
     override fun viewListener() {
+        binding.imgBack.tap {
+            finish()
+        }
         binding.llCompressVideo.tap {
             selectVideo(1)
         }
         binding.llTrim.tap {
             selectVideo(2)
+        }
+        binding.llSpeed.tap {
+            selectVideo(3)
+        }
+        binding.llReverseVideo.tap {
+            selectVideo(4)
         }
     }
 
@@ -46,6 +57,8 @@ class ToolsActivity : BaseActivity<ActivityToolsBinding>() {
                 val nameClass = when (int) {
                     1 -> CompressVideoActivity::class.java
                     2 -> TrimActivity::class.java
+                    3 -> SpeedActivity::class.java
+                    4-> ReverseVideoActivity::class.java
                     else -> {
                         CompressVideoActivity::class.java
                     }

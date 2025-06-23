@@ -6,7 +6,9 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.util.Log
 import androidx.compose.ui.input.key.Key
+import androidx.core.content.FileProvider
 import com.example.editphotovideo.R
+import java.io.File
 
 object ShareImage {
     enum class KeyShare {
@@ -42,10 +44,19 @@ object ShareImage {
 
     private fun shareData(context: Context, mediaKey: String, target: KeyShare, uri: Uri) {
         val mime = if (mediaKey == IMAGE_SHARE) "image/*" else "video/mp4"
-
+        val safeUri = if (uri.scheme == "file") {
+            val file = File(uri.path ?: "")
+            FileProvider.getUriForFile(
+                context,
+                "${context.packageName}.fileprovider",
+                file
+            )
+        } else {
+            uri
+        }
         val shareIntent = Intent(Intent.ACTION_SEND).apply {
             type = mime
-            putExtra(Intent.EXTRA_STREAM, uri)
+            putExtra(Intent.EXTRA_STREAM, safeUri)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
 
