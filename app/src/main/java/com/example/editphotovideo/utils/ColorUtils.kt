@@ -3,6 +3,7 @@ package com.example.editphotovideo.utils
 import android.content.Context
 import android.util.Log
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import com.example.editphotovideo.library.colorpicker.ColorPickerPopUp
 import kotlin.random.Random
@@ -49,4 +50,9 @@ fun TextView.setDrawableTopWithTint(drawableRes: Int, colorRes: Int) {
         wrappedDrawable.setTint( colorRes)
         setCompoundDrawablesWithIntrinsicBounds(null, wrappedDrawable, null, null)
     }
+}
+fun TextView.setDrawableStartWithTint(drawableResId: Int, color: Int) {
+    val drawable = ContextCompat.getDrawable(context, drawableResId)?.mutate()
+    drawable?.setTint(color)
+    setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
 }

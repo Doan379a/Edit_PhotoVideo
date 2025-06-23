@@ -7,15 +7,16 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.example.editphotovideo.MyApplication
 import com.example.editphotovideo.base.BaseFragment
 import com.example.editphotovideo.data.ImageData
 import com.example.editphotovideo.databinding.FragmentEditorBinding
 import com.example.editphotovideo.service.CreateVideoService
 import com.example.editphotovideo.service.ImageCreatorService
 import com.example.editphotovideo.ui.editmovie.ImageEditActivity
-import com.example.editphotovideo.ui.editmovie.MyApplication
-import com.example.editphotovideo.ui.editor.EditImageActivity
+import com.example.editphotovideo.ui.editorimage.EditImageActivity
 import com.example.editphotovideo.ui.removebackgr.RemoveBackGrActivity
+import com.example.editphotovideo.ui.tools.ToolsActivity
 import com.example.editphotovideo.widget.tap
 import gun0912.tedimagepicker.builder.TedImagePicker
 
@@ -35,6 +36,9 @@ class EditorFragment : BaseFragment<FragmentEditorBinding>() {
         }
         binding.imgEnhanceBeauty.setOnClickListener {
             selectImageEdit()
+        }
+        binding.imgTools.tap {
+            requireActivity().startActivity(Intent(requireActivity(), ToolsActivity::class.java))
         }
         binding.llCreateVideo.tap {
             TedImagePicker.with(requireActivity())

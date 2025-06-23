@@ -39,11 +39,11 @@ import androidx.recyclerview.widget.RecyclerView.Adapter;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 
+import com.example.editphotovideo.MyApplication;
 import com.example.editphotovideo.data.MusicData;
 import com.example.editphotovideo.soundfile.CheapSoundFile;
 import com.example.editphotovideo.soundfile.CheapSoundFile.ProgressListener;
 import com.example.editphotovideo.R;
-import com.example.editphotovideo.ui.editmovie.MyApplication;
 import com.example.editphotovideo.utils.SongMetadataReader;
 import java.io.File;
 import java.io.IOException;

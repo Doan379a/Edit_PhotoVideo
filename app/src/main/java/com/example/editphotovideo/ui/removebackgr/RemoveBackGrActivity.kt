@@ -11,17 +11,27 @@ import android.util.Log
 import android.view.Gravity
 import android.widget.FrameLayout
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.ahmadhamwi.tabsync.TabbedListMediator
 import com.bumptech.glide.Glide
 import com.example.editphotovideo.base.BaseActivity
+import com.example.editphotovideo.data.DSDatabase
+import com.example.editphotovideo.data.entity.MediaEntity
+import com.example.editphotovideo.data.entity.MediaType
+import com.example.editphotovideo.data.repository.MediaRepository
+import com.example.editphotovideo.data.viewmodel.MediaViewModel
+import com.example.editphotovideo.data.viewmodel.MediaViewModelFactory
 import com.example.editphotovideo.databinding.ActivityRemoveBackGrBinding
 import com.example.editphotovideo.library.removebackgr.RemoveBg
 import com.example.editphotovideo.ui.main.template.model.TemplateType
 import com.example.editphotovideo.ui.main.template.model.getAllSection
 import com.example.editphotovideo.ui.main.template.model.getAllTemplate
+import com.example.editphotovideo.ui.save.SaveImageActivity
+import com.example.editphotovideo.utils.ImageUtils.DEFAULT_FOLDER
 import com.example.editphotovideo.utils.ImageUtils.getCorrectlyOrientedBitmap
 import com.example.editphotovideo.utils.ImageUtils.setUpZoomSettings
 import com.example.editphotovideo.utils.getBitmapFromAsset
@@ -29,6 +39,7 @@ import com.example.editphotovideo.widget.getTagDebug
 import com.example.editphotovideo.widget.gone
 import com.example.editphotovideo.widget.tap
 import com.example.editphotovideo.widget.visible
+import dagger.hilt.android.AndroidEntryPoint
 import gun0912.tedimagepicker.builder.TedImagePicker
 import gun0912.tedimagepicker.util.ToastUtil.showToast
 import kotlinx.coroutines.CoroutineScope
@@ -39,6 +50,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import java.io.IOException
 
+@AndroidEntryPoint
 class RemoveBackGrActivity : BaseActivity<ActivityRemoveBackGrBinding>() {
     private var outputImage: Bitmap? = null
     private var imgUri: Uri? = null
@@ -46,6 +58,7 @@ class RemoveBackGrActivity : BaseActivity<ActivityRemoveBackGrBinding>() {
     private lateinit var adapter: BackGroundAdapter
     private lateinit var mediator: TabbedListMediator
     private var templateId: String? = null
+    private  val mediaViewModel:MediaViewModel by viewModels()
 
     override fun setViewBinding(): ActivityRemoveBackGrBinding {
         return ActivityRemoveBackGrBinding.inflate(layoutInflater)
@@ -69,16 +82,24 @@ class RemoveBackGrActivity : BaseActivity<ActivityRemoveBackGrBinding>() {
     }
 
     override fun viewListener() {
-        binding.btnRemovePain.setOnClickListener {
-            val intent = Intent(this, FreeHandCropperActivity::class.java)
-            intent.putExtra("image_uri", imgUri)
-            launcher.launch(intent)
+//        binding.btnRemovePain.setOnClickListener {
+//            val intent = Intent(this, FreeHandCropperActivity::class.java)
+//            intent.putExtra("image_uri", imgUri)
+//            launcher.launch(intent)
+//        }
+        binding.imgBack.tap {
+            finish()
         }
-        binding.btnSave.tap {
+        binding.imgDowload.tap {
             saveImageRemoveToFile(binding.frameImage)?.let { uri ->
-                val intent = Intent()
+                val intent = Intent(this,SaveImageActivity::class.java)
+                val entity = MediaEntity(
+                    filePath = uri,
+                    mediaType = MediaType.IMAGE
+                )
+                mediaViewModel.insertMedia(entity)
                 intent.putExtra("output_image_uri", uri)
-                setResult(Activity.RESULT_OK, intent)
+                startActivity(intent)
                 finish()
             }
         }
@@ -199,14 +220,14 @@ class RemoveBackGrActivity : BaseActivity<ActivityRemoveBackGrBinding>() {
         val canvas = Canvas(bitmap)
         frameLayout.draw(canvas)
 
-        val fileName = "collage_${System.currentTimeMillis()}.jpg"
+        val fileName = "Remove_background_${System.currentTimeMillis()}.jpg"
 
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
             put(
                 MediaStore.MediaColumns.RELATIVE_PATH,
-                "DCIM/Photo_edit_video" // Change to your desired directory
+                "DCIM/$DEFAULT_FOLDER"
             )
         }
 
@@ -218,7 +239,7 @@ class RemoveBackGrActivity : BaseActivity<ActivityRemoveBackGrBinding>() {
                 resolver.openOutputStream(it)?.use { outputStream ->
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
                 }
-                showToast("Saved to HD_camera")
+//                showToast("Saved to HD_camera")
                 return it.toString()
             } catch (e: IOException) {
                 e.printStackTrace()

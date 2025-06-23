@@ -14,7 +14,7 @@ import android.graphics.RectF;
 import androidx.core.internal.view.SupportMenu;
 
 
-import com.example.editphotovideo.ui.editmovie.MyApplication;
+import com.example.editphotovideo.MyApplication;
 
 import java.lang.reflect.Array;
 import java.util.Random;

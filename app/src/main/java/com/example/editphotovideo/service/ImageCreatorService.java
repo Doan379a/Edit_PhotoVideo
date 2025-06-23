@@ -12,10 +12,9 @@ import android.os.Looper;
 import android.util.Log;
 
 import com.bumptech.glide.Glide;
+import com.example.editphotovideo.MyApplication;
 import com.example.editphotovideo.R;
 import com.example.editphotovideo.data.ImageData;
-import com.example.editphotovideo.libffmpeg.FileUtils;
-import com.example.editphotovideo.ui.editmovie.MyApplication;
 import com.example.editphotovideo.ui.editmovie.OnProgressReceiver;
 import com.example.editphotovideo.ui.editmovie.mask.FinalMaskBitmap3D;
 import com.example.editphotovideo.utils.ScalingUtilities;

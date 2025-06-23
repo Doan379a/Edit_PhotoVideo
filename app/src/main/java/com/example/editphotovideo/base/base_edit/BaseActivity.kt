@@ -2,7 +2,9 @@ package com.example.editphotovideo.base.base_edit
 
 import android.R
 import android.app.ProgressDialog
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Bundle
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -51,6 +53,17 @@ open class BaseActivity : AppCompatActivity() {
 
     protected fun hideLoading() {
         mProgressDialog?.dismiss()
+    }
+    fun showActivity(activity: Class<*>, bundle: Bundle?) {
+        val intent = Intent(this, activity)
+        intent.putExtras(bundle ?: Bundle())
+        startActivity(intent)
+    }
+
+    // Chuyển đến Activity khác không cần bundle
+    fun showActivity(activity: Class<*>) {
+        val intent = Intent(this, activity)
+        startActivity(intent)
     }
 
     protected fun showSnackbar(message: String) {

@@ -1,5 +1,6 @@
 package com.example.editphotovideo.utils
 
+import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -8,6 +9,7 @@ import android.graphics.Matrix
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import android.provider.MediaStore
 import android.view.Gravity
 import android.widget.ImageView
@@ -18,7 +20,7 @@ import java.io.File
 import java.io.FileOutputStream
 
 object ImageUtils {
-
+    const val DEFAULT_FOLDER = "Photo_edit_video"
     fun setUpZoomSettings(zoomImageView: GestureImageView) {
         zoomImageView.controller.settings.apply {
             isZoomEnabled = true
@@ -27,11 +29,11 @@ object ImageUtils {
             isDoubleTapEnabled = true
             isPanEnabled = true
             maxZoom = 5f
-            minZoom = 0.02f
+            minZoom = 0.1f
             setFitMethod(Settings.Fit.NONE)
-            setBoundsType(Settings.Bounds.INSIDE)
+            setBoundsType(Settings.Bounds.OUTSIDE)
             setGravity(Gravity.CENTER)
-//            setImage(300, 300)
+            setImage(300, 300)
         }
     }
 
@@ -85,6 +87,23 @@ object ImageUtils {
         val width = view.width
         val height = view.height
         return Bitmap.createScaledBitmap(bitmap, width, height, true)
+    }
+    fun getRealPathFromUri(context: Context, uri: Uri): String? {
+        val projection = arrayOf(android.provider.MediaStore.Video.Media.DATA)
+        val cursor = context.contentResolver.query(uri, projection, null, null, null)
+        return cursor?.use {
+            val columnIndex = it.getColumnIndexOrThrow(android.provider.MediaStore.Video.Media.DATA)
+            it.moveToFirst()
+            it.getString(columnIndex)
+        }
+    }
+    fun getTempMovieDir(): File {
+        val dcim = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
+        val customDir = File(dcim, "$DEFAULT_FOLDER")
+        if (!customDir.exists()) {
+            customDir.mkdirs()
+        }
+        return customDir
     }
 
 }

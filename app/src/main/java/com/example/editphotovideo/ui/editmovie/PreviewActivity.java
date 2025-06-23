@@ -16,8 +16,6 @@ import android.provider.MediaStore;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -33,7 +31,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog.Builder;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.Toolbar;
@@ -48,11 +45,9 @@ import androidx.recyclerview.widget.RecyclerView.Adapter;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.bumptech.glide.signature.MediaStoreSignature;
-import com.bumptech.glide.signature.ObjectKey;
+import com.example.editphotovideo.MyApplication;
 import com.example.editphotovideo.R;
 import com.example.editphotovideo.data.ImageData;
 import com.example.editphotovideo.data.MusicData;
@@ -65,20 +60,21 @@ import com.example.editphotovideo.ui.songedit.SongEditActivity;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 import gun0912.tedimagepicker.builder.TedImagePicker;
 
 
 public class PreviewActivity extends AppCompatActivity implements OnClickListener, OnSeekBarChangeListener, OnProgressReceiver {
+    private final int REQUEST_PICK_AUDIO = 101;
+    private final int REQUEST_PICK_EDIT = 103;
+    private final int REQUEST_PICK_IMAGES = 102;
     private MyApplication application;
     private ArrayList<ImageData> arrayList;
+    private BottomSheetBehavior<View> behavior;
     private Float[] duration = new Float[]{Float.valueOf(1.0f), Float.valueOf(1.5f), Float.valueOf(2.0f), Float.valueOf(2.5f), Float.valueOf(3.0f), Float.valueOf(3.5f), Float.valueOf(4.0f)};
     int f21i = 0;
     private View flLoader;
@@ -103,6 +99,8 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
     private SeekBar seekBar;
     private MoviewThemeAdapter themeAdapter;
     private String videoPath;
+    private TextView tvEndTime;
+    private TextView tvTime;
     private ArrayList<Uri> selectedUris;
     private TextView ivDone;
     private TextView btnAddPhoto, btnTransition, btnMusic,btnDuration,btnFrame,btnEditPhoto,tvTime,tvEndTime;

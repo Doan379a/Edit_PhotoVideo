@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#101014"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/layout_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/img_back"
+            style="@style/SelectableItemBackground"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="0dp"
+            android:paddingHorizontal="@dimen/_15sdp"
+            android:paddingVertical="@dimen/_10sdp"
+            android:src="@drawable/ic_back"
+            app:tint="#A0E12E" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/img_back"
+            android:fontFamily="@font/polly_bold_700"
+            android:gravity="start"
+            android:includeFontPadding="false"
+            android:paddingStart="@dimen/_10sdp"
+            android:text="@string/my_work"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_20ssp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_5sdp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/layout_header">
+
+        <TextView
+            android:id="@+id/tv_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_select_tab"
+            android:drawableStart="@drawable/ic_video2"
+            android:drawablePadding="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:fontFamily="@font/polly_regular_400"
+            android:gravity="center_vertical"
+            android:includeFontPadding="false"
+            style="@style/SelectableItemBackground"
+            android:paddingHorizontal="@dimen/_25sdp"
+            android:paddingVertical="@dimen/_8sdp"
+            android:textColor="#000000"
+            android:textSize="@dimen/_14ssp"
+            android:text="@string/video" />
+
+        <TextView
+            android:id="@+id/tv_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_selected_photo"
+            android:background="@drawable/bg_select_tab"
+            android:backgroundTint="#303030"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/polly_bold_700"
+            android:gravity="center"
+            style="@style/SelectableItemBackground"
+            android:includeFontPadding="false"
+            android:paddingHorizontal="@dimen/_25sdp"
+            android:paddingVertical="@dimen/_8sdp"
+            android:textColor="#FFF"
+            android:textSize="@dimen/_14ssp"
+            android:text="@string/picture" />
+    </LinearLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:paddingHorizontal="@dimen/_10sdp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_new_project"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+    <TextView
+        android:id="@+id/tv_new_project"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/polly_regular_400"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:paddingVertical="@dimen/_10sdp"
+        android:text="@string/new_project"
+        android:textColor="@color/black"
+        android:layout_marginVertical="@dimen/_10sdp"
+        android:background="@drawable/bg_select_tab"
+        style="@style/SelectableItemBackground"
+        android:drawablePadding="@dimen/_10sdp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:drawableStart="@drawable/ic_plus"
+        android:paddingHorizontal="@dimen/_55sdp"
+        android:textSize="@dimen/_18ssp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

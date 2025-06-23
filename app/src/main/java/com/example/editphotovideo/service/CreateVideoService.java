@@ -1,14 +1,10 @@
 package com.example.editphotovideo.service;
 
-import android.annotation.SuppressLint;
 import android.app.IntentService;
-import android.app.Notification;
 import android.app.Notification.Builder;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
@@ -19,10 +15,11 @@ import android.provider.MediaStore.Audio.Media;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.arthenica.ffmpegkit.FFmpegKit;
+import com.example.editphotovideo.MyApplication;
 import com.example.editphotovideo.R;
 import com.example.editphotovideo.libffmpeg.FileUtils;
 import com.example.editphotovideo.libffmpeg.Util;
-import com.example.editphotovideo.ui.editmovie.MyApplication;
 import com.example.editphotovideo.ui.editmovie.OnProgressReceiver;
 import com.example.editphotovideo.utils.ScalingUtilities;
 
@@ -107,7 +104,8 @@ public class CreateVideoService extends IntentService {
         System.gc();
         Process process = null;
         try {
-            process = Runtime.getRuntime().exec(inputCode);
+//            process = Runtime.getRuntime().exec(inputCode);
+            FFmpegKit.execute("-i input.mp3 -filter:a volume=2 output.mp3");
             while (!Util.isProcessCompleted(process)) {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
                 String line = bufferedReader.readLine();
@@ -213,7 +211,8 @@ public class CreateVideoService extends IntentService {
         Log.e("in_joinAudio1", String.valueOf(this.toatalSecond) + "in_joinAudio1");
         Process process = null;
         try {
-            process = Runtime.getRuntime().exec(new String[]{FileUtils.getFFmpeg(this), "-f", "concat", "-safe", "0", "-i", this.audioIp.getAbsolutePath(), "-c", "copy", "-preset", "ultrafast", "-ac", "2", this.audioFile.getAbsolutePath()});
+//            process = Runtime.getRuntime().exec(new String[]{FileUtils.getFFmpeg(this), "-f", "concat", "-safe", "0", "-i", this.audioIp.getAbsolutePath(), "-c", "copy", "-preset", "ultrafast", "-ac", "2", this.audioFile.getAbsolutePath()});
+            FFmpegKit.execute("-i input.mp3 -filter:a volume=2 output.mp3");
             while (!Util.isProcessCompleted(process)) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
                 String line = reader.readLine();

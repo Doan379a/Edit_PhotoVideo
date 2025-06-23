@@ -1,22 +1,18 @@
 package com.example.editphotovideo.ui.main
 
 
+import android.content.Intent
 import com.example.editphotovideo.R
 import com.example.editphotovideo.base.BaseActivity
-import com.example.editphotovideo.data.ImageData
 import com.example.editphotovideo.databinding.ActivityMainBinding
-import com.example.editphotovideo.ui.editor.EditImageActivity
-import com.example.editphotovideo.service.CreateVideoService
-import com.example.editphotovideo.service.ImageCreatorService
+import com.example.editphotovideo.ui.mywork.MyWorkActivity
 
-import com.example.editphotovideo.ui.editmovie.MyApplication
-import com.example.editphotovideo.ui.removebackgr.RemoveBackGrActivity
 import com.example.editphotovideo.utils.setDrawableTopWithTint
+import com.example.editphotovideo.widget.tap
 
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     private lateinit var viewPagerAdapter: MainAdapter
-    private lateinit var application: MyApplication
 
     override fun setViewBinding(): ActivityMainBinding {
         return ActivityMainBinding.inflate(layoutInflater)
@@ -24,7 +20,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
 
     override fun initView() {
-
         viewPagerAdapter = MainAdapter(this)
         binding.viewPager2.adapter = viewPagerAdapter
         binding.viewPager2.isUserInputEnabled = false
@@ -37,7 +32,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.tvTemplate.setOnClickListener {
             setUpColorTab(2)
         }
-
+        binding.tvMyFolder.tap {
+            startActivity(Intent(this, MyWorkActivity::class.java))
+        }
     }
 
     override fun dataObservable() {
