@@ -8,6 +8,7 @@ import android.util.TypedValue;
 
 import androidx.cardview.widget.CardView;
 
+import com.example.editphotovideo.MyApplication;
 import com.example.editphotovideo.R;
 
 

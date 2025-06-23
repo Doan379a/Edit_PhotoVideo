@@ -406,7 +406,7 @@
         <item>u+1f6a9</item>
     </string-array>
     //////
-    <string name="app_name">EditPhotoVideo</string>
+    <string name="app_name" translatable="false">EditPhotoVideo</string>
     <string name="please_send_us">Please send us some feedback!</string>
     <string name="write_some_feedback">Write some feedback</string>
     <string name="There_is_no_email">There is no email client installed.</string>
@@ -487,13 +487,6 @@
     <string name="device_music">Device music</string>
     <string name="demo_music">Demo Music</string>
 
-    <string name="progress_dialog_saving">Saving ringtone...</string>
-    <string name="alert_title_failure">Save Failed</string>
-    <string name="too_small_error">The file is too small to save.</string>
-    <string name="alert_ok_button">OK</string>
-    <string name="artist_name">Unknown Artist</string>
-    <string name="write_error">Error writing file</string>
-    <string name="no_space_error">No space left on device</string>
     <string name="remove_bg">Remove BG</string>
     <string name="saved_image">Saved Image</string>
     <string name="my_work">My Work</string>

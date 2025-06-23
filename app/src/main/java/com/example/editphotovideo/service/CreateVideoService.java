@@ -211,7 +211,6 @@ public class CreateVideoService extends IntentService {
         Log.e("in_joinAudio1", String.valueOf(this.toatalSecond) + "in_joinAudio1");
         Process process = null;
         try {
-//            process = Runtime.getRuntime().exec(new String[]{FileUtils.getFFmpeg(this), "-f", "concat", "-safe", "0", "-i", this.audioIp.getAbsolutePath(), "-c", "copy", "-preset", "ultrafast", "-ac", "2", this.audioFile.getAbsolutePath()});
             FFmpegKit.execute("-i input.mp3 -filter:a volume=2 output.mp3");
             while (!Util.isProcessCompleted(process)) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()));

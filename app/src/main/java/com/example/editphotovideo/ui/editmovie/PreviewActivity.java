@@ -99,8 +99,6 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
     private SeekBar seekBar;
     private MoviewThemeAdapter themeAdapter;
     private String videoPath;
-    private TextView tvEndTime;
-    private TextView tvTime;
     private ArrayList<Uri> selectedUris;
     private TextView ivDone;
     private TextView btnAddPhoto, btnTransition, btnMusic,btnDuration,btnFrame,btnEditPhoto,tvTime,tvEndTime;
@@ -764,7 +762,7 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
     }
 
     private void onBackDialog() {
-        new Builder(this, R.style.Theme_MovieMaker_AlertDialog).setTitle((int) R.string.app_name).setMessage((CharSequence) "Are you sure ? \nYour video is not prepared yet!").setPositiveButton((CharSequence) "Go Back", new C05875()).setNegativeButton((CharSequence) "Stay here", null).create().show();
+    //    new Builder(this, R.style.Theme_MovieMaker_AlertDialog).setTitle((int) R.string.app_name).setMessage((CharSequence) "Are you sure ? \nYour video is not prepared yet!").setPositiveButton((CharSequence) "Go Back", new C05875()).setNegativeButton((CharSequence) "Stay here", null).create().show();
     }
 
     public void setTheme() {
