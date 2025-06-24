@@ -78,7 +78,7 @@ public class CreateVideoService extends IntentService {
         File videoListFile = new File(FileUtils.TEMP_DIRECTORY, "video.txt");
         if (videoListFile.exists()) videoListFile.delete();
         Log.d("videoListSize", String.valueOf(application.videoImages.size()));
-        float targetDurationSeconds = 5.0f;
+        float targetDurationSeconds = application.getDuration();
         int imageCount = application.videoImages.size();
         float durationPerImage = targetDurationSeconds / imageCount;
         DecimalFormat df = new DecimalFormat("#.##");
@@ -122,21 +122,14 @@ public class CreateVideoService extends IntentService {
                     .append("-filter_complex \"[0:v][2:v]overlay=0:0\" ");
         }
 
-//        commandBuilder
-//                .append("-vsync vfr ")
-//                .append("-c:v mpeg4 ")
-//                .append("-pix_fmt yuv420p ")
-//                //.append("-t ").append(application.getSecond()).append(" ");
-//                .append("-t 5 ");
 
         commandBuilder
                 .append("-vsync vfr ")
                 .append("-c:v libx264 ")
                 .append("-preset ultrafast ")
-                .append("-b:v 2000k ") // bitrate cao hơn → nét hơn
+                .append("-b:v 2000k ")
                 .append("-pix_fmt yuv420p ")
-                .append("-t 5 ");
-
+                .append("-t ").append(application.getDuration()).append(" ");
 
         if (application.getMusicData() != null) {
             commandBuilder.append("-c:a aac -b:a 192k ");

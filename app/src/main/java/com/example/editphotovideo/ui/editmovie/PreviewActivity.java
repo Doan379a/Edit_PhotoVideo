@@ -530,8 +530,8 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
                     String[] parts = formattedTime.split(":");
                     int minutes = Integer.parseInt(parts[0]);
                     int seconds = Integer.parseInt(parts[1]);
-
                     float totalSeconds = minutes * 60 + seconds;
+                    application.setDuration(totalSeconds+1.0f);
                     Log.d("totalSeconds", String.valueOf(totalSeconds));
                     this.tvEndTime.setText(formattedTime);
                 }

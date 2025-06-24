@@ -12,6 +12,8 @@ import android.provider.MediaStore.Images.Media;
 import android.util.Log;
 
 
+import com.arthenica.ffmpegkit.FFmpegKit;
+import com.arthenica.ffmpegkit.FFmpegKitConfig;
 import com.example.editphotovideo.data.ImageData;
 import com.example.editphotovideo.data.MusicData;
 //import com.example.editphotovideo.libffmpeg.FFmpeg;
@@ -44,6 +46,7 @@ public class MyApplication extends Application {
     private MusicData musicData;
     private OnProgressReceiver onProgressReceiver;
     private float second = 2.0f;
+    private float duration = 5.0f;
     private String selectedFolderId = "";
     private final ArrayList<ImageData> selectedImages = new ArrayList();
     public THEMES selectedTheme = THEMES.Shine;
@@ -57,6 +60,18 @@ public class MyApplication extends Application {
         super.onCreate();
         instance = this;
         FileUtils.init(getApplicationContext());
+        FFmpegKit.executeAsync("-codecs", session -> {
+            String output = session.getOutput();
+            if (output != null) {
+                Log.d("Codecs", output);
+                if (output.contains("libx264")) {
+                    Log.d("FFmpegKit", "✅ libx264 is available!");
+                } else {
+                    Log.e("FFmpegKit", "❌ libx264 NOT found!");
+                }
+            }
+        });
+
         init();
     }
 
@@ -75,6 +90,13 @@ public class MyApplication extends Application {
         this.videoImages = new ArrayList();
     }
 
+    public float getDuration() {
+        return this.duration;
+    }
+
+    public void setDuration(float duration) {
+        this.duration = duration;
+    }
     public float getSecond() {
         return this.second;
     }
@@ -82,7 +104,6 @@ public class MyApplication extends Application {
     public void setSecond(float second) {
         this.second = second;
     }
-
     public void setMusicData(MusicData musicData) {
         this.isFromSdCardAudio = false;
         this.musicData = musicData;
