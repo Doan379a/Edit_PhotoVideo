@@ -43,7 +43,7 @@ class SaveVideoActivity : BaseActivity<ActivitySaveVideoBinding>() {
 
     override fun initView() {
         val activityName = intent.getStringExtra("KEY_ACTIVITY")
-        activity = KeyNewProject.valueOf(activityName ?: "")
+        activity = KeyNewProject.valueOf(activityName ?:KeyNewProject.EDIT_VIDEO_ACTIVITY.name)
         videoUri = intent.getStringExtra("URI_VIDEO_INPUT")
         if (videoUri != null) {
             Log.d("URI_VIDEO_INPUT", videoUri!!)
