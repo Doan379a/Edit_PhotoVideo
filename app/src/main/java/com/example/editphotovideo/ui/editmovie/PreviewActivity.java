@@ -1,5 +1,7 @@
 package com.example.editphotovideo.ui.editmovie;
 
+import static com.example.editphotovideo.utils.ImageUtils.DEFAULT_FOLDER;
+import com.example.editphotovideo.data.DSDatabase;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
@@ -42,6 +44,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -57,12 +60,20 @@ import com.example.editphotovideo.MyApplication;
 import com.example.editphotovideo.R;
 import com.example.editphotovideo.data.ImageData;
 import com.example.editphotovideo.data.MusicData;
+import com.example.editphotovideo.data.entity.MediaEntity;
+import com.example.editphotovideo.data.entity.MediaType;
+import com.example.editphotovideo.data.repository.MediaRepository;
+import com.example.editphotovideo.data.viewmodel.MediaViewModel;
+import com.example.editphotovideo.data.viewmodel.MediaViewModelFactory;
 import com.example.editphotovideo.libffmpeg.FileUtils;
 import com.example.editphotovideo.service.CreateVideoService;
 import com.example.editphotovideo.service.ImageCreatorService;
 import com.example.editphotovideo.ui.editmovie.themes.THEMES;
 import com.example.editphotovideo.ui.main.MainActivity;
+import com.example.editphotovideo.ui.save.KeyNewProject;
+import com.example.editphotovideo.ui.save.SaveVideoActivity;
 import com.example.editphotovideo.ui.songedit.SongEditActivity;
+import com.example.editphotovideo.ui.tools.speed.SpeedActivity;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback;
 
@@ -112,6 +123,8 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
     private TextView ivDone;
     private TextView btnAddPhoto, btnTransition, btnMusic,btnDuration,btnFrame,btnEditPhoto,tvTime,tvEndTime;
     private LinearLayout llMusic,ivDeviceMusic,ivDemoMusic;
+    private MediaViewModel mediaViewModel;
+
 
     class C05853 implements Runnable {
         C05853() {
@@ -399,6 +412,9 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
     }
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        MediaRepository repository = new MediaRepository(DSDatabase.getDatabase(this).mediaDao());
+        MediaViewModelFactory factory = new MediaViewModelFactory(repository);
+        mediaViewModel = new ViewModelProvider(this, factory).get(MediaViewModel.class);
         selectedUris = getIntent().getParcelableArrayListExtra("selectedImages");
         this.application = MyApplication.getInstance();
         this.application.videoImages.clear();
@@ -845,7 +861,7 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
         this.videoPath = videoPath;
 
         File src = new File(videoPath);
-        File dst = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "YourApp");
+        File dst = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), DEFAULT_FOLDER);
 
         if (!dst.exists()) dst.mkdirs();
 
@@ -862,17 +878,27 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
                 getPackageName() + ".fileprovider",
                 outFile
         );
+        MediaScannerConnection.scanFile(
+                PreviewActivity.this,
+                new String[]{ videoUri.toString() },
+                new String[]{ "video/mp4" },
+                new MediaScannerConnection.OnScanCompletedListener() {
+                    @Override
+                    public void onScanCompleted(String path, Uri uri) {
+                        Log.d("MediaScan", "Scanned " + path + ": uri=" + uri);
+                    }
+                }
+        );
 
-
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(videoUri, "video/mp4");
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-        try {
-            startActivity(intent);
-        } catch (ActivityNotFoundException e) {
-            Toast.makeText(this, "Không tìm thấy ứng dụng để mở video.", Toast.LENGTH_SHORT).show();
-        }
+        MediaEntity entity = new MediaEntity(
+                videoUri.toString(),
+                MediaType.VIDEO
+        );
+        mediaViewModel.insertMedia(entity);
+        Intent intent = new Intent(PreviewActivity.this, SaveVideoActivity.class);
+        intent.putExtra("URI_VIDEO_INPUT", videoUri.toString());
+        intent.putExtra("KEY_ACTIVITY", KeyNewProject.EDIT_VIDEO_ACTIVITY.name());
+        startActivity(intent);
 
         Log.d("loadProgress", videoPath);
     }

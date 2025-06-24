@@ -66,7 +66,8 @@ class SpeedActivity : BaseActivity<ActivitySpeedBinding>() {
         }
     }
 
-    override fun setViewBinding(): ActivitySpeedBinding = ActivitySpeedBinding.inflate(layoutInflater)
+    override fun setViewBinding(): ActivitySpeedBinding =
+        ActivitySpeedBinding.inflate(layoutInflater)
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun initView() {
@@ -91,7 +92,8 @@ class SpeedActivity : BaseActivity<ActivitySpeedBinding>() {
     override fun viewListener() {
         binding.imgBack.tap {
             showActivity(MainActivity::class.java)
-            finish() }
+            finish()
+        }
         binding.parent.setOnClickListener { togglePlayPause() }
         binding.btnPlayPause.setOnClickListener { togglePlayPause() }
         binding.tvSave.tap { speedVideo(speed) }
@@ -118,17 +120,23 @@ class SpeedActivity : BaseActivity<ActivitySpeedBinding>() {
         }
     }
 
-    private fun setUpSeekbar() = binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-        override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-            if (fromUser && videoDuration > 0) {
-                val position = (videoDuration * progress) / 100
-                binding.videoView.seekTo(position)
+    private fun setUpSeekbar() =
+        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (fromUser && videoDuration > 0) {
+                    val position = (videoDuration * progress) / 100
+                    binding.videoView.seekTo(position)
+                }
             }
-        }
 
-        override fun onStartTrackingTouch(seekBar: SeekBar?) { isTracking = true }
-        override fun onStopTrackingTouch(seekBar: SeekBar?) { isTracking = false }
-    })
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                isTracking = true
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                isTracking = false
+            }
+        })
 
     private fun setupVideoView(videoPath: String) {
         binding.videoView.setVideoURI(Uri.parse(videoPath))
@@ -236,7 +244,8 @@ class SpeedActivity : BaseActivity<ActivitySpeedBinding>() {
                     }
                     val filePath = dest.absolutePath
 
-                    val realPath = getRealPathFromUri(this@SpeedActivity, Uri.parse(videoUri)) ?: return@withContext
+                    val realPath = getRealPathFromUri(this@SpeedActivity, Uri.parse(videoUri))
+                        ?: return@withContext
 
                     VideoProcessor.processor(this@SpeedActivity)
                         .input(realPath)
@@ -266,7 +275,7 @@ class SpeedActivity : BaseActivity<ActivitySpeedBinding>() {
                         intent.putExtra("URI_VIDEO_INPUT", filePath)
                         intent.putExtra("KEY_ACTIVITY", KeyNewProject.SPEED_ACTIVITY.name)
                         startActivity(intent)
-               showToast("speed xong: ${filePath}")
+                        showToast("speed xong: ${filePath}")
                         Log.d("ItemVideoPlayerFragment", "Video processed: $filePath")
                     }
                 } catch (e: Exception) {
@@ -283,7 +292,6 @@ class SpeedActivity : BaseActivity<ActivitySpeedBinding>() {
             }
         }
     }
-
 
 
     override fun onDestroy() {

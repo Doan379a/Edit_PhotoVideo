@@ -8,7 +8,9 @@ data class MediaEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     var filePath: String,
     val mediaType: MediaType
-)
+){
+    constructor(filePath: String, mediaType: MediaType): this( 0,filePath, mediaType)
+}
 
 enum class MediaType {
     IMAGE,

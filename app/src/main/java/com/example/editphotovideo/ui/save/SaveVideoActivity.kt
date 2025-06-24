@@ -22,6 +22,7 @@ import com.example.editphotovideo.utils.ShareUtils
 import com.example.editphotovideo.utils.ShareUtils.shareVideo
 import com.example.editphotovideo.utils.ViewUtils.createSeekBarChangeListener
 import com.example.editphotovideo.utils.ViewUtils.formatTime
+import com.example.editphotovideo.widget.showSnackBar
 import com.example.editphotovideo.widget.tap
 import com.example.editphotovideo.widget.visible
 import gun0912.tedimagepicker.builder.TedImagePicker
@@ -33,11 +34,16 @@ class SaveVideoActivity : BaseActivity<ActivitySaveVideoBinding>() {
     private var isTracking = false
     private val handler = Handler(Looper.getMainLooper())
 
+    var activity: KeyNewProject? = null
+
+
     override fun setViewBinding(): ActivitySaveVideoBinding {
         return ActivitySaveVideoBinding.inflate(layoutInflater)
     }
 
     override fun initView() {
+        val activityName = intent.getStringExtra("KEY_ACTIVITY")
+        activity = KeyNewProject.valueOf(activityName ?: "")
         videoUri = intent.getStringExtra("URI_VIDEO_INPUT")
         if (videoUri != null) {
             Log.d("URI_VIDEO_INPUT", videoUri!!)
@@ -86,7 +92,13 @@ class SaveVideoActivity : BaseActivity<ActivitySaveVideoBinding>() {
         binding.imgWhatsapp.tap {
             shareVideo(this, ShareUtils.KeyShare.WHATSAPP, Uri.parse(videoUri))
         }
-        binding.tvNewProject.tap { selectVideoEdit() }
+        binding.tvNewProject.tap {
+            if (activity==KeyNewProject.EDIT_VIDEO_ACTIVITY){
+                showSnackBar("để hàm chọn video giống ở main vòa đây ")
+            }else{
+                selectVideoEdit()
+            }
+        }
     }
 
     private fun setupVideoView(videoPath: String) {
@@ -134,14 +146,15 @@ class SaveVideoActivity : BaseActivity<ActivitySaveVideoBinding>() {
                 Log.d("TedImagePicker", "Lỗi khi chọn ảnh!")
             }
             .start { uri ->
-                val activityName = intent.getStringExtra("KEY_ACTIVITY")
-                val activity = KeyNewProject.valueOf(activityName ?: "")
-                val startActivity=when(activity){
+                val startActivity = when (activity) {
                     KeyNewProject.COMPRESS_ACTIVITY -> CompressVideoActivity::class.java
                     KeyNewProject.EXTRACT_ACTIVITY -> ExtractAudioActivity::class.java
                     KeyNewProject.REVERSE_ACTIVITY -> ReverseVideoActivity::class.java
                     KeyNewProject.SPEED_ACTIVITY -> SpeedActivity::class.java
                     KeyNewProject.TRIM_ACTIVITY -> TrimActivity::class.java
+                    else -> {
+                        MainActivity::class.java
+                    }
                 }
                 val intent = Intent(this, startActivity).apply {
                     putExtra(
