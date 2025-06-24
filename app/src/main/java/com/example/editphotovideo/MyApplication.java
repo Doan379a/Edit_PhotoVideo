@@ -104,6 +104,7 @@ public class MyApplication extends Application {
     public void setSecond(float second) {
         this.second = second;
     }
+
     public void setMusicData(MusicData musicData) {
         this.isFromSdCardAudio = false;
         this.musicData = musicData;

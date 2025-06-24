@@ -828,6 +828,7 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
 
     @SuppressLint({"WrongConstant"})
     private void loadProgress() {
+        this.lockRunnable.stop();
         this.handler.removeCallbacks(this.lockRunnable);
         startService(new Intent(this, CreateVideoService.class));
         ImageCreatorService.isImageComplate = true;
