@@ -21,10 +21,14 @@ import com.example.editphotovideo.data.entity.MediaEntity
 import com.example.editphotovideo.data.entity.MediaType
 import com.example.editphotovideo.data.viewmodel.MediaViewModel
 import com.example.editphotovideo.databinding.ActivityCompressVideoBinding
+import com.example.editphotovideo.ui.main.MainActivity
+import com.example.editphotovideo.ui.save.KeyNewProject
 import com.example.editphotovideo.ui.save.SaveVideoActivity
 import com.example.editphotovideo.utils.ImageUtils.getRealPathFromUri
 import com.example.editphotovideo.utils.ImageUtils.getTempMovieDir
+import com.example.editphotovideo.utils.ViewUtils.createSeekBarChangeListener
 import com.example.editphotovideo.utils.ViewUtils.formatTime
+import com.example.editphotovideo.utils.ViewUtils.showLoadingView
 import com.example.editphotovideo.widget.tap
 import com.example.editphotovideo.widget.visible
 import com.hw.videoprocessor.VideoProcessor
@@ -33,6 +37,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+
 @AndroidEntryPoint
 class CompressVideoActivity : BaseActivity<ActivityCompressVideoBinding>() {
     private var videoUri: String? = null
@@ -43,7 +48,7 @@ class CompressVideoActivity : BaseActivity<ActivityCompressVideoBinding>() {
     private var originWidth: Int = 0
     private var originHeight: Int = 0
     private var originBitrate: Int = 0
-    private  val mediaViewModel: MediaViewModel by viewModels()
+    private val mediaViewModel: MediaViewModel by viewModels()
 
     override fun setViewBinding(): ActivityCompressVideoBinding {
         return ActivityCompressVideoBinding.inflate(layoutInflater)
@@ -59,7 +64,10 @@ class CompressVideoActivity : BaseActivity<ActivityCompressVideoBinding>() {
     }
 
     override fun viewListener() {
-        binding.imgBack.tap { finish() }
+        binding.imgBack.tap {
+            showActivity(MainActivity::class.java)
+            finish()
+        }
         binding.tvCompress.tap {
             CompressBottomSheet(
                 this@CompressVideoActivity,
@@ -75,22 +83,14 @@ class CompressVideoActivity : BaseActivity<ActivityCompressVideoBinding>() {
             togglePlayPause()
         }
         binding.btnPlayPause.setOnClickListener { togglePlayPause() }
-        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if (fromUser && binding.videoView.duration > 0) {
-                    val position = (binding.videoView.duration * progress) / 100
-                    binding.videoView.seekTo(position)
-                }
-            }
+        binding.seekBar.setOnSeekBarChangeListener(
+            createSeekBarChangeListener(
+                videoView = binding.videoView,
+                onStart = { isTracking = true },
+                onStop = { isTracking = false }
+            )
+        )
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                isTracking = true
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                isTracking = false
-            }
-        })
     }
 
     private fun executeScaleVideo(
@@ -100,12 +100,17 @@ class CompressVideoActivity : BaseActivity<ActivityCompressVideoBinding>() {
         startMs: Int,
         endMs: Int
     ) {
-        showLoading(true)
+        showLoadingView(
+            loadingView = binding.loadingProgress,
+            show = true
+        )
 
+        handler.removeCallbacks(updateRunnable)
+        pauseVideo()
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
                 try {
-                    val moviesDir = getTempMovieDir()
+                    val moviesDir = getTempMovieDir(this@CompressVideoActivity)
                     val filePrefix = "Compressed_${System.currentTimeMillis()}"
                     val fileExtn = ".mp4"
                     var dest = File(moviesDir, "$filePrefix$fileExtn")
@@ -144,9 +149,16 @@ class CompressVideoActivity : BaseActivity<ActivityCompressVideoBinding>() {
                             mediaType = MediaType.VIDEO
                         )
                         mediaViewModel.insertMedia(entity)
-                        val intent = Intent(this@CompressVideoActivity, SaveVideoActivity::class.java)
+                        val intent =
+                            Intent(this@CompressVideoActivity, SaveVideoActivity::class.java)
                         intent.putExtra("URI_VIDEO_INPUT", filePath)
+                        intent.putExtra("KEY_ACTIVITY", KeyNewProject.COMPRESS_ACTIVITY.name)
                         startActivity(intent)
+                        showLoadingView(
+                            loadingView = binding.loadingProgress,
+                            show = false
+                        )
+
                         Toast.makeText(
                             this@CompressVideoActivity,
                             "Xử lý video xong!",
@@ -160,7 +172,11 @@ class CompressVideoActivity : BaseActivity<ActivityCompressVideoBinding>() {
                     }
                 } finally {
                     withContext(Dispatchers.Main) {
-                        showLoading(false)
+                        showLoadingView(
+                            loadingView = binding.loadingProgress,
+                            show = false
+                        )
+
                     }
                 }
             }
@@ -185,11 +201,6 @@ class CompressVideoActivity : BaseActivity<ActivityCompressVideoBinding>() {
             retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE)?.toInt() ?: 0
         retriever.release()
 
-    }
-
-    private fun showLoading(show: Boolean) {
-        binding.loadingProgress.visibility = if (show) View.VISIBLE else View.GONE
-        binding.tvCompress.isEnabled = !show
     }
 
     private fun setupVideoView(videoPath: String) {
@@ -265,7 +276,6 @@ class CompressVideoActivity : BaseActivity<ActivityCompressVideoBinding>() {
     private fun updateSeekBar() {
         handler.post(updateRunnable)
     }
-
 
 
     override fun onDestroy() {

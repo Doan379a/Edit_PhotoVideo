@@ -5,12 +5,11 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.util.Log
-import androidx.compose.ui.input.key.Key
 import androidx.core.content.FileProvider
 import com.example.editphotovideo.R
 import java.io.File
 
-object ShareImage {
+object ShareUtils {
     enum class KeyShare {
         WHATSAPP,
         FACEBOOK,
@@ -23,7 +22,7 @@ object ShareImage {
     }
     private const val VIDEO_SHARE = "video"
     private const val IMAGE_SHARE = "image"
-
+    private const val AUDIO_SHARE = "audio"
 
     private const val FACEBOOK = "com.facebook.katana"
     private const val MESSENGER = "com.facebook.orca"
@@ -42,8 +41,18 @@ object ShareImage {
         shareData(context, mediaKey = IMAGE_SHARE, target = target, uri = imageUri)
     }
 
+    fun shareAudio(context: Context, target: KeyShare, audioUri: Uri) {
+        shareData(context, mediaKey = AUDIO_SHARE, target = target, uri = audioUri)
+    }
+
     private fun shareData(context: Context, mediaKey: String, target: KeyShare, uri: Uri) {
-        val mime = if (mediaKey == IMAGE_SHARE) "image/*" else "video/mp4"
+        val mime = when (mediaKey) {
+            IMAGE_SHARE -> "image/*"
+            VIDEO_SHARE -> "video/mp4"
+            AUDIO_SHARE -> "audio/*"
+            else -> "*/*"
+        }
+
         val safeUri = if (uri.scheme == "file") {
             val file = File(uri.path ?: "")
             FileProvider.getUriForFile(
@@ -127,6 +136,8 @@ object ShareImage {
         }
         val chooserTitle = when (mediaKey) {
             IMAGE_SHARE -> context.getString(R.string.share_image)
+            VIDEO_SHARE -> context.getString(R.string.share_video)
+            AUDIO_SHARE -> context.getString(R.string.share_audio)
             else -> context.getString(R.string.share_video)
         }
         if (shareIntent.resolveActivity(context.packageManager) != null) {

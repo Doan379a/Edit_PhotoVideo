@@ -1,6 +1,5 @@
 package com.example.editphotovideo.ui.save
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Handler
@@ -9,17 +8,21 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import android.widget.Toast
-import com.bumptech.glide.Glide
 import com.example.editphotovideo.R
 import com.example.editphotovideo.base.BaseActivity
-import com.example.editphotovideo.databinding.ActivitySaveImageBinding
 import com.example.editphotovideo.databinding.ActivitySaveVideoBinding
 import com.example.editphotovideo.ui.editorimage.EditImageActivity
 import com.example.editphotovideo.ui.main.MainActivity
-import com.example.editphotovideo.utils.ShareImage
-import com.example.editphotovideo.utils.ShareImage.shareVideo
+import com.example.editphotovideo.ui.tools.compressvideo.CompressVideoActivity
+import com.example.editphotovideo.ui.tools.extract_audio.ExtractAudioActivity
+import com.example.editphotovideo.ui.tools.reversevideo.ReverseVideoActivity
+import com.example.editphotovideo.ui.tools.speed.SpeedActivity
+import com.example.editphotovideo.ui.tools.trim.TrimActivity
+import com.example.editphotovideo.utils.ShareUtils
+import com.example.editphotovideo.utils.ShareUtils.shareVideo
+import com.example.editphotovideo.utils.ViewUtils.createSeekBarChangeListener
 import com.example.editphotovideo.utils.ViewUtils.formatTime
+import com.example.editphotovideo.widget.showSnackBar
 import com.example.editphotovideo.widget.tap
 import com.example.editphotovideo.widget.visible
 import gun0912.tedimagepicker.builder.TedImagePicker
@@ -31,32 +34,29 @@ class SaveVideoActivity : BaseActivity<ActivitySaveVideoBinding>() {
     private var isTracking = false
     private val handler = Handler(Looper.getMainLooper())
 
+    var activity: KeyNewProject? = null
+
+
     override fun setViewBinding(): ActivitySaveVideoBinding {
         return ActivitySaveVideoBinding.inflate(layoutInflater)
     }
 
     override fun initView() {
+        val activityName = intent.getStringExtra("KEY_ACTIVITY")
+        activity = KeyNewProject.valueOf(activityName ?: "")
         videoUri = intent.getStringExtra("URI_VIDEO_INPUT")
         if (videoUri != null) {
             Log.d("URI_VIDEO_INPUT", videoUri!!)
             setupVideoView(videoUri!!)
         }
-        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if (fromUser && binding.videoView.duration > 0) {
-                    val position = (binding.videoView.duration * progress) / 100
-                    binding.videoView.seekTo(position)
-                }
-            }
+        binding.seekBar.setOnSeekBarChangeListener(
+            createSeekBarChangeListener(
+                videoView = binding.videoView,
+                onStart = { isTracking = true },
+                onStop = { isTracking = false }
+            )
+        )
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                isTracking = true
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                isTracking = false
-            }
-        })
     }
 
     override fun viewListener() {
@@ -69,29 +69,36 @@ class SaveVideoActivity : BaseActivity<ActivitySaveVideoBinding>() {
         binding.btnPlayPause.setOnClickListener { togglePlayPause() }
         binding.imgHome.tap {
             showActivity(MainActivity::class.java)
+            finishAffinity()
         }
         binding.imgFaceBook.tap {
-            shareVideo(this, ShareImage.KeyShare.FACEBOOK, Uri.parse(videoUri))
+            shareVideo(this, ShareUtils.KeyShare.FACEBOOK, Uri.parse(videoUri))
         }
         binding.imgShareMore.tap {
-            shareVideo(this, ShareImage.KeyShare.SHARE_MORE, Uri.parse(videoUri))
+            shareVideo(this, ShareUtils.KeyShare.SHARE_MORE, Uri.parse(videoUri))
         }
         binding.imgInstagram.tap {
-            shareVideo(this, ShareImage.KeyShare.INSTAGRAM, Uri.parse(videoUri))
+            shareVideo(this, ShareUtils.KeyShare.INSTAGRAM, Uri.parse(videoUri))
         }
         binding.imgTiktok.tap {
-            shareVideo(this, ShareImage.KeyShare.TIKTOK, Uri.parse(videoUri))
+            shareVideo(this, ShareUtils.KeyShare.TIKTOK, Uri.parse(videoUri))
         }
         binding.imgYoutube.tap {
-            shareVideo(this, ShareImage.KeyShare.YOUTUBE, Uri.parse(videoUri))
+            shareVideo(this, ShareUtils.KeyShare.YOUTUBE, Uri.parse(videoUri))
         }
         binding.imgMessenger.tap {
-            shareVideo(this, ShareImage.KeyShare.MESSENGER, Uri.parse(videoUri))
+            shareVideo(this, ShareUtils.KeyShare.MESSENGER, Uri.parse(videoUri))
         }
         binding.imgWhatsapp.tap {
-            shareVideo(this, ShareImage.KeyShare.WHATSAPP, Uri.parse(videoUri))
+            shareVideo(this, ShareUtils.KeyShare.WHATSAPP, Uri.parse(videoUri))
         }
-        binding.tvNewProject.tap { selectImageEdit() }
+        binding.tvNewProject.tap {
+            if (activity==KeyNewProject.EDIT_VIDEO_ACTIVITY){
+                showSnackBar("để hàm chọn video giống ở main vòa đây ")
+            }else{
+                selectVideoEdit()
+            }
+        }
     }
 
     private fun setupVideoView(videoPath: String) {
@@ -126,26 +133,38 @@ class SaveVideoActivity : BaseActivity<ActivitySaveVideoBinding>() {
 
     }
 
-    private fun selectImageEdit() {
+    private fun selectVideoEdit() {
         TedImagePicker.with(this)
+            .video()
             .cancelListener {
                 Log.d("TedImagePicker", "Người dùng đã hủy chọn ảnh")
-//                val intent = Intent(this, MainActivity::class.java)
-//                startActivity(intent)
-//                finishAffinity()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finishAffinity()
             }
             .errorListener {
                 Log.d("TedImagePicker", "Lỗi khi chọn ảnh!")
             }
             .start { uri ->
-//                val intent = Intent(this, EditImageActivity::class.java).apply {
-//                    putExtra(
-//                        "URI_IMAGE_INPUT",
-//                        uri
-//                    )
-//                }
-//
-//                startActivity(intent)
+                val startActivity = when (activity) {
+                    KeyNewProject.COMPRESS_ACTIVITY -> CompressVideoActivity::class.java
+                    KeyNewProject.EXTRACT_ACTIVITY -> ExtractAudioActivity::class.java
+                    KeyNewProject.REVERSE_ACTIVITY -> ReverseVideoActivity::class.java
+                    KeyNewProject.SPEED_ACTIVITY -> SpeedActivity::class.java
+                    KeyNewProject.TRIM_ACTIVITY -> TrimActivity::class.java
+                    else -> {
+                        MainActivity::class.java
+                    }
+                }
+                val intent = Intent(this, startActivity).apply {
+                    putExtra(
+                        "URI_VIDEO_INPUT",
+                        uri.toString()
+                    )
+                }
+
+                startActivity(intent)
+                finishAffinity()
             }
     }
 

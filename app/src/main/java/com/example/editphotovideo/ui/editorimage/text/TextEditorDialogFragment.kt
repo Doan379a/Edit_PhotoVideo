@@ -256,7 +256,7 @@ class TextEditorDialogFragment : DialogFragment() {
         binding.rcvFont.gone()
         binding.addTextColorPickerRecyclerView.gone()
         binding.llGravity.gone()
-        binding.imgKeyboard.setColorFilter(Color.parseColor("#519FFF"))
+        binding.imgKeyboard.setColorFilter(Color.parseColor("#A0E12E"))
         binding.imgFont.setColorFilter(Color.parseColor("#A4A4A4"))
         binding.imgColor.setColorFilter(Color.parseColor("#A4A4A4"))
         binding.imgGravity.setColorFilter(Color.parseColor("#A4A4A4"))

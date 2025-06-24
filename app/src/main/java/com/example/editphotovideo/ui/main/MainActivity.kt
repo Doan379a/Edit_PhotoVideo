@@ -6,6 +6,7 @@ import com.example.editphotovideo.R
 import com.example.editphotovideo.base.BaseActivity
 import com.example.editphotovideo.databinding.ActivityMainBinding
 import com.example.editphotovideo.ui.mywork.MyWorkActivity
+import com.example.editphotovideo.ui.setting.SettingActivity
 
 import com.example.editphotovideo.utils.setDrawableTopWithTint
 import com.example.editphotovideo.widget.tap
@@ -34,6 +35,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
         binding.tvMyFolder.tap {
             startActivity(Intent(this, MyWorkActivity::class.java))
+        }
+        binding.imgSetting.tap {
+            showActivity(SettingActivity::class.java)
         }
     }
 

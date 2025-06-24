@@ -1,5 +1,7 @@
 package com.example.editphotovideo.ui.tools.reversevideo
 
+import android.content.Intent
+import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
@@ -22,16 +24,27 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import com.arthenica.ffmpegkit.FFmpegKit
+import com.arthenica.ffmpegkit.FFmpegKitConfig
 import com.arthenica.ffmpegkit.ReturnCode
+import com.example.editphotovideo.data.entity.MediaEntity
+import com.example.editphotovideo.data.entity.MediaType
+import com.example.editphotovideo.ui.main.MainActivity
+import com.example.editphotovideo.ui.save.KeyNewProject
+import com.example.editphotovideo.ui.save.SaveVideoActivity
+import com.example.editphotovideo.utils.ImageUtils.getTempMovieDir
+import com.example.editphotovideo.utils.ViewUtils.createSeekBarChangeListener
+import com.example.editphotovideo.utils.ViewUtils.showLoadingView
+import com.example.editphotovideo.widget.getTagDebug
+import com.example.editphotovideo.widget.showToast
 import com.example.editphotovideo.widget.tap
 
 @AndroidEntryPoint
-class ReverseVideoActivity:BaseActivity<ActivityReverseVideoBinding>() {
+class ReverseVideoActivity : BaseActivity<ActivityReverseVideoBinding>() {
     private var videoUri: String? = null
     private var isPlaying = false
     private var isTracking = false
     private val handler = Handler(Looper.getMainLooper())
-    private  val mediaViewModel: MediaViewModel by viewModels()
+    private val mediaViewModel: MediaViewModel by viewModels()
 
     private val updateRunnable = object : Runnable {
         override fun run() {
@@ -58,71 +71,101 @@ class ReverseVideoActivity:BaseActivity<ActivityReverseVideoBinding>() {
             Log.d("URI_VIDEO_INPUT", videoUri!!)
             setupVideoView(videoUri!!)
         }
+        FFmpegKitConfig.enableLogCallback { log ->
+            Log.d("FFmpegLog", log.message)
+        }
+
     }
 
     override fun viewListener() {
         binding.imgBack.setOnClickListener {
+            showActivity(MainActivity::class.java)
             finish()
         }
         binding.parent.setOnClickListener {
             togglePlayPause()
         }
         binding.btnPlayPause.setOnClickListener { togglePlayPause() }
-        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if (fromUser && binding.videoView.duration > 0) {
-                    val position = (binding.videoView.duration * progress) / 100
-                    binding.videoView.seekTo(position)
-                }
-            }
+        binding.seekBar.setOnSeekBarChangeListener(
+            createSeekBarChangeListener(
+                videoView = binding.videoView,
+                onStart = { isTracking = true },
+                onStop = { isTracking = false }
+            )
+        )
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                isTracking = true
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                isTracking = false
-            }
-        })
         binding.tvReverseVideo.tap {
-            if (videoUri == null) return@tap
-
-            val inputPath = Uri.parse(videoUri).path ?: return@tap
-            val output = File(getExternalFilesDir(null), "reversed_${System.currentTimeMillis()}.mp4")
-
-            showLoading(true)
-
-            lifecycleScope.launch(Dispatchers.IO) {
-                val cmd = listOf(
-                    "-i", "\"$inputPath\"",
-                    "-vf", "reverse",
-                    "-af", "areverse",
-                    "-preset", "ultrafast",
-                    "\"${output.absolutePath}\""
-                ).joinToString(" ")
-
-                val session = FFmpegKit.execute(cmd)
-
-                withContext(Dispatchers.Main) {
-                    showLoading(false)
-                    if (ReturnCode.isSuccess(session.returnCode)) {
-                        binding.videoView.setVideoURI(Uri.fromFile(output))
-                        binding.videoView.start()
-                        isPlaying = true
-                        Toast.makeText(this@ReverseVideoActivity, "Đã phát video ngược", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(this@ReverseVideoActivity, "Lỗi đảo ngược: ${session.failStackTrace}", Toast.LENGTH_SHORT).show()
-                        Log.e("ReverseVideoActivity", "Lỗi đảo ngược: ${session.failStackTrace}")
-                    }
-                }
-            }
+            reverseVideo()
         }
-
 
     }
 
     override fun dataObservable() {
     }
+
+    private fun reverseVideo() {
+        if (videoUri == null) return
+
+        val inputPath = Uri.parse(videoUri) ?: return
+        val output = File(getTempMovieDir(this@ReverseVideoActivity), "Reversed_${System.currentTimeMillis()}.mp4")
+
+        showLoadingView(
+            loadingView = binding.loadingProgress,
+            show = true
+        )
+
+        handler.removeCallbacks(updateRunnable)
+        pauseVideo()
+        lifecycleScope.launch(Dispatchers.IO) {
+            val inputStream = contentResolver.openInputStream(inputPath)
+            val tempFile = File(cacheDir, "temp_input.mp4")
+            tempFile.outputStream().use { output -> inputStream?.copyTo(output) }
+            val cmd = "-y -i ${tempFile.absolutePath} -vf reverse -af areverse -c:v mpeg4 -b:v 2M -c:a aac ${output.absolutePath}"
+
+            val session = FFmpegKit.execute(cmd)
+            Log.d(getTagDebug(), "Command: ${session.command}")
+            Log.d(getTagDebug(), "State: ${session.state}")
+            Log.d(getTagDebug(), "ReturnCode: ${session.returnCode}")
+            Log.d(getTagDebug(), "Output:\n${session.output}")
+            Log.d(getTagDebug(), "FailStackTrace:\n${session.failStackTrace}")
+            withContext(Dispatchers.Main) {
+                showLoadingView(
+                    loadingView = binding.loadingProgress,
+                    show = false
+                )
+
+                if (ReturnCode.isSuccess(session.returnCode)) {
+                    MediaScannerConnection.scanFile(
+                        this@ReverseVideoActivity,
+                        arrayOf(output.path),
+                        arrayOf("video/mp4"),
+                        null
+                    )
+                    val entity = MediaEntity(
+                        filePath = output.path,
+                        mediaType = MediaType.VIDEO
+                    )
+                    mediaViewModel.insertMedia(entity)
+                    val intent = Intent(this@ReverseVideoActivity, SaveVideoActivity::class.java)
+                    intent.putExtra("URI_VIDEO_INPUT", output.path)
+                    intent.putExtra("KEY_ACTIVITY", KeyNewProject.REVERSE_ACTIVITY.name)
+                    startActivity(intent)
+                    showToast( "speed xong: ${output.path}")
+                    Log.d("ItemVideoPlayerFragment", "Video processed: $output.path")
+                    showToast( "Đã phát video ngược")
+                } else {
+                    showToast("Lỗi đảo ngược: ${session.failStackTrace}")
+                    showLoadingView(
+                        loadingView = binding.loadingProgress,
+                        show = true
+                    )
+
+                    Log.e("ReverseVideoActivity", "Lỗi đảo ngược: ${session.failStackTrace}")
+                }
+            }
+        }
+    }
+
     private fun setupVideoView(videoPath: String) {
         Log.d("ItemVideoPlayerFragment", "Initializing video: $videoPath")
         binding.videoView.setVideoURI(Uri.parse(videoUri))
@@ -158,11 +201,6 @@ class ReverseVideoActivity:BaseActivity<ActivityReverseVideoBinding>() {
         handler.post(updateRunnable)
     }
 
-    private fun showLoading(show: Boolean) {
-        binding.loadingProgress.visibility = if (show) View.VISIBLE else View.GONE
-        binding.tvSave.isEnabled = !show
-    }
-
     private fun togglePlayPause() {
         if (isPlaying) {
             pauseVideo()
@@ -186,6 +224,7 @@ class ReverseVideoActivity:BaseActivity<ActivityReverseVideoBinding>() {
         isPlaying = false
 
     }
+
     override fun onDestroy() {
         super.onDestroy()
         handler.removeCallbacks(updateRunnable)

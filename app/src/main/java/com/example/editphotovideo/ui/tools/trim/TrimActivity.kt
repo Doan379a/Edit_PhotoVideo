@@ -15,8 +15,11 @@ import com.example.editphotovideo.data.entity.MediaEntity
 import com.example.editphotovideo.data.entity.MediaType
 import com.example.editphotovideo.data.viewmodel.MediaViewModel
 import com.example.editphotovideo.databinding.ActivityTrimBinding
+import com.example.editphotovideo.ui.main.MainActivity
+import com.example.editphotovideo.ui.save.KeyNewProject
 import com.example.editphotovideo.ui.save.SaveVideoActivity
 import com.example.editphotovideo.utils.ImageUtils.getTempMovieDir
+import com.example.editphotovideo.widget.tap
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.text.SimpleDateFormat
@@ -42,7 +45,7 @@ class TrimActivity : BaseActivity<ActivityTrimBinding>(), VideoTrimmingListener 
             return
         }
 
-        dstTrimmedFile = File(getTempMovieDir(), "trimmed_${System.currentTimeMillis()}.mp4")
+        dstTrimmedFile = File(getTempMovieDir(this@TrimActivity), "trimmed_${System.currentTimeMillis()}.mp4")
         val retriever = MediaMetadataRetriever().apply {
             setDataSource(this@TrimActivity, inputUri)
         }
@@ -55,39 +58,45 @@ class TrimActivity : BaseActivity<ActivityTrimBinding>(), VideoTrimmingListener 
             post { setVideoURI(inputUri!!) }
         }
 
+
+    }
+
+    override fun viewListener() {
+        binding.imgBack.tap {
+            showActivity(MainActivity::class.java)
+            finish()
+        }
         binding.tvSave.setOnClickListener {
             binding.videoTrimmerView.initiateTrimming()
         }
     }
 
-    override fun viewListener() { }
-
     override fun dataObservable() { }
 
     override fun onVideoPrepared() {
-        binding.progressBar.post {
+        binding.loadingProgress.post {
             Toast.makeText(this, "Video sẵn sàng", Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun onTrimStarted() {
         binding.videoTrimmerView.post {
-            binding.progressBar.visibility = View.VISIBLE
+            binding.loadingProgress.visibility = View.VISIBLE
             Toast.makeText(this, "Bắt đầu cắt...", Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun onTrimProgressing(progress: Double) {
         // progress từ 0.0 đến 1.0
-        binding.progressBar.post {
-            binding.progressBar.visibility = View.VISIBLE
+        binding.loadingProgress.post {
+            binding.loadingProgress.visibility = View.VISIBLE
             Log.d("TrimActivity", "Progress: ${progress * 100}%")
         }
     }
 
     override fun onFinishedTrimming(uri: Uri?) {
-        binding.progressBar.post {
-            binding.progressBar.visibility = View.GONE
+        binding.loadingProgress.post {
+            binding.loadingProgress.visibility = View.GONE
             MediaScannerConnection.scanFile(
                 this@TrimActivity,
                 arrayOf(uri?.path),
@@ -101,6 +110,7 @@ class TrimActivity : BaseActivity<ActivityTrimBinding>(), VideoTrimmingListener 
             mediaViewModel.insertMedia(entity)
             val intent = Intent(this@TrimActivity, SaveVideoActivity::class.java)
             intent.putExtra("URI_VIDEO_INPUT", uri.toString())
+            intent.putExtra("KEY_ACTIVITY", KeyNewProject.TRIM_ACTIVITY.name)
             startActivity(intent)
             Toast.makeText(
                 this,
@@ -109,14 +119,12 @@ class TrimActivity : BaseActivity<ActivityTrimBinding>(), VideoTrimmingListener 
                 Toast.LENGTH_LONG
             ).show()
             Log.d("TrimActivity", "Destination file path: ${dstTrimmedFile?.absolutePath}")
-
-            // Có thể trả lại data hoặc dùng đoạn file tiếp tục xử lý
         }
     }
 
     override fun onTrimFailed(exception: Exception?) {
-        binding.progressBar.post {
-            binding.progressBar.visibility = View.GONE
+        binding.loadingProgress.post {
+            binding.loadingProgress.visibility = View.GONE
             Toast.makeText(
                 this,
                 "Trim thất bại: ${exception?.message ?: "Không xác định"}",

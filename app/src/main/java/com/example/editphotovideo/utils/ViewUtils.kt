@@ -6,6 +6,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.SeekBar
 import android.widget.TextView
+import android.widget.VideoView
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import com.example.editphotovideo.R
@@ -85,35 +86,36 @@ object ViewUtils {
         })
     }
 
-    fun mapSeekBarToSpeechRate(progress: Int): Float {
-        val minSpeed = 0.5f
-        val maxSpeed = 2.0f
-        return minSpeed + (progress / 100f) * (maxSpeed - minSpeed)
+    fun createSeekBarChangeListener(
+        videoView: VideoView,
+        onStart: (() -> Unit)? = null,
+        onStop: (() -> Unit)? = null
+    ): SeekBar.OnSeekBarChangeListener {
+        return object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (fromUser && videoView.duration > 0) {
+                    val position = (videoView.duration * progress) / 100
+                    videoView.seekTo(position)
+                }
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                onStart?.invoke()
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                onStop?.invoke()
+            }
+        }
     }
 
-    fun mapSpeechRateToSeekBar(speechRate: Float): Int {
-        val minSpeed = 0.5f
-        val maxSpeed = 2.0f
-        return (((speechRate - minSpeed) / (maxSpeed - minSpeed)) * 100).toInt()
-    }
-    fun mapSeekBarToVolume(progress: Int): Float {
-        return progress / 100f
+    fun showLoadingView(
+        loadingView: View,
+        show: Boolean
+    ) {
+        loadingView.visibility = if (show) View.VISIBLE else View.GONE
     }
 
-    fun formatTwoDigits(number: Number): String {
-        return String.format("%.1f", number.toDouble())
-    }
-
-    fun showKeyboard(context: Context,view: View) {
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        view.requestFocus()
-        imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
-    }
-
-    fun hideKeyboard(context: Context,view: View) {
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
-    }
      fun formatTime(millis: Int): String {
         val totalSeconds = millis / 1000
         val minutes = totalSeconds / 60
