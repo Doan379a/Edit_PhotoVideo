@@ -1,7 +1,9 @@
 package com.example.editphotovideo.ui.editmovie;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.NotificationManager;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,8 +11,10 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnPreparedListener;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.AttributeSet;
@@ -28,6 +32,7 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,6 +40,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -62,7 +68,10 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCa
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
 import gun0912.tedimagepicker.builder.TedImagePicker;
@@ -158,7 +167,7 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
             THEMES themes = PreviewActivity.this.application.selectedTheme;
             try {
                 FileUtils.TEMP_DIRECTORY_AUDIO.mkdirs();
-                File audioDir = new File(getExternalFilesDir(null), "Photo Video Maker/.temp_audio");
+                File audioDir = new File(getExternalFilesDir(null), "Photo_Video_Edit/.temp_audio");
                 audioDir.mkdirs();
                 File tempFile = new File(audioDir, "temp.mp3");
                 if (tempFile.exists()) {
@@ -394,6 +403,7 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
         this.application = MyApplication.getInstance();
         this.application.videoImages.clear();
         MyApplication.isBreak = false;
+        application.setOnProgressReceiver(this);
         Intent intent = new Intent(getApplicationContext(), ImageCreatorService.class);
         intent.putExtra(ImageCreatorService.EXTRA_SELECTED_THEME, this.application.getCurrentTheme());
         startService(intent);
@@ -516,7 +526,14 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
                     int ss = j % 60;
                     this.tvTime.setText(String.format("%02d:%02d", new Object[]{Integer.valueOf(mm), Integer.valueOf(ss)}));
                     int total = (int) (((float) (this.arrayList.size() - 1)) * this.seconds);
-                    this.tvEndTime.setText(String.format("%02d:%02d", new Object[]{Integer.valueOf(total / 60), Integer.valueOf(total % 60)}));
+                    String formattedTime = String.format("%02d:%02d", new Object[]{Integer.valueOf(total / 60), Integer.valueOf(total % 60)});
+                    String[] parts = formattedTime.split(":");
+                    int minutes = Integer.parseInt(parts[0]);
+                    int seconds = Integer.parseInt(parts[1]);
+
+                    float totalSeconds = minutes * 60 + seconds;
+                    Log.d("totalSeconds", String.valueOf(totalSeconds));
+                    this.tvEndTime.setText(formattedTime);
                 }
             }
         } catch (Exception e) {
@@ -762,7 +779,7 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
     }
 
     private void onBackDialog() {
-    //    new Builder(this, R.style.Theme_MovieMaker_AlertDialog).setTitle((int) R.string.app_name).setMessage((CharSequence) "Are you sure ? \nYour video is not prepared yet!").setPositiveButton((CharSequence) "Go Back", new C05875()).setNegativeButton((CharSequence) "Stay here", null).create().show();
+        new AlertDialog.Builder(this, R.style.Theme_MovieMaker_AlertDialog).setTitle((int) R.string.app_name).setMessage((CharSequence) "Are you sure ? \nYour video is not prepared yet!").setPositiveButton((CharSequence) "Go Back", new C05875()).setNegativeButton((CharSequence) "Stay here", null).create().show();
     }
 
     public void setTheme() {
@@ -813,7 +830,7 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
     private void loadProgress() {
         this.handler.removeCallbacks(this.lockRunnable);
         startService(new Intent(this, CreateVideoService.class));
-
+        ImageCreatorService.isImageComplate = true;
 //        Intent intent2 = new Intent(this.application, ProgressActivity.class);
 //        intent2.setFlags(268468224);
 //        startActivity(intent2);
@@ -826,6 +843,37 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
 
     public void onProgressFinish(String videoPath) {
         this.videoPath = videoPath;
+
+        File src = new File(videoPath);
+        File dst = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "YourApp");
+
+        if (!dst.exists()) dst.mkdirs();
+
+        File outFile = new File(dst, src.getName());
+        try {
+            Files.copy(src.toPath(), outFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        Uri videoUri = FileProvider.getUriForFile(
+                this,
+                getPackageName() + ".fileprovider",
+                outFile
+        );
+
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(videoUri, "video/mp4");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, "Không tìm thấy ứng dụng để mở video.", Toast.LENGTH_SHORT).show();
+        }
+
         Log.d("loadProgress", videoPath);
     }
 

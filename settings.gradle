@@ -19,6 +19,7 @@ dependencyResolutionManagement {
         maven { url 'https://jitpack.io' }
         maven { url 'https://repo.gradle.org/gradle/libs-releases/' }
 //        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+        jcenter()
     }
 }
 

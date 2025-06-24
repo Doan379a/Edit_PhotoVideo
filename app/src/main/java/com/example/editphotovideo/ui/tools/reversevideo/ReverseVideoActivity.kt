@@ -14,7 +14,6 @@ import com.example.editphotovideo.R
 import com.example.editphotovideo.base.BaseActivity
 import com.example.editphotovideo.data.viewmodel.MediaViewModel
 import com.example.editphotovideo.databinding.ActivityReverseVideoBinding
-import com.example.editphotovideo.libffmpeg.FFmpeg
 import com.example.editphotovideo.utils.ViewUtils.formatTime
 import com.example.editphotovideo.widget.visible
 import dagger.hilt.android.AndroidEntryPoint

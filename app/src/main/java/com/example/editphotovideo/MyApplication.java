@@ -14,9 +14,10 @@ import android.util.Log;
 
 import com.example.editphotovideo.data.ImageData;
 import com.example.editphotovideo.data.MusicData;
-import com.example.editphotovideo.libffmpeg.FFmpeg;
-import com.example.editphotovideo.libffmpeg.FFmpegLoadBinaryResponseHandler;
-import com.example.editphotovideo.libffmpeg.exceptions.FFmpegNotSupportedException;
+//import com.example.editphotovideo.libffmpeg.FFmpeg;
+//import com.example.editphotovideo.libffmpeg.FFmpegLoadBinaryResponseHandler;
+//import com.example.editphotovideo.libffmpeg.exceptions.FFmpegNotSupportedException;
+import com.example.editphotovideo.libffmpeg.FileUtils;
 import com.example.editphotovideo.ui.editmovie.OnProgressReceiver;
 import com.example.editphotovideo.ui.editmovie.themes.THEMES;
 import com.example.editphotovideo.utils.PermissionModelUtil;
@@ -48,31 +49,6 @@ public class MyApplication extends Application {
     public THEMES selectedTheme = THEMES.Shine;
     public ArrayList<String> videoImages = new ArrayList();
 
-    class C11551 implements FFmpegLoadBinaryResponseHandler {
-        C11551() {
-        }
-
-        public void onStart() {
-        }
-
-        public void onFinish() {
-        }
-
-        public void onSuccess(String cpuType) {
-            Log.e("ffmpeg", cpuType);
-        }
-
-        public void onFailure(String cpuType) {
-            Log.e("ffmpeg", cpuType);
-        }
-
-        public void onSuccess() {
-        }
-
-        public void onFailure() {
-        }
-    }
-
     public static MyApplication getInstance() {
         return instance;
     }
@@ -80,6 +56,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        FileUtils.init(getApplicationContext());
         init();
     }
 
@@ -87,11 +64,11 @@ public class MyApplication extends Application {
         if (!new PermissionModelUtil(this).needPermissionCheck()) {
             getFolderList();
         }
-        try {
-            loadLib();
-        } catch (FFmpegNotSupportedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            loadLib();
+//        } catch (FFmpegNotSupportedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void initArray() {
@@ -184,9 +161,9 @@ public class MyApplication extends Application {
         }
     }
 
-    private void loadLib() throws FFmpegNotSupportedException {
-        FFmpeg.getInstance(this).loadBinary(new C11551());
-    }
+//    private void loadLib() throws FFmpegNotSupportedException {
+//        FFmpeg.getInstance(this).loadBinary(new C11551());
+//    }
 
     public Typeface getApplicationTypeFace() {
         return null;

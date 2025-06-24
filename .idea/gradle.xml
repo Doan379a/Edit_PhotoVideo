@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/photoeditor" />
             <option value="$PROJECT_DIR$/tedimagepicker" />
+            <option value="$PROJECT_DIR$/video_trimmer_library" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
