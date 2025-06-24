@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "ja.burhanrashid52.photoeditor.test.photoeditor-mergeDebugAndroidTestResources-22:/values-ldltr-v21/values-ldltr-v21.xml",
+            "map": [
+                {
+                    "source": "/Users/macbook/.gradle/caches/transforms-4/cb9c05503805061f85da2d9e07677c6a/transformed/appcompat-1.7.0/res/values-ldltr-v21/values-ldltr-v21.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "112",
+                        "endOffsets": "163"
+                    }
+                }
+            ]
+        }
+    ]
+}

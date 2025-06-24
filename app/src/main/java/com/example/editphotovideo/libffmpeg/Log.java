@@ -1,8 +1,10 @@
 package com.example.editphotovideo.libffmpeg;
 
+import com.arthenica.ffmpegkit.FFmpegKit;
+
 class Log {
     private static boolean DEBUG = false;
-    private static String TAG = FFmpeg.class.getSimpleName();
+    private static String TAG = FFmpegKit.class.getSimpleName();
 
     Log() {
     }

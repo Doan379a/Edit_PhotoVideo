@@ -1,0 +1,92 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="gun0912.tedimagepicker" >
+4
+5    <uses-sdk android:minSdkVersion="24" />
+6
+7    <!-- To handle the reselection within the app on Android 14 (API level 34) -->
+8    <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
+8-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:5:5-90
+8-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:5:22-87
+9
+10    <!-- Devices running Android 13 (API level 33) or higher -->
+11    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+11-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:8:5-76
+11-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:8:22-73
+12    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+12-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:9:5-75
+12-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:9:22-72
+13
+14    <!-- Devices running Android 12L (API level 32) or lower -->
+15    <uses-permission
+15-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:12:5-14:38
+16        android:name="android.permission.READ_EXTERNAL_STORAGE"
+16-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:13:9-64
+17        android:maxSdkVersion="32" />
+17-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:14:9-35
+18    <uses-permission
+18-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:15:5-17:38
+19        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+19-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:16:9-65
+20        android:maxSdkVersion="32" />
+20-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:17:9-35
+21
+22    <queries>
+22-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:19:5-26:15
+23        <intent>
+23-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:20:9-22:18
+24            <action android:name="android.media.action.IMAGE_CAPTURE" />
+24-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:21:13-73
+24-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:21:21-70
+25        </intent>
+26        <intent>
+26-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:23:9-25:18
+27            <action android:name="android.media.action.VIDEO_CAPTURE" />
+27-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:24:13-73
+27-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:24:21-70
+28        </intent>
+29    </queries>
+30
+31    <application>
+31-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:28:5-51:19
+32        <activity
+32-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:29:9-31:58
+33            android:name="gun0912.tedimagepicker.TedImagePickerActivity"
+33-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:30:13-51
+34            android:theme="@style/TedImagePickerTheme" />
+34-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:31:13-55
+35        <activity
+35-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:33:9-35:63
+36            android:name="gun0912.tedimagepicker.zoom.TedImageZoomActivity"
+36-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:34:13-54
+37            android:theme="@style/TedImagePickerTheme.Zoom" />
+37-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:35:13-60
+38
+39        <provider
+39-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:37:9-40:40
+40            android:name="gun0912.tedimagepicker.util.TedImagePickerContentProvider"
+40-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:38:13-63
+41            android:authorities="${applicationId}.tedimagepicker.provider"
+41-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:39:13-75
+42            android:exported="false" />
+42-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:40:13-37
+43        <provider
+43-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:42:9-50:20
+44            android:name="androidx.core.content.FileProvider"
+44-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:43:13-62
+45            android:authorities="${applicationId}.provider"
+45-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:44:13-60
+46            android:exported="false"
+46-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:45:13-37
+47            android:grantUriPermissions="true" >
+47-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:46:13-47
+48            <meta-data
+48-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:47:13-49:58
+49                android:name="android.support.FILE_PROVIDER_PATHS"
+49-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:48:17-67
+50                android:resource="@xml/provider_paths" />
+50-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/src/main/AndroidManifest.xml:49:17-55
+51        </provider>
+52    </application>
+53
+54</manifest>

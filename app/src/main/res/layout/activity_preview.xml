@@ -1,35 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:n1="http://schemas.android.com/apk/res/android"
-    n1:id="@+id/main_content"
-    n1:layout_width="fill_parent"
-    n1:layout_height="fill_parent"
-    n1:fitsSystemWindows="true">
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        android:id="@+id/include"
+        layout="@layout/layout_preview" />
 
-    <include layout="@layout/layout_preview" />
-
-    <LinearLayout xmlns:n2="http://schemas.android.com/apk/res-auto"
-        n1:id="@+id/bottom_sheet"
-        n1:layout_width="fill_parent"
-        n1:layout_height="wrap_content"
-        n1:background="#cccccc"
-        n1:orientation="vertical"
-        n2:behavior_hideable="true"
-        n2:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/bottom_sheet"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#cccccc"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
 
         <TextView
-            n1:layout_width="fill_parent"
-            n1:layout_height="?listPreferredItemHeightSmall"
-            n1:layout_marginLeft="@dimen/abc_dialog_padding_material"
-            n1:gravity="center_vertical"
-            n1:text="Select Duration"
-            n1:textAppearance="?android:textAppearanceMedium"
-            n1:textColor="?colorPrimary"
-            n1:textSize="14.0sp"
-            n1:textStyle="bold" />
+            android:layout_width="fill_parent"
+            android:layout_height="?listPreferredItemHeightSmall"
+            android:layout_marginLeft="@dimen/abc_dialog_padding_material"
+            android:gravity="center_vertical"
+            android:text="Select Duration"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="?colorPrimary"
+            android:textSize="14.0sp"
+            android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
-            n1:id="@+id/rvDuration"
-            n1:layout_width="fill_parent"
-            n1:layout_height="fill_parent" />
+            android:id="@+id/rvDuration"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
     </LinearLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

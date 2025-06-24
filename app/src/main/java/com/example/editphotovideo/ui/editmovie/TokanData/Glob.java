@@ -13,7 +13,7 @@ import java.util.ArrayList;
 //import com.google.android.exoplayer2.util.MimeTypes;
 
 public class Glob {
-    public static String app_name = "Photo Video Maker";
+    public static String app_name = "Photo_Video_Edit";
     public static boolean dialog = true;
     public static ArrayList<Album> fileList = new ArrayList();
      public static ArrayList<Album> getfile(File dir, String fileType, Context mContext) {

@@ -3,6 +3,7 @@ package com.example.editphotovideo.ui.editmovie;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.widget.ImageView;
 
 import com.example.editphotovideo.MyApplication;

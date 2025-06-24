@@ -16,6 +16,9 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.arthenica.ffmpegkit.FFmpegKit;
+import com.arthenica.ffmpegkit.FFmpegKitConfig;
+import com.arthenica.ffmpegkit.ReturnCode;
+import com.arthenica.ffmpegkit.Session;
 import com.example.editphotovideo.MyApplication;
 import com.example.editphotovideo.R;
 import com.example.editphotovideo.libffmpeg.FileUtils;
@@ -30,8 +33,10 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -63,94 +68,113 @@ public class CreateVideoService extends IntentService {
         this.mBuilder.setContentTitle("Creating Video").setContentText("Making in progress").setSmallIcon(R.mipmap.ic_launcher);
         createVideo();
     }
-
     private void createVideo() {
-        String[] inputCode;
         long startTime = System.currentTimeMillis();
         this.toatalSecond = (this.application.getSecond() * ((float) this.application.getSelectedImages().size())) - 1.0f;
-        Log.e("totalseconds", String.valueOf(this.toatalSecond) + "_totalSecond");
         joinAudio();
         while (!ImageCreatorService.isImageComplate) {
             Log.e("isImageComplate", "ImageCreatorService.isImageComplate");
         }
-        Log.e("createVideo", "video create start");
-        new File(FileUtils.TEMP_DIRECTORY, "video.txt").delete();
-        for (int i = 0; i < this.application.videoImages.size(); i++) {
-            appendVideoLog(String.format("file '%s'", new Object[]{this.application.videoImages.get(i)}));
+        File videoListFile = new File(FileUtils.TEMP_DIRECTORY, "video.txt");
+        if (videoListFile.exists()) videoListFile.delete();
+        Log.d("videoListSize", String.valueOf(application.videoImages.size()));
+        float targetDurationSeconds = application.getDuration();
+        int imageCount = application.videoImages.size();
+        float durationPerImage = targetDurationSeconds / imageCount;
+        DecimalFormat df = new DecimalFormat("#.##");
+        for (int i = 0; i < application.videoImages.size(); i++) {
+            String path = application.videoImages.get(i);
+            appendVideoLog("file '" + path + "'");
+            Log.d("videoListFile", "file '" + path + "'");
+                appendVideoLog(String.format(Locale.US, "duration %.2f", durationPerImage));
         }
+        String lastPath = application.videoImages.get(imageCount - 1);
+        appendVideoLog("file '" + lastPath + "'");
+        Log.d("videoListFile", "file '" + lastPath + "'");
         String videoPath = new File(FileUtils.APP_DIRECTORY, getVideoName()).getAbsolutePath();
-        if (this.application.getMusicData() == null) {
-            inputCode = new String[]{FileUtils.getFFmpeg(this), "-r", String.valueOf(30.0f / this.application.getSecond()), "-f", "concat", "-i", new File(FileUtils.TEMP_DIRECTORY, "video.txt").getAbsolutePath(), "-r", "30", "-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p", videoPath};
-        } else if (this.application.getFrame() != -1) {
+        Log.d("videoPath", videoPath);
+        StringBuilder commandBuilder = new StringBuilder();
+
+        commandBuilder
+                .append("-y ")
+                .append("-fflags +genpts ")
+                .append("-f concat -safe 0 ")
+                .append("-i ").append("\"").append(videoListFile.getAbsolutePath()).append("\" ");
+
+
+        if (this.application.getMusicData() != null) {
+            commandBuilder.append("-i ").append("\"").append(this.audioFile.getAbsolutePath()).append("\" ");
+        }
+        if (this.application.getFrame() != -1) {
             if (!FileUtils.frameFile.exists()) {
                 try {
                     Bitmap bm = BitmapFactory.decodeResource(getResources(), this.application.getFrame());
-                    if (!(bm.getWidth() == MyApplication.VIDEO_WIDTH && bm.getHeight() == MyApplication.VIDEO_HEIGHT)) {
+                    if (bm.getWidth() != MyApplication.VIDEO_WIDTH || bm.getHeight() != MyApplication.VIDEO_HEIGHT) {
                         bm = ScalingUtilities.scaleCenterCrop(bm, MyApplication.VIDEO_WIDTH, MyApplication.VIDEO_HEIGHT);
                     }
-                    FileOutputStream outStream = new FileOutputStream(FileUtils.frameFile);
-                    bm.compress(CompressFormat.PNG, 100, outStream);
-                    outStream.flush();
-                    outStream.close();
-                    bm.recycle();
-                    System.gc();
-                } catch (Exception e) {
-                }
+                    FileOutputStream out = new FileOutputStream(FileUtils.frameFile);
+                    bm.compress(Bitmap.CompressFormat.PNG, 100, out);
+                    out.flush(); out.close();
+                    bm.recycle(); System.gc();
+                } catch (Exception ignored) {}
             }
-            inputCode = new String[]{FileUtils.getFFmpeg(this), "-r", String.valueOf(30.0f / this.application.getSecond()), "-f", "concat", "-safe", "0", "-i", new File(FileUtils.TEMP_DIRECTORY, "video.txt").getAbsolutePath(), "-i", FileUtils.frameFile.getAbsolutePath(), "-i", this.audioFile.getAbsolutePath(), "-filter_complex", "overlay= 0:0", "-strict", "experimental", "-r", String.valueOf(30.0f / this.application.getSecond()), "-t", String.valueOf(this.toatalSecond), "-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p", "-ac", "2", videoPath};
+            commandBuilder.append("-i ").append("\"").append(FileUtils.frameFile.getAbsolutePath()).append("\" ")
+                    .append("-filter_complex \"[0:v][2:v]overlay=0:0\" ");
+        }
+
+
+        commandBuilder
+                .append("-vsync vfr ")
+                .append("-c:v libx264 ")
+                .append("-preset ultrafast ")
+                .append("-b:v 2000k ")
+                .append("-pix_fmt yuv420p ")
+                .append("-t ").append(application.getDuration()).append(" ");
+
+        if (application.getMusicData() != null) {
+            commandBuilder.append("-c:a aac -b:a 192k ");
+        }
+
+        commandBuilder.append("\"").append(videoPath).append("\"");
+
+
+        Session session = FFmpegKit.execute(commandBuilder.toString());
+
+        if (ReturnCode.isSuccess(session.getReturnCode())) {
+            Log.d("FFmpegKit", "Video created successfully!");
         } else {
-            inputCode = new String[]{FileUtils.getFFmpeg(this), "-r", String.valueOf(30.0f / this.application.getSecond()), "-f", "concat", "-safe", "0", "-i", new File(FileUtils.TEMP_DIRECTORY, "video.txt").getAbsolutePath(), "-i", this.audioFile.getAbsolutePath(), "-strict", "experimental", "-r", "30", "-t", String.valueOf(this.toatalSecond), "-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p", "-ac", "2", videoPath};
+            Log.e("FFmpegKit", "Failed: " + session.getFailStackTrace());
         }
-        System.gc();
-        Process process = null;
-        try {
-//            process = Runtime.getRuntime().exec(inputCode);
-            FFmpegKit.execute("-i input.mp3 -filter:a volume=2 output.mp3");
-            while (!Util.isProcessCompleted(process)) {
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-                String line = bufferedReader.readLine();
-                while (line != null) {
-                    if (line != null) {
-                        line = bufferedReader.readLine();
-                        Log.e("process", "process_" + line + "");
-                        this.mBuilder.setProgress(100, ((int) ((75.0f * ((float) durationToprogtess(line + ""))) / 100.0f)) + 25, false);
-                    }
-                }
-            }
-        } catch (IOException e2) {
-            e2.printStackTrace();
-        } finally {
-            Util.destroyProcess(process);
-        }
+
         this.mBuilder.setContentText("Video created :" + FileUtils.getDuration(System.currentTimeMillis() - startTime)).setProgress(0, 0, false);
+
         try {
             long fileSize = new File(videoPath).length();
-            String artist = getResources().getString(R.string.app_name);
             ContentValues values = new ContentValues();
             values.put("_data", videoPath);
-            values.put("_size", Long.valueOf(fileSize));
-            values.put("mime_type",  "video/mp4");
-            values.put("artist", artist);
-            values.put("duration", Float.valueOf(this.toatalSecond * 1000.0f));
+            values.put("_size", fileSize);
+            values.put("mime_type", "video/mp4");
+            values.put("artist", getResources().getString(R.string.app_name));
+            values.put("duration", this.toatalSecond * 1000.0f);
             getContentResolver().insert(Media.getContentUriForPath(videoPath), values);
-        } catch (Exception e3) {
-        }
+        } catch (Exception ignored) {}
+
         try {
-            sendBroadcast(new Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE", Uri.fromFile(new File(videoPath))));
-        } catch (Exception e4) {
-            e4.printStackTrace();
+            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(videoPath))));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
         this.application.clearAllSelection();
         final String str = videoPath;
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            public void run() {
-                OnProgressReceiver receiver = CreateVideoService.this.application.getOnProgressReceiver();
-                if (receiver != null) {
-                    receiver.onVideoProgressFrameUpdate(100.0f);
-                    receiver.onProgressFinish(str);
-                }
+        new Handler(Looper.getMainLooper()).post(() -> {
+            OnProgressReceiver receiver = CreateVideoService.this.application.getOnProgressReceiver();
+            if (receiver != null) {
+                receiver.onVideoProgressFrameUpdate(100.0f);
+                receiver.onProgressFinish(str);
             }
         });
+
         FileUtils.deleteTempDir();
         this.application.setFrame(-1);
         this.application.clearAllSelection();
@@ -159,6 +183,29 @@ public class CreateVideoService extends IntentService {
         stopSelf();
     }
 
+    private void joinAudio() {
+        this.audioIp = new File(FileUtils.TEMP_DIRECTORY, "audio.txt");
+        this.audioFile = new File(FileUtils.APP_DIRECTORY, "audio.mp3");
+
+        if (audioIp.exists()) audioIp.delete();
+        if (audioFile.exists()) audioFile.delete();
+
+        int d = 0;
+        while (true) {
+            appendAudioLog(String.format("file '%s'", this.application.getMusicData().track_data));
+            if (this.toatalSecond * 1000.0f <= (this.application.getMusicData().track_duration * ((long) d))) {
+                break;
+            }
+            d++;
+        }
+        String command = String.format(
+                "-y -f concat -safe 0 -i \"%s\" -c:a libmp3lame -b:a 192k \"%s\"",
+                audioIp.getAbsolutePath(),
+                audioFile.getAbsolutePath()
+        );
+        Log.d("FFmpegKit", "Join audio command: " + command);
+        FFmpegKit.execute(command);
+    }
 
     private int durationToprogtess(String input) {
         int progress = 0;
@@ -193,97 +240,59 @@ public class CreateVideoService extends IntentService {
         });
     }
 
-    private void joinAudio() {
-        this.audioIp = new File(FileUtils.TEMP_DIRECTORY, "audio.txt");
-        this.audioFile = new File(FileUtils.APP_DIRECTORY, "audio.mp3");
-        this.audioFile.delete();
-        this.audioIp.delete();
-        int d = 0;
-        Log.e("in_joinAudio", String.valueOf(this.toatalSecond) + "_in_joinAudio");
-        while (true) {
-            appendAudioLog(String.format("file '%s'", new Object[]{this.application.getMusicData().track_data}));
-            Log.e("audio", new StringBuilder(String.valueOf(d)).append(" is D  ").append(this.toatalSecond * 1000.0f).append("___").append(this.application.getMusicData().track_duration * ((long) d)).toString());
-            if (this.toatalSecond * 1000.0f <= ((float) (this.application.getMusicData().track_duration * ((long) d)))) {
-                break;
-            }
-            d++;
-        }
-        Log.e("in_joinAudio1", String.valueOf(this.toatalSecond) + "in_joinAudio1");
-        Process process = null;
-        try {
-//            process = Runtime.getRuntime().exec(new String[]{FileUtils.getFFmpeg(this), "-f", "concat", "-safe", "0", "-i", this.audioIp.getAbsolutePath(), "-c", "copy", "-preset", "ultrafast", "-ac", "2", this.audioFile.getAbsolutePath()});
-            FFmpegKit.execute("-i input.mp3 -filter:a volume=2 output.mp3");
-            while (!Util.isProcessCompleted(process)) {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-                String line = reader.readLine();
-                while (line != null) {
-                    if (line != null) {
-                        line = reader.readLine();
-                        Log.e("audio", line + "_audio");
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.e("audio", "io", e);
-            Log.e("IOException", e.getMessage() + "_IOException");
-        } finally {
-            Util.destroyProcess(process);
-            Log.e("finally", "_finally");
-        }
-    }
-
     private String getVideoName() {
         return "video_" + new SimpleDateFormat("yyyy_MMM_dd_HH_mm_ss", Locale.ENGLISH).format(new Date()) + ".mp4";
     }
 
     public void appendVideoLog(String text) {
-        if (!FileUtils.TEMP_DIRECTORY.exists()) {
-            FileUtils.TEMP_DIRECTORY.mkdirs();
-        }
-        File logFile = new File(getExternalFilesDir(null), "video.txt");
+        File videoLog = new File(FileUtils.TEMP_DIRECTORY, "video.txt");
 
-        Log.d("FFMPEG", "File append " + text);
-        Log.d("TEMP_PATHVideoLog", FileUtils.TEMP_DIRECTORY.getAbsolutePath());
-
-        if (!logFile.exists()) {
-            try {
-                logFile.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
+        File parentDir = videoLog.getParentFile();
+        if (parentDir != null && !parentDir.exists()) {
+            boolean created = parentDir.mkdirs();
+            Log.d("CHECK_DIR", "Created parent: " + created + " Path: " + parentDir.getAbsolutePath());
+            if (!created) {
+                Log.e("CHECK_DIR", "Không thể tạo thư mục: " + parentDir.getAbsolutePath());
             }
         }
         try {
-            BufferedWriter buf = new BufferedWriter(new FileWriter(logFile, true));
+            if (!videoLog.exists()) {
+                boolean createdFile = videoLog.createNewFile();
+                Log.d("CHECK_FILE", "Created file: " + createdFile);
+            }
+
+            BufferedWriter buf = new BufferedWriter(new FileWriter(videoLog, true));
             buf.append(text);
             buf.newLine();
             buf.close();
-        } catch (IOException e2) {
-            e2.printStackTrace();
+        } catch (IOException e) {
+            Log.e("appendVideoLog", "Lỗi khi ghi video.txt: " + e.getMessage());
+            e.printStackTrace();
         }
+
     }
 
     public void appendAudioLog(String text) {
-        if (!FileUtils.TEMP_DIRECTORY.exists()) {
-            FileUtils.TEMP_DIRECTORY.mkdirs();
-        }
-      //  File logFile = new File(getCacheDir(), ".temp");
-        File logFile = new File(getExternalFilesDir(null), "audio.txt");
-        Log.d("TEMP_PATHAudioLog", FileUtils.TEMP_DIRECTORY.getAbsolutePath());
-        if (!logFile.exists()) {
-            try {
-                logFile.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        File audioLog = new File(FileUtils.TEMP_DIRECTORY, "audio.txt");
+        Log.d("TEMP_PATHAudioLog", audioLog.getAbsolutePath());
+
         try {
-            BufferedWriter buf = new BufferedWriter(new FileWriter(logFile, true));
+            if (!FileUtils.TEMP_DIRECTORY.exists()) {
+                FileUtils.TEMP_DIRECTORY.mkdirs();
+            }
+
+            if (!audioLog.exists()) {
+                audioLog.createNewFile();
+            }
+
+            BufferedWriter buf = new BufferedWriter(new FileWriter(audioLog, true));
             buf.append(text);
             buf.newLine();
             buf.close();
-        } catch (IOException e2) {
-            e2.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("appendAudioLog", "Lỗi khi ghi audio.txt: " + e.getMessage());
         }
     }
+
 }

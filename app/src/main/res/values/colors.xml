@@ -26,4 +26,8 @@
     <color name="radio_unchecked_border">#FF8594</color>
     <color name="color_selector_tab">#A0E12E</color>
     <color name="color_selector_none_tab">#CFCFD0</color>
+    <color name="color_727272">#727272</color>
+    <color name="color_9F9F9F">#9F9F9F</color>
+    <color name="color_3F3F3F">#3F3F3F</color>
+    <color name="color_939393">#939393</color>
 </resources>

@@ -12,11 +12,14 @@ import android.provider.MediaStore.Images.Media;
 import android.util.Log;
 
 
+import com.arthenica.ffmpegkit.FFmpegKit;
+import com.arthenica.ffmpegkit.FFmpegKitConfig;
 import com.example.editphotovideo.data.ImageData;
 import com.example.editphotovideo.data.MusicData;
-import com.example.editphotovideo.libffmpeg.FFmpeg;
-import com.example.editphotovideo.libffmpeg.FFmpegLoadBinaryResponseHandler;
-import com.example.editphotovideo.libffmpeg.exceptions.FFmpegNotSupportedException;
+//import com.example.editphotovideo.libffmpeg.FFmpeg;
+//import com.example.editphotovideo.libffmpeg.FFmpegLoadBinaryResponseHandler;
+//import com.example.editphotovideo.libffmpeg.exceptions.FFmpegNotSupportedException;
+import com.example.editphotovideo.libffmpeg.FileUtils;
 import com.example.editphotovideo.ui.editmovie.OnProgressReceiver;
 import com.example.editphotovideo.ui.editmovie.themes.THEMES;
 import com.example.editphotovideo.utils.PermissionModelUtil;
@@ -43,35 +46,11 @@ public class MyApplication extends Application {
     private MusicData musicData;
     private OnProgressReceiver onProgressReceiver;
     private float second = 2.0f;
+    private float duration = 5.0f;
     private String selectedFolderId = "";
     private final ArrayList<ImageData> selectedImages = new ArrayList();
     public THEMES selectedTheme = THEMES.Shine;
     public ArrayList<String> videoImages = new ArrayList();
-
-    class C11551 implements FFmpegLoadBinaryResponseHandler {
-        C11551() {
-        }
-
-        public void onStart() {
-        }
-
-        public void onFinish() {
-        }
-
-        public void onSuccess(String cpuType) {
-            Log.e("ffmpeg", cpuType);
-        }
-
-        public void onFailure(String cpuType) {
-            Log.e("ffmpeg", cpuType);
-        }
-
-        public void onSuccess() {
-        }
-
-        public void onFailure() {
-        }
-    }
 
     public static MyApplication getInstance() {
         return instance;
@@ -80,6 +59,19 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        FileUtils.init(getApplicationContext());
+        FFmpegKit.executeAsync("-codecs", session -> {
+            String output = session.getOutput();
+            if (output != null) {
+                Log.d("Codecs", output);
+                if (output.contains("libx264")) {
+                    Log.d("FFmpegKit", "✅ libx264 is available!");
+                } else {
+                    Log.e("FFmpegKit", "❌ libx264 NOT found!");
+                }
+            }
+        });
+
         init();
     }
 
@@ -87,17 +79,24 @@ public class MyApplication extends Application {
         if (!new PermissionModelUtil(this).needPermissionCheck()) {
             getFolderList();
         }
-        try {
-            loadLib();
-        } catch (FFmpegNotSupportedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            loadLib();
+//        } catch (FFmpegNotSupportedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void initArray() {
         this.videoImages = new ArrayList();
     }
 
+    public float getDuration() {
+        return this.duration;
+    }
+
+    public void setDuration(float duration) {
+        this.duration = duration;
+    }
     public float getSecond() {
         return this.second;
     }
@@ -105,7 +104,6 @@ public class MyApplication extends Application {
     public void setSecond(float second) {
         this.second = second;
     }
-
     public void setMusicData(MusicData musicData) {
         this.isFromSdCardAudio = false;
         this.musicData = musicData;
@@ -184,9 +182,9 @@ public class MyApplication extends Application {
         }
     }
 
-    private void loadLib() throws FFmpegNotSupportedException {
-        FFmpeg.getInstance(this).loadBinary(new C11551());
-    }
+//    private void loadLib() throws FFmpegNotSupportedException {
+//        FFmpeg.getInstance(this).loadBinary(new C11551());
+//    }
 
     public Typeface getApplicationTypeFace() {
         return null;

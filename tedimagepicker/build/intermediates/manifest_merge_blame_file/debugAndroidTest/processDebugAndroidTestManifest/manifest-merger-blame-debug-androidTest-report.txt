@@ -1,0 +1,204 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="gun0912.tedimagepicker.test" >
+4
+5    <uses-sdk
+5-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest13928700514893132548.xml:5:5-74
+6        android:minSdkVersion="24"
+6-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest13928700514893132548.xml:5:15-41
+7        android:targetSdkVersion="34" />
+7-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest13928700514893132548.xml:5:42-71
+8
+9    <instrumentation
+9-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest13928700514893132548.xml:11:5-15:77
+10        android:name="android.test.InstrumentationTestRunner"
+10-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest13928700514893132548.xml:11:22-75
+11        android:functionalTest="false"
+11-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest13928700514893132548.xml:14:22-52
+12        android:handleProfiling="false"
+12-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest13928700514893132548.xml:13:22-53
+13        android:label="Tests for gun0912.tedimagepicker.test"
+13-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest13928700514893132548.xml:15:22-75
+14        android:targetPackage="gun0912.tedimagepicker.test" />
+14-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest13928700514893132548.xml:12:22-73
+15    <!-- To handle the reselection within the app on Android 14 (API level 34) -->
+16    <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" /> <!-- Devices running Android 13 (API level 33) or higher -->
+16-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:8:5-90
+16-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:8:22-87
+17    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+17-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:11:5-76
+17-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:11:22-73
+18    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" /> <!-- Devices running Android 12L (API level 32) or lower -->
+18-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:12:5-75
+18-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:12:22-72
+19    <uses-permission
+19-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:15:5-17:38
+20        android:name="android.permission.READ_EXTERNAL_STORAGE"
+20-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:16:9-64
+21        android:maxSdkVersion="32" />
+21-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:17:9-35
+22    <uses-permission
+22-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:18:5-20:38
+23        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+23-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:19:9-65
+24        android:maxSdkVersion="32" />
+24-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:20:9-35
+25
+26    <queries>
+26-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:22:5-29:15
+27        <intent>
+27-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:23:9-25:18
+28            <action android:name="android.media.action.IMAGE_CAPTURE" />
+28-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:24:13-73
+28-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:24:21-70
+29        </intent>
+30        <intent>
+30-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:26:9-28:18
+31            <action android:name="android.media.action.VIDEO_CAPTURE" />
+31-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:27:13-73
+31-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:27:21-70
+32        </intent>
+33    </queries>
+34
+35    <application
+35-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest13928700514893132548.xml:7:5-9:19
+36        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+36-->[androidx.core:core:1.5.0] /Users/macbook/.gradle/caches/transforms-4/5d6fb11a9637119054970c00e91e515e/transformed/core-1.5.0/AndroidManifest.xml:24:18-86
+37        android:debuggable="true"
+38        android:extractNativeLibs="false" >
+39        <uses-library android:name="android.test.runner" />
+39-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest13928700514893132548.xml:8:9-60
+39-->/Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest13928700514893132548.xml:8:23-57
+40
+41        <activity
+41-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:32:9-34:58
+42            android:name="gun0912.tedimagepicker.TedImagePickerActivity"
+42-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:33:13-73
+43            android:theme="@style/TedImagePickerTheme" />
+43-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:34:13-55
+44        <activity
+44-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:35:9-37:63
+45            android:name="gun0912.tedimagepicker.zoom.TedImageZoomActivity"
+45-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:36:13-76
+46            android:theme="@style/TedImagePickerTheme.Zoom" />
+46-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:37:13-60
+47
+48        <provider
+48-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:39:9-42:40
+49            android:name="gun0912.tedimagepicker.util.TedImagePickerContentProvider"
+49-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:40:13-85
+50            android:authorities="gun0912.tedimagepicker.test.tedimagepicker.provider"
+50-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:41:13-75
+51            android:exported="false" />
+51-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:42:13-37
+52        <provider
+52-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:43:9-51:20
+53            android:name="androidx.core.content.FileProvider"
+53-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:44:13-62
+54            android:authorities="gun0912.tedimagepicker.test.provider"
+54-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:45:13-60
+55            android:exported="false"
+55-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:46:13-37
+56            android:grantUriPermissions="true" >
+56-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:47:13-47
+57            <meta-data
+57-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:48:13-50:58
+58                android:name="android.support.FILE_PROVIDER_PATHS"
+58-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:49:17-67
+59                android:resource="@xml/provider_paths" />
+59-->[:tedimagepicker] /Users/macbook/Documents/Android/Kim_Thành_Group/Edit_PhotoVideo/tedimagepicker/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:50:17-55
+60        </provider>
+61
+62        <activity
+62-->[io.github.ParkSangGwon:tedpermission:3.3.0] /Users/macbook/.gradle/caches/transforms-4/41208e7557944124aa1492669a25b7bd/transformed/jetified-tedpermission-3.3.0/AndroidManifest.xml:10:9-14:67
+63            android:name="com.gun0912.tedpermission.TedPermissionActivity"
+63-->[io.github.ParkSangGwon:tedpermission:3.3.0] /Users/macbook/.gradle/caches/transforms-4/41208e7557944124aa1492669a25b7bd/transformed/jetified-tedpermission-3.3.0/AndroidManifest.xml:11:13-75
+64            android:configChanges="mcc|mnc|locale|keyboard|keyboardHidden|screenLayout|fontScale|uiMode|orientation|screenSize|layoutDirection"
+64-->[io.github.ParkSangGwon:tedpermission:3.3.0] /Users/macbook/.gradle/caches/transforms-4/41208e7557944124aa1492669a25b7bd/transformed/jetified-tedpermission-3.3.0/AndroidManifest.xml:12:13-144
+65            android:screenOrientation="unspecified"
+65-->[io.github.ParkSangGwon:tedpermission:3.3.0] /Users/macbook/.gradle/caches/transforms-4/41208e7557944124aa1492669a25b7bd/transformed/jetified-tedpermission-3.3.0/AndroidManifest.xml:13:13-52
+66            android:theme="@style/Theme.Transparent.Permission" />
+66-->[io.github.ParkSangGwon:tedpermission:3.3.0] /Users/macbook/.gradle/caches/transforms-4/41208e7557944124aa1492669a25b7bd/transformed/jetified-tedpermission-3.3.0/AndroidManifest.xml:14:13-64
+67
+68        <provider
+68-->[io.github.ParkSangGwon:tedpermission:3.3.0] /Users/macbook/.gradle/caches/transforms-4/41208e7557944124aa1492669a25b7bd/transformed/jetified-tedpermission-3.3.0/AndroidManifest.xml:16:9-19:40
+69            android:name="com.gun0912.tedpermission.provider.TedPermissionProvider"
+69-->[io.github.ParkSangGwon:tedpermission:3.3.0] /Users/macbook/.gradle/caches/transforms-4/41208e7557944124aa1492669a25b7bd/transformed/jetified-tedpermission-3.3.0/AndroidManifest.xml:17:13-84
+70            android:authorities="gun0912.tedimagepicker.test.tedpermissionprovider"
+70-->[io.github.ParkSangGwon:tedpermission:3.3.0] /Users/macbook/.gradle/caches/transforms-4/41208e7557944124aa1492669a25b7bd/transformed/jetified-tedpermission-3.3.0/AndroidManifest.xml:18:13-73
+71            android:exported="false" />
+71-->[io.github.ParkSangGwon:tedpermission:3.3.0] /Users/macbook/.gradle/caches/transforms-4/41208e7557944124aa1492669a25b7bd/transformed/jetified-tedpermission-3.3.0/AndroidManifest.xml:19:13-37
+72
+73        <activity
+73-->[io.github.ParkSangGwon:tedonactivityresult:1.0.10] /Users/macbook/.gradle/caches/transforms-4/3a38dd053e736b752406a1c913a185de/transformed/jetified-tedonactivityresult-1.0.10/AndroidManifest.xml:10:9-14:67
+74            android:name="com.gun0912.tedonactivityresult.ProxyActivity"
+74-->[io.github.ParkSangGwon:tedonactivityresult:1.0.10] /Users/macbook/.gradle/caches/transforms-4/3a38dd053e736b752406a1c913a185de/transformed/jetified-tedonactivityresult-1.0.10/AndroidManifest.xml:11:13-73
+75            android:configChanges="mcc|mnc|locale|keyboard|keyboardHidden|screenLayout|fontScale|uiMode|orientation|screenSize|layoutDirection"
+75-->[io.github.ParkSangGwon:tedonactivityresult:1.0.10] /Users/macbook/.gradle/caches/transforms-4/3a38dd053e736b752406a1c913a185de/transformed/jetified-tedonactivityresult-1.0.10/AndroidManifest.xml:12:13-144
+76            android:screenOrientation="unspecified"
+76-->[io.github.ParkSangGwon:tedonactivityresult:1.0.10] /Users/macbook/.gradle/caches/transforms-4/3a38dd053e736b752406a1c913a185de/transformed/jetified-tedonactivityresult-1.0.10/AndroidManifest.xml:13:13-52
+77            android:theme="@style/Theme.AppCompat.Light.Dialog" />
+77-->[io.github.ParkSangGwon:tedonactivityresult:1.0.10] /Users/macbook/.gradle/caches/transforms-4/3a38dd053e736b752406a1c913a185de/transformed/jetified-tedonactivityresult-1.0.10/AndroidManifest.xml:14:13-64
+78
+79        <provider
+79-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/macbook/.gradle/caches/transforms-4/7d43d382dd51ba08e44b7747f48b4dde/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:24:9-32:20
+80            android:name="androidx.startup.InitializationProvider"
+80-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/macbook/.gradle/caches/transforms-4/7d43d382dd51ba08e44b7747f48b4dde/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:25:13-67
+81            android:authorities="gun0912.tedimagepicker.test.androidx-startup"
+81-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/macbook/.gradle/caches/transforms-4/7d43d382dd51ba08e44b7747f48b4dde/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:26:13-68
+82            android:exported="false" >
+82-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/macbook/.gradle/caches/transforms-4/7d43d382dd51ba08e44b7747f48b4dde/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:27:13-37
+83            <meta-data
+83-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/macbook/.gradle/caches/transforms-4/7d43d382dd51ba08e44b7747f48b4dde/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:29:13-31:52
+84                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+84-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/macbook/.gradle/caches/transforms-4/7d43d382dd51ba08e44b7747f48b4dde/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:30:17-78
+85                android:value="androidx.startup" />
+85-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/macbook/.gradle/caches/transforms-4/7d43d382dd51ba08e44b7747f48b4dde/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:31:17-49
+86            <meta-data
+86-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook/.gradle/caches/transforms-4/2064e7a54f48a8a3bfd94ef826b0b743/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
+87                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+87-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook/.gradle/caches/transforms-4/2064e7a54f48a8a3bfd94ef826b0b743/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+88                android:value="androidx.startup" />
+88-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook/.gradle/caches/transforms-4/2064e7a54f48a8a3bfd94ef826b0b743/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+89        </provider>
+90
+91        <receiver
+91-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook/.gradle/caches/transforms-4/2064e7a54f48a8a3bfd94ef826b0b743/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
+92            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+92-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook/.gradle/caches/transforms-4/2064e7a54f48a8a3bfd94ef826b0b743/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+93            android:directBootAware="false"
+93-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook/.gradle/caches/transforms-4/2064e7a54f48a8a3bfd94ef826b0b743/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+94            android:enabled="true"
+94-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook/.gradle/caches/transforms-4/2064e7a54f48a8a3bfd94ef826b0b743/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+95            android:exported="true"
+95-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook/.gradle/caches/transforms-4/2064e7a54f48a8a3bfd94ef826b0b743/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
+96            android:permission="android.permission.DUMP" >
+96-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook/.gradle/caches/transforms-4/2064e7a54f48a8a3bfd94ef826b0b743/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
+97            <intent-filter>
+97-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook/.gradle/caches/transforms-4/2064e7a54f48a8a3bfd94ef826b0b743/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+98                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+98-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook/.gradle/caches/transforms-4/2064e7a54f48a8a3bfd94ef826b0b743/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
+98-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook/.gradle/caches/transforms-4/2064e7a54f48a8a3bfd94ef826b0b743/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
+99            </intent-filter>
+100            <intent-filter>
+100-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook/.gradle/caches/transforms-4/2064e7a54f48a8a3bfd94ef826b0b743/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+101                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+101-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook/.gradle/caches/transforms-4/2064e7a54f48a8a3bfd94ef826b0b743/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
+101-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook/.gradle/caches/transforms-4/2064e7a54f48a8a3bfd94ef826b0b743/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+102            </intent-filter>
+103            <intent-filter>
+103-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook/.gradle/caches/transforms-4/2064e7a54f48a8a3bfd94ef826b0b743/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+104                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+104-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook/.gradle/caches/transforms-4/2064e7a54f48a8a3bfd94ef826b0b743/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
+104-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook/.gradle/caches/transforms-4/2064e7a54f48a8a3bfd94ef826b0b743/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+105            </intent-filter>
+106            <intent-filter>
+106-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook/.gradle/caches/transforms-4/2064e7a54f48a8a3bfd94ef826b0b743/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+107                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+107-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook/.gradle/caches/transforms-4/2064e7a54f48a8a3bfd94ef826b0b743/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
+107-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook/.gradle/caches/transforms-4/2064e7a54f48a8a3bfd94ef826b0b743/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+108            </intent-filter>
+109        </receiver>
+110    </application>
+111
+112</manifest>
