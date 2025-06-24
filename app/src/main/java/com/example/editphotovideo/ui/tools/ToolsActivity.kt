@@ -6,6 +6,7 @@ import com.example.editphotovideo.base.BaseActivity
 import com.example.editphotovideo.databinding.ActivityToolsBinding
 import com.example.editphotovideo.ui.editorimage.EditImageActivity
 import com.example.editphotovideo.ui.tools.compressvideo.CompressVideoActivity
+import com.example.editphotovideo.ui.tools.extract_audio.ExtractAudioActivity
 import com.example.editphotovideo.ui.tools.reversevideo.ReverseVideoActivity
 import com.example.editphotovideo.ui.tools.speed.SpeedActivity
 import com.example.editphotovideo.ui.tools.trim.TrimActivity
@@ -38,6 +39,9 @@ class ToolsActivity : BaseActivity<ActivityToolsBinding>() {
         binding.llReverseVideo.tap {
             selectVideo(4)
         }
+        binding.llExtractAudio.tap {
+            selectVideo(5)
+        }
     }
 
     override fun dataObservable() {
@@ -59,6 +63,7 @@ class ToolsActivity : BaseActivity<ActivityToolsBinding>() {
                     2 -> TrimActivity::class.java
                     3 -> SpeedActivity::class.java
                     4-> ReverseVideoActivity::class.java
+                    5-> ExtractAudioActivity::class.java
                     else -> {
                         CompressVideoActivity::class.java
                     }

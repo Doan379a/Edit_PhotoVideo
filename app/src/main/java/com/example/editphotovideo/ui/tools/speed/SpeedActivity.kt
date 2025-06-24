@@ -23,10 +23,14 @@ import com.example.editphotovideo.data.entity.MediaEntity
 import com.example.editphotovideo.data.entity.MediaType
 import com.example.editphotovideo.data.viewmodel.MediaViewModel
 import com.example.editphotovideo.databinding.ActivitySpeedBinding
+import com.example.editphotovideo.ui.main.MainActivity
+import com.example.editphotovideo.ui.save.KeyNewProject
 import com.example.editphotovideo.ui.save.SaveVideoActivity
 import com.example.editphotovideo.utils.ImageUtils.getRealPathFromUri
 import com.example.editphotovideo.utils.ImageUtils.getTempMovieDir
 import com.example.editphotovideo.utils.ViewUtils.formatTime
+import com.example.editphotovideo.utils.ViewUtils.showLoadingView
+import com.example.editphotovideo.widget.showToast
 import com.example.editphotovideo.widget.tap
 import com.example.editphotovideo.widget.visible
 import com.hw.videoprocessor.VideoProcessor
@@ -85,7 +89,9 @@ class SpeedActivity : BaseActivity<ActivitySpeedBinding>() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun viewListener() {
-        binding.imgBack.tap { finish() }
+        binding.imgBack.tap {
+            showActivity(MainActivity::class.java)
+            finish() }
         binding.parent.setOnClickListener { togglePlayPause() }
         binding.btnPlayPause.setOnClickListener { togglePlayPause() }
         binding.tvSave.tap { speedVideo(speed) }
@@ -128,10 +134,6 @@ class SpeedActivity : BaseActivity<ActivitySpeedBinding>() {
         binding.videoView.setVideoURI(Uri.parse(videoPath))
 
         binding.videoView.setOnPreparedListener { mp ->
-            mediaPlayer = mp
-            videoDuration = mp.duration
-            binding.tvEnd.text = formatTime(videoDuration)
-
             val videoWidth = mp.videoWidth
             val videoHeight = mp.videoHeight
             val containerWidth = binding.parent.width
@@ -142,6 +144,9 @@ class SpeedActivity : BaseActivity<ActivitySpeedBinding>() {
                     height = calculatedHeight
                 }
             }
+            mediaPlayer = mp
+            videoDuration = mp.duration
+            binding.tvEnd.text = formatTime(videoDuration)
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 val params = mp.playbackParams
@@ -211,12 +216,16 @@ class SpeedActivity : BaseActivity<ActivitySpeedBinding>() {
     }
 
     private fun speedVideo(speed: Float) {
-        showLoading(true)
-
+        showLoadingView(
+            loadingView = binding.loadingProgress,
+            show = true
+        )
+        handler.removeCallbacks(updateRunnable)
+        pauseVideo()
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
                 try {
-                    val moviesDir = getTempMovieDir()
+                    val moviesDir = getTempMovieDir(this@SpeedActivity)
                     val filePrefix = "Speed_${System.currentTimeMillis()}"
                     val fileExtn = ".mp4"
                     var dest = File(moviesDir, "$filePrefix$fileExtn")
@@ -248,32 +257,34 @@ class SpeedActivity : BaseActivity<ActivitySpeedBinding>() {
                             mediaType = MediaType.VIDEO
                         )
                         mediaViewModel.insertMedia(entity)
+                        showLoadingView(
+                            loadingView = binding.loadingProgress,
+                            show = false
+                        )
+
                         val intent = Intent(this@SpeedActivity, SaveVideoActivity::class.java)
                         intent.putExtra("URI_VIDEO_INPUT", filePath)
+                        intent.putExtra("KEY_ACTIVITY", KeyNewProject.SPEED_ACTIVITY.name)
                         startActivity(intent)
-                        Toast.makeText(
-                            this@SpeedActivity,
-
-                            "speed xong: ${filePath}",
-                            Toast.LENGTH_LONG
-                        ).show()
+               showToast("speed xong: ${filePath}")
                         Log.d("ItemVideoPlayerFragment", "Video processed: $filePath")
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
                 } finally {
                     withContext(Dispatchers.Main) {
-                        showLoading(false)
+                        showLoadingView(
+                            loadingView = binding.loadingProgress,
+                            show = false
+                        )
+
                     }
                 }
             }
         }
     }
 
-    private fun showLoading(show: Boolean) {
-        binding.loadingProgress.visibility = if (show) View.VISIBLE else View.GONE
-        binding.tvSave.isEnabled = !show
-    }
+
 
     override fun onDestroy() {
         super.onDestroy()

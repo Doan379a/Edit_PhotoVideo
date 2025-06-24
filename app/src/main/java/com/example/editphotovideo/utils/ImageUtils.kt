@@ -33,7 +33,7 @@ object ImageUtils {
             setFitMethod(Settings.Fit.NONE)
             setBoundsType(Settings.Bounds.OUTSIDE)
             setGravity(Gravity.CENTER)
-            setImage(300, 300)
+            setImage(500, 500)
         }
     }
 
@@ -97,7 +97,12 @@ object ImageUtils {
             it.getString(columnIndex)
         }
     }
-    fun getTempMovieDir(): File {
+    fun getTempMovieDir(context: Context): File {
+//        val customDir = File(context.getExternalFilesDir(Environment.DIRECTORY_MOVIES), DEFAULT_FOLDER)
+//        if (!customDir.exists()) {
+//            customDir.mkdirs()
+//        }
+//        return customDir
         val dcim = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
         val customDir = File(dcim, "$DEFAULT_FOLDER")
         if (!customDir.exists()) {
@@ -105,5 +110,6 @@ object ImageUtils {
         }
         return customDir
     }
+
 
 }

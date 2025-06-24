@@ -5,57 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/img_backgr_home">
 
-    <RelativeLayout
-        android:id="@+id/layout_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingVertical="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/img_back"
-            style="@style/SelectableItemBackground"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="0dp"
-            android:paddingHorizontal="@dimen/_15sdp"
-            android:paddingVertical="@dimen/_10sdp"
-            android:src="@drawable/ic_back"
-            app:tint="#A0E12E" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/img_back"
-            android:fontFamily="@font/polly_bold_700"
-            android:gravity="start"
-            android:includeFontPadding="false"
-            android:paddingStart="@dimen/_10sdp"
-            android:text="@string/reverse_video"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_18ssp" />
-
-        <TextView
-            android:id="@+id/tv_save"
-            android:layout_width="@dimen/_80sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/btn_done_button"
-            android:fontFamily="@font/polly_bold_700"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:text="@string/save"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_12ssp" />
-    </RelativeLayout>
 
     <com.example.editphotovideo.library.zoomimg.views.GestureFrameLayout
         android:id="@+id/gestureFrameLayout2"
@@ -161,16 +111,60 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <ProgressBar
-        android:id="@+id/loadingProgress"
-        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/layout_header"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/img_back"
+            style="@style/SelectableItemBackground"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="0dp"
+            android:paddingHorizontal="@dimen/_15sdp"
+            android:paddingVertical="@dimen/_10sdp"
+            android:src="@drawable/ic_back"
+            app:tint="#A0E12E" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/img_back"
+            android:fontFamily="@font/polly_bold_700"
+            android:gravity="start"
+            android:includeFontPadding="false"
+            android:paddingStart="@dimen/_10sdp"
+            android:text="@string/reverse_video"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_18ssp" />
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/loadingProgress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

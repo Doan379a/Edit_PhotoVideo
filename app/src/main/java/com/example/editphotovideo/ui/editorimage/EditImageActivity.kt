@@ -439,17 +439,14 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
 
     @SuppressLint("MissingPermission")
     private fun showSaveDialog() {
-        val builder = AlertDialog.Builder(this)
-        builder.setMessage(getString(R.string.msg_save_image))
-        builder.setPositiveButton("Save") { _: DialogInterface?, _: Int -> saveImage() }
-        builder.setNegativeButton("Cancel") { dialog: DialogInterface, _: Int -> dialog.dismiss() }
-        builder.setNeutralButton("Discard") { _: DialogInterface?, _: Int ->
+        com.example.editphotovideo.dialog.AlertDialog(this, actionExit = {
+            saveImage()
+        }, actionClose = {
             showActivity(
                 MainActivity::class.java
             )
             finishAffinity()
-        }
-        builder.create().show()
+        }).show()
     }
 
     override fun onFilterSelected(photoFilter: PhotoFilter) {

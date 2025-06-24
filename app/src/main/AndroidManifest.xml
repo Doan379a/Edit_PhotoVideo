@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
 
+
     <queries>
         <intent>
             <action android:name="android.intent.action.SEND" />
@@ -19,6 +20,10 @@
         <intent>
             <action android:name="android.intent.action.SEND" />
             <data android:mimeType="video/*" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+            <data android:mimeType="audio/*" />
         </intent>
 
         <package android:name="com.facebook.katana" />
@@ -43,6 +48,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EditPhotoVideo"
+        android:requestLegacyExternalStorage="true"
         tools:targetApi="31">
         <meta-data
             android:name="com.google.android.actions"
@@ -117,7 +123,38 @@
             android:name=".ui.tools.reversevideo.ReverseVideoActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".ui.tools.extract_audio.ExtractAudioActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.tools.extract_audio.ResultAudioActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.setting.SettingActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.language.LanguageActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.language_start.LanguageStartActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.intro.IntroActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.permission.PermissionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <service android:name="com.example.editphotovideo.service.ImageCreatorService" />
         <service android:name="com.example.editphotovideo.service.CreateVideoService" />
 
