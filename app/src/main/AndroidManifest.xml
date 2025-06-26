@@ -98,10 +98,6 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.songedit.SongEditActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.save.SaveImageActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
