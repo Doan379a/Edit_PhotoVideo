@@ -112,12 +112,12 @@ class TrimActivity : BaseActivity<ActivityTrimBinding>(), VideoTrimmingListener 
             intent.putExtra("URI_VIDEO_INPUT", uri.toString())
             intent.putExtra("KEY_ACTIVITY", KeyNewProject.TRIM_ACTIVITY.name)
             startActivity(intent)
-            Toast.makeText(
-                this,
-
-                "Trim xong: ${uri?.path ?: dstTrimmedFile?.absolutePath}",
-                Toast.LENGTH_LONG
-            ).show()
+//            Toast.makeText(
+//                this,
+//
+//                "Trim xong: ${uri?.path ?: dstTrimmedFile?.absolutePath}",
+//                Toast.LENGTH_LONG
+//            ).show()
             Log.d("TrimActivity", "Destination file path: ${dstTrimmedFile?.absolutePath}")
         }
     }

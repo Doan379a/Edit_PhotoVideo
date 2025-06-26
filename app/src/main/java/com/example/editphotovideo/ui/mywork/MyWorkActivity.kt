@@ -1,15 +1,24 @@
 package com.example.editphotovideo.ui.mywork
 
+import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.net.Uri
+import android.provider.MediaStore
 import android.util.Log
 import androidx.viewpager2.widget.ViewPager2
+import com.example.editphotovideo.MyApplication
 import com.example.editphotovideo.R
 import com.example.editphotovideo.base.BaseActivity
+import com.example.editphotovideo.data.ImageData
 import com.example.editphotovideo.databinding.ActivityMyWorkBinding
+import com.example.editphotovideo.service.CreateVideoService
+import com.example.editphotovideo.service.ImageCreatorService
+import com.example.editphotovideo.ui.editmovie.ImageEditActivity
 import com.example.editphotovideo.ui.editorimage.EditImageActivity
 import com.example.editphotovideo.ui.main.MainActivity
+import com.example.editphotovideo.utils.ImageUtils.getRealPathFromUri
 import com.example.editphotovideo.utils.setDrawableStartWithTint
 import com.example.editphotovideo.utils.setDrawableTopWithTint
 import com.example.editphotovideo.widget.showSnackBar
@@ -20,6 +29,8 @@ import gun0912.tedimagepicker.builder.TedImagePicker
 @AndroidEntryPoint
 class MyWorkActivity : BaseActivity<ActivityMyWorkBinding>() {
     private lateinit var viewPagerAdapter: MyWorkAdapter
+    private lateinit var application: MyApplication
+
     private var myPageChangeCallback: ViewPager2.OnPageChangeCallback =
         object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -34,6 +45,7 @@ class MyWorkActivity : BaseActivity<ActivityMyWorkBinding>() {
     }
 
     override fun initView() {
+        application = MyApplication.getInstance()
         viewPagerAdapter = MyWorkAdapter(this)
         binding.viewPager2.adapter = viewPagerAdapter
         binding.viewPager2.registerOnPageChangeCallback(myPageChangeCallback)
@@ -53,13 +65,58 @@ class MyWorkActivity : BaseActivity<ActivityMyWorkBinding>() {
         }
         binding.tvNewProject.tap {
             if (binding.viewPager2.currentItem == 0) {
-                showSnackBar("video")
+                TedImagePicker.with(this)
+
+                    .cancelListener {
+                        Log.d("TedImagePicker", "Người dùng đã hủy chọn ảnh")
+                    }
+                    .errorListener {
+                        Log.d("TedImagePicker", "Lỗi khi chọn ảnh!")
+                    }
+                    .min(3, getString(R.string.Please_select_at_least_3_photos))
+                    .startMultiImage { uriList ->
+                        application.clearAllSelection()
+                        uriList.forEach { uri ->
+                            val imagePath = getRealPathFromUri(this, uri)
+                            val imageData = ImageData().apply {
+                                this.imagePath = imagePath
+                                this.folderName = "FromPicker"
+                                this.imageCount = 1
+                            }
+                            application.addSelectedImage(imageData)
+                        }
+                        if (!isVideoInprocess()) {
+                            val intent = Intent(this, ImageEditActivity::class.java)
+                            intent.putParcelableArrayListExtra("selectedImages", ArrayList(uriList))
+                            startActivity(intent)
+                        }
+                    }
             } else {
                 selectImageEdit()
             }
         }
     }
+    private fun isVideoInprocess(): Boolean {
+        return MyApplication.isMyServiceRunning(
+            this,
+            CreateVideoService::class.java
+        ) || MyApplication.isMyServiceRunning(
+            this,
+            ImageCreatorService::class.java
+        )
+    }
 
+    private fun getRealPathFromUri(context: Context, uri: Uri): String {
+        var path = ""
+        val projection = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor = context.contentResolver.query(uri, projection, null, null, null)
+        cursor?.use {
+            val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            it.moveToFirst()
+            path = it.getString(columnIndex)
+        }
+        return path
+    }
     override fun dataObservable() {
 
     }

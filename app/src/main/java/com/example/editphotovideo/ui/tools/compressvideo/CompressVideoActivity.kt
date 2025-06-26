@@ -159,11 +159,11 @@ class CompressVideoActivity : BaseActivity<ActivityCompressVideoBinding>() {
                             show = false
                         )
 
-                        Toast.makeText(
-                            this@CompressVideoActivity,
-                            "Xử lý video xong!",
-                            Toast.LENGTH_SHORT
-                        ).show()
+//                        Toast.makeText(
+//                            this@CompressVideoActivity,
+//                            "Xử lý video xong!",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()

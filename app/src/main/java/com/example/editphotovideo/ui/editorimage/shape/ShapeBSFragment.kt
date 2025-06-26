@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.editphotovideo.R
 import com.example.editphotovideo.ui.editorimage.BottomSheetDismissListener
 import com.example.editphotovideo.ui.editorimage.ColorPickerAdapter
+import com.example.editphotovideo.utils.SystemUtil
 import com.example.editphotovideo.utils.showColorPicker
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ja.burhanrashid52.photoeditor.shape.ShapeType
@@ -38,6 +39,7 @@ class ShapeBSFragment : BottomSheetDialogFragment(), SeekBar.OnSeekBarChangeList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        SystemUtil.setLocale(requireActivity())
         val rvColor: RecyclerView = view.findViewById(R.id.shapeColors)
         val sbOpacity = view.findViewById<SeekBar>(R.id.shapeOpacity)
         val sbBrushSize = view.findViewById<SeekBar>(R.id.shapeSize)

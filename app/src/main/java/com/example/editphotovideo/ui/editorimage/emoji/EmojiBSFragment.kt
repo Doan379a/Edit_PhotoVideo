@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.editphotovideo.MyApplication
 import com.example.editphotovideo.R
 import com.example.editphotovideo.ui.editorimage.BottomSheetDismissListener
+import com.example.editphotovideo.utils.SystemUtil
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -50,6 +51,7 @@ class EmojiBSFragment : BottomSheetDialogFragment() {
         super.setupDialog(dialog, style)
         val contentView = View.inflate(context, R.layout.fragment_bottom_sticker_emoji_dialog, null)
         dialog.setContentView(contentView)
+        SystemUtil.setLocale(requireActivity())
         val params = (contentView.parent as View).layoutParams as CoordinatorLayout.LayoutParams
         val behavior = params.behavior
         if (behavior != null && behavior is BottomSheetBehavior<*>) {

@@ -127,16 +127,16 @@ class ExtractAudioActivity:BaseActivity<ActivityExtractAudioBinding>() {
                     if (success && tempOutput.exists()) {
                         val saved = saveAudioToMusic(this@ExtractAudioActivity,tempOutput, fileName)
                         if (saved.second) {
-                            showToast("Đã tách và lưu vào Music/ExtractedAudios")
+//                            showToast("Đã tách và lưu vào Music/ExtractedAudios")
                             val intent = Intent(this@ExtractAudioActivity, ResultAudioActivity::class.java)
                             intent.putExtra("AUDIO_URI", saved.first.toString())
                             intent.putExtra("KEY_ACTIVITY", KeyNewProject.EXTRACT_ACTIVITY.name)
                             startActivity(intent)
                         } else {
-                            showToast("Tách OK nhưng lưu thất bại")
+//                            showToast("Tách OK nhưng lưu thất bại")
                         }
                     } else {
-                        showToast("Tách âm thanh thất bại")
+//                        showToast("Tách âm thanh thất bại")
                     }
                 }
             } catch (e: Exception) {

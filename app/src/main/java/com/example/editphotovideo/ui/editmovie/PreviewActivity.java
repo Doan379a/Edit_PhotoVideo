@@ -547,6 +547,7 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
             this.lastData.addAll(this.arrayList);
             TedImagePicker.with(PreviewActivity.this)
                     .selectedUri(selectedUris)
+                    .min(3, getString(R.string.Please_select_at_least_3_photos))
                     .startMultiImage(uriList -> {
                         application.isEditModeEnable = false;
                         application.clearAllSelection();
@@ -763,7 +764,7 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
             return;
         }
         onBackDialog();
-        super.onBackPressed();
+//        super.onBackPressed();
     }
 
     private void onBackDialog() {
@@ -785,7 +786,10 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
                     mPlayer.release();
                 }
 
-                finish();
+//                finish();?
+                Intent intent=new Intent(PreviewActivity.this,MainActivity.class);
+                startActivity(intent);
+                finishAffinity();
                 dialog.dismiss();
             });
 
@@ -892,7 +896,6 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
         intent.putExtra("URI_VIDEO_INPUT", videoUri.toString());
         intent.putExtra("KEY_ACTIVITY", KeyNewProject.EDIT_VIDEO_ACTIVITY.name());
         startActivity(intent);
-        finish();
         llLoading.setVisibility(View.GONE);
         checkSave= false;
         PreviewActivity.this.application.setMusicData(null);

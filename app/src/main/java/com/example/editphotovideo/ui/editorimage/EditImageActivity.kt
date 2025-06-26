@@ -55,6 +55,7 @@ import com.example.editphotovideo.ui.save.SaveImageActivity
 import com.example.editphotovideo.utils.ImageUtils.DEFAULT_FOLDER
 import com.example.editphotovideo.utils.ImageUtils.getCorrectlyOrientedBitmap
 import com.example.editphotovideo.utils.ImageUtils.resizeBitmapToView
+import com.example.editphotovideo.utils.SystemUtil
 import com.example.editphotovideo.utils.helper.FileSaveHelper
 import com.example.editphotovideo.widget.getTagDebug
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -119,6 +120,7 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
         makeFullScreen()
         binding = ActivityEditImageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        SystemUtil.setLocale(this)
         imageUriOrigin = intent.getParcelableExtra("URI_IMAGE_INPUT")
         Log.d(getTagDebug(), "onCreate: $imageUriOrigin")
         val bitmap = getCorrectlyOrientedBitmap(this, imageUriOrigin ?: Uri.EMPTY)

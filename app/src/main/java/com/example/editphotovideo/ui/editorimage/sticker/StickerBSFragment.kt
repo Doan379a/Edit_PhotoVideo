@@ -128,34 +128,33 @@ class StickerBSFragment : BottomSheetDialogFragment() {
     companion object {
         private val stickerPathList: List<String> by lazy {
             val baseStickers = listOf(
-                "sticker/food/food_birthday_cake_1.png",
-                "sticker/food/food_birthday_cake_2.png",
-                "sticker/food/food_birthday_cake_3.png",
-                "sticker/food/food_cupcake.png",
-                "sticker/food/food_cupcake_with_cherry.png",
-                "sticker/food/food_ice_cream_1.png",
-                "sticker/food/food_ice_cream2.png",
-                "sticker/food/food_ice_cream3.png",
-                "sticker/food/food_ice_cream_4.png",
-                "sticker/food/food_pizza1.png",
-                "sticker/food/food_pizza2.png",
+                "sticker/food/food_birthday_cake_1.webp",
+                "sticker/food/food_birthday_cake_2.webp",
+                "sticker/food/food_birthday_cake_3.webp",
+                "sticker/food/food_cupcake.webp",
+                "sticker/food/food_cupcake_with_cherry.webp",
+                "sticker/food/food_ice_cream_1.webp",
+                "sticker/food/food_ice_cream2.webp",
+                "sticker/food/food_ice_cream3.webp",
+                "sticker/food/food_ice_cream_4.webp",
+                "sticker/food/food_pizza1.webp",
+                "sticker/food/food_pizza2.webp",
                 ////
 
-                "sticker/fun/fun_rainbow.png",
-                "sticker/fun/fun_star.png",
-                "sticker/fun/fun_star2.png",
-                "sticker/fun/fun_stool.png",
+                "sticker/fun/fun_rainbow.webp",
+                "sticker/fun/fun_star.webp",
+                "sticker/fun/fun_star2.webp",
                 ////
-                "sticker/words/words_bang.png",
-                "sticker/words/words_yeah.png",
-                "sticker/words/words_blog.png",
-                "sticker/words/words_boom.png",
-                "sticker/words/words_happy_birthday1.png",
-                "sticker/words/words_happy_birthday2.png",
-                "sticker/words/words_happy_birthday3.png",
-                "sticker/words/words_legacy.png",
-                "sticker/words/words_win1.png",
-                "sticker/words/words_wow.png",
+                "sticker/words/words_bang.webp",
+                "sticker/words/words_yeah.webp",
+                "sticker/words/words_blog.webp",
+                "sticker/words/words_boom.webp",
+                "sticker/words/words_happy_birthday1.webp",
+                "sticker/words/words_happy_birthday2.webp",
+                "sticker/words/words_happy_birthday3.webp",
+                "sticker/words/words_legacy.webp",
+                "sticker/words/words_win1.webp",
+                "sticker/words/words_wow.webp",
                 /////
                 "sticker/facial/facial_1.webp",
                 "sticker/facial/facial_2.webp",
@@ -168,24 +167,24 @@ class StickerBSFragment : BottomSheetDialogFragment() {
                 "sticker/facial/facial_9.webp",
                 "sticker/facial/facial_10.webp",
                 "sticker/facial/facial_11.webp",
-                "sticker/facial/facial_12.png",
-                "sticker/facial/facial_13.png",
+                "sticker/facial/facial_12.webp",
+                "sticker/facial/facial_13.webp",
                 ///
-                "sticker/animal/animal_cat1.png",
-                "sticker/animal/animal_deer1.png",
-                "sticker/animal/animal_dog1.png",
-                "sticker/animal/animal_fox1.png",
-                "sticker/animal/animal_bee1.png",
-                "sticker/animal/animal_frog1.png",
-                "sticker/animal/animal_hippo1.png",
-                "sticker/animal/animal_fox2.png",
-                "sticker/animal/animal_hen.png",
-                "sticker/animal/animal_donkey.png",
+                "sticker/animal/animal_cat1.webp",
+                "sticker/animal/animal_deer1.webp",
+                "sticker/animal/animal_dog1.webp",
+                "sticker/animal/animal_fox1.webp",
+                "sticker/animal/animal_bee1.webp",
+                "sticker/animal/animal_frog1.webp",
+                "sticker/animal/animal_hippo1.webp",
+                "sticker/animal/animal_fox2.webp",
+                "sticker/animal/animal_hen.webp",
+                "sticker/animal/animal_donkey.webp",
             )
 
             //stickerv2
             val generated = (1..236).map { i ->
-                "sticker/stickerv1/sticker_$i.png"
+                "sticker/stickerv1/sticker_$i.webp"
             }
             (baseStickers + generated).reversed()
         }

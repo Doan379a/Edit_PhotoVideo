@@ -33,6 +33,7 @@ import com.example.editphotovideo.widget.visible
 import com.google.android.material.internal.ViewUtils.hideKeyboard
 import com.google.android.material.internal.ViewUtils.showKeyboard
 import androidx.fragment.app.activityViewModels
+import com.example.editphotovideo.utils.SystemUtil
 import com.example.editphotovideo.utils.ViewUtils.setupSeekBarWithProgressLabel
 import com.example.editphotovideo.widget.getTagDebug
 import kotlin.math.roundToInt
@@ -111,6 +112,7 @@ class TextEditorDialogFragment : DialogFragment() {
     @SuppressLint("RestrictedApi")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        SystemUtil.setLocale(requireActivity())
         mInputMethodManager =
             requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         binding.addTextEditText.requestFocus()

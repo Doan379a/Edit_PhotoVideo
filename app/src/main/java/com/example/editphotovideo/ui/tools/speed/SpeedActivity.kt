@@ -275,7 +275,7 @@ class SpeedActivity : BaseActivity<ActivitySpeedBinding>() {
                         intent.putExtra("URI_VIDEO_INPUT", filePath)
                         intent.putExtra("KEY_ACTIVITY", KeyNewProject.SPEED_ACTIVITY.name)
                         startActivity(intent)
-                        showToast("speed xong: ${filePath}")
+//                        showToast("speed xong: ${filePath}")
                         Log.d("ItemVideoPlayerFragment", "Video processed: $filePath")
                     }
                 } catch (e: Exception) {

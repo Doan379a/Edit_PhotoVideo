@@ -526,5 +526,6 @@
     <string name="slow">Slow</string>
     <string name="saving_video">Saving video...</string>
     <string name="import_song">Import</string>
-    <string name="none">none</string>
+    <string name="none">None</string>
+    <string name="Please_select_at_least_3_photos">Please select at least 3 photos.</string>
 </resources>

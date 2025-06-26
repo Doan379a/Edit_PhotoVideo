@@ -1,16 +1,23 @@
 package com.example.editphotovideo.ui.save
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import com.example.editphotovideo.MyApplication
 import com.example.editphotovideo.R
 import com.example.editphotovideo.base.BaseActivity
+import com.example.editphotovideo.data.ImageData
 import com.example.editphotovideo.databinding.ActivitySaveVideoBinding
+import com.example.editphotovideo.service.CreateVideoService
+import com.example.editphotovideo.service.ImageCreatorService
+import com.example.editphotovideo.ui.editmovie.ImageEditActivity
 import com.example.editphotovideo.ui.editorimage.EditImageActivity
 import com.example.editphotovideo.ui.main.MainActivity
 import com.example.editphotovideo.ui.tools.compressvideo.CompressVideoActivity
@@ -18,6 +25,7 @@ import com.example.editphotovideo.ui.tools.extract_audio.ExtractAudioActivity
 import com.example.editphotovideo.ui.tools.reversevideo.ReverseVideoActivity
 import com.example.editphotovideo.ui.tools.speed.SpeedActivity
 import com.example.editphotovideo.ui.tools.trim.TrimActivity
+import com.example.editphotovideo.utils.ImageUtils.getRealPathFromUri
 import com.example.editphotovideo.utils.ShareUtils
 import com.example.editphotovideo.utils.ShareUtils.shareVideo
 import com.example.editphotovideo.utils.ViewUtils.createSeekBarChangeListener
@@ -33,7 +41,7 @@ class SaveVideoActivity : BaseActivity<ActivitySaveVideoBinding>() {
     private var isPlaying = false
     private var isTracking = false
     private val handler = Handler(Looper.getMainLooper())
-
+    private lateinit var application: MyApplication
     var activity: KeyNewProject? = null
 
 
@@ -45,6 +53,7 @@ class SaveVideoActivity : BaseActivity<ActivitySaveVideoBinding>() {
         val activityName = intent.getStringExtra("KEY_ACTIVITY")
         activity = KeyNewProject.valueOf(activityName ?:KeyNewProject.EDIT_VIDEO_ACTIVITY.name)
         videoUri = intent.getStringExtra("URI_VIDEO_INPUT")
+        application = MyApplication.getInstance()
         if (videoUri != null) {
             Log.d("URI_VIDEO_INPUT", videoUri!!)
             setupVideoView(videoUri!!)
@@ -94,13 +103,59 @@ class SaveVideoActivity : BaseActivity<ActivitySaveVideoBinding>() {
         }
         binding.tvNewProject.tap {
             if (activity==KeyNewProject.EDIT_VIDEO_ACTIVITY){
-                showSnackBar("để hàm chọn video giống ở main vòa đây ")
+                TedImagePicker.with(this)
+
+                    .cancelListener {
+                        Log.d("TedImagePicker", "Người dùng đã hủy chọn ảnh")
+                    }
+                    .errorListener {
+                        Log.d("TedImagePicker", "Lỗi khi chọn ảnh!")
+                    }
+                    .min(3, getString(R.string.Please_select_at_least_3_photos))
+                    .startMultiImage { uriList ->
+                        application.clearAllSelection()
+                        uriList.forEach { uri ->
+                            val imagePath = getRealPathFromUri(this, uri)
+                            val imageData = ImageData().apply {
+                                this.imagePath = imagePath
+                                this.folderName = "FromPicker"
+                                this.imageCount = 1
+                            }
+                            application.addSelectedImage(imageData)
+                        }
+                        if (!isVideoInprocess()) {
+                            val intent = Intent(this, ImageEditActivity::class.java)
+                            intent.putParcelableArrayListExtra("selectedImages", ArrayList(uriList))
+                            startActivity(intent)
+                            finishAffinity()
+                        }
+                    }
             }else{
                 selectVideoEdit()
             }
         }
     }
+    private fun isVideoInprocess(): Boolean {
+        return MyApplication.isMyServiceRunning(
+            this,
+            CreateVideoService::class.java
+        ) || MyApplication.isMyServiceRunning(
+            this,
+            ImageCreatorService::class.java
+        )
+    }
 
+    private fun getRealPathFromUri(context: Context, uri: Uri): String {
+        var path = ""
+        val projection = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor = context.contentResolver.query(uri, projection, null, null, null)
+        cursor?.use {
+            val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            it.moveToFirst()
+            path = it.getString(columnIndex)
+        }
+        return path
+    }
     private fun setupVideoView(videoPath: String) {
         Log.d("ItemVideoPlayerFragment", "Initializing video: $videoPath")
         binding.videoView.setVideoURI(Uri.parse(videoUri))

@@ -150,11 +150,11 @@ class ReverseVideoActivity : BaseActivity<ActivityReverseVideoBinding>() {
                     intent.putExtra("URI_VIDEO_INPUT", output.path)
                     intent.putExtra("KEY_ACTIVITY", KeyNewProject.REVERSE_ACTIVITY.name)
                     startActivity(intent)
-                    showToast( "speed xong: ${output.path}")
+//                    showToast( "speed xong: ${output.path}")
                     Log.d("ItemVideoPlayerFragment", "Video processed: $output.path")
-                    showToast( "Đã phát video ngược")
+//                    showToast( "Đã phát video ngược")
                 } else {
-                    showToast("Lỗi đảo ngược: ${session.failStackTrace}")
+//                    showToast("Lỗi đảo ngược: ${session.failStackTrace}")
                     showLoadingView(
                         loadingView = binding.loadingProgress,
                         show = true

@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.editphotovideo.MyApplication
+import com.example.editphotovideo.R
 import com.example.editphotovideo.base.BaseFragment
 import com.example.editphotovideo.data.ImageData
 import com.example.editphotovideo.databinding.FragmentEditorBinding
@@ -42,13 +43,14 @@ class EditorFragment : BaseFragment<FragmentEditorBinding>() {
         }
         binding.llCreateVideo.tap {
             TedImagePicker.with(requireActivity())
+
                 .cancelListener {
                     Log.d("TedImagePicker", "Người dùng đã hủy chọn ảnh")
                 }
                 .errorListener {
                     Log.d("TedImagePicker", "Lỗi khi chọn ảnh!")
                 }
-
+                .min(3, getString(R.string.Please_select_at_least_3_photos))
                 .startMultiImage { uriList ->
                     application.clearAllSelection()
                     uriList.forEach { uri ->
