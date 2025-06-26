@@ -56,21 +56,11 @@ public class MoviewThemeAdapter extends Adapter<MoviewThemeAdapter.Holder> {
     public void onBindViewHolder(Holder holder, final int pos) {
         THEMES themes = (THEMES) this.list.get(pos);
         Glide.with(this.application).load(Integer.valueOf(themes.getThemeDrawable())).into(holder.ivThumb);
-        if (pos == 0){
-            holder.tvThemeName.setVisibility(View.VISIBLE);
-            holder.tvThemeName.setText(previewActivity.getString(R.string.neon));
-        }
+
         if (themes == this.application.selectedTheme) {
-            if (pos == 0) {
-                holder.tvThemeName.setVisibility(View.VISIBLE);
-            } else {
-                holder.tvThemeName.setVisibility(View.GONE);
-            }
             holder.clickableView.setBackgroundResource(R.drawable.bg_width_radius_green_selected);
-            holder.tvThemeName.setTextColor(ContextCompat.getColor(previewActivity, R.color.color_selector_tab));
         } else {
             holder.clickableView.setBackgroundResource(R.drawable.bg_width_radius_green_unselected);
-            holder.tvThemeName.setTextColor(ContextCompat.getColor(previewActivity, R.color.white));
         }
 
         holder.clickableView.setOnClickListener(new OnClickListener() {

@@ -51,6 +51,7 @@ class ImageEditActivity : BaseActivity<ActivityImageAlbumBinding>() {
         val intent = Intent(this, PreviewActivity::class.java)
             .putExtra("selectedImages", selectedUris)
         startActivity(intent)
+        finish()
     }
     private val _ithCallback = object : ItemTouchHelper.Callback() {
         override fun getMovementFlags(

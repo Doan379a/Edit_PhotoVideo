@@ -165,6 +165,10 @@
             android:name=".ui.splash.SplashActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.songedit.SongDemoActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <service android:name="com.example.editphotovideo.service.ImageCreatorService" />
         <service android:name="com.example.editphotovideo.service.CreateVideoService" />
 

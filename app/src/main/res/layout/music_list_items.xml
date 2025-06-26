@@ -1,22 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.AppCompatCheckBox xmlns:n1="http://schemas.android.com/apk/res/android"
-    n1:id="@+id/radioMusicName"
-    n1:layout_width="fill_parent"
-    n1:layout_height="60.0dip"
-    n1:background="@drawable/bg_card_transparent"
-    n1:button="@null"
-    n1:drawableEnd="@drawable/ic_radiomusicname"
-    n1:drawableLeft="@drawable/ic_music"
-    n1:drawablePadding="20.0dip"
-    n1:drawableRight="@drawable/ic_radiomusicname"
-    n1:drawableStart="@drawable/ic_music"
-    n1:ellipsize="marquee"
-    n1:gravity="center_vertical"
-    n1:lines="2"
-    n1:minHeight="?listPreferredItemHeightSmall"
-    n1:padding="10.0dip"
-    n1:paddingLeft="@dimen/abc_select_dialog_padding_start_material"
-    n1:paddingRight="?dialogPreferredPadding"
-    n1:text="Hello"
-    n1:textAppearance="?android:textAppearanceMedium"
-    n1:textColor="@android:color/white" />
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:background="@color/black"
+    android:id="@+id/rootView"
+    >
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_music"
+        android:layout_centerVertical="true"
+        />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@+id/radioMusicName"
+        android:layout_toEndOf="@+id/appCompatImageView"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="15dp"
+        >
+
+        <TextView
+            android:id="@+id/txt_music_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/polly_regular_400"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            tools:text="dfghfffh" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_music_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/polly_regular_400"
+                android:textColor="#919191"
+                android:textSize="11sp"
+                tools:text="dfghfffh" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:fontFamily="@font/polly_regular_400"
+                android:text="."
+                android:textColor="#919191"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/txt_music_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/polly_regular_400"
+                android:textColor="#919191"
+                android:textSize="11sp"
+                tools:text="dfghfffh" />
+        </LinearLayout>
+    </LinearLayout>
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/radioMusicName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/bg_radio_checked"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:button="@null"
+        android:clickable="true"
+        android:focusable="true"
+      />
+</RelativeLayout>

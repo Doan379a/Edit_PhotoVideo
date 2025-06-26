@@ -74,7 +74,6 @@ public class SongEditActivity extends AppCompatActivity {
     private RecyclerView mMusicList;
     private int mOffset;
     private int mOffsetGoal;
-    private ImageButton mPlayButton;
     private OnClickListener mPlayListener = new C08214();
     private int mPlayStartMsec;
     private int mPlayStartOffset;
@@ -90,7 +89,8 @@ public class SongEditActivity extends AppCompatActivity {
     private boolean mTouchDragging;
     private int mWidth;
     private MusicData selectedMusicData;
-    private AppCompatImageView appCompatImageView;
+    private TextView appCompatImageView;
+    private AppCompatImageView ivBack;
 
     class C08214 implements OnClickListener {
         C08214() {
@@ -146,10 +146,14 @@ public class SongEditActivity extends AppCompatActivity {
 
         public class Holder extends ViewHolder {
             public CheckBox radioMusicName;
+            public TextView txt_music_id,txt_music_name,txt_music_duration;
 
             public Holder(View v) {
                 super(v);
                 this.radioMusicName = (CheckBox) v.findViewById(R.id.radioMusicName);
+                this.txt_music_id = (TextView) v.findViewById(R.id.txt_music_id);
+                this.txt_music_name = (TextView) v.findViewById(R.id.txt_music_name);
+                this.txt_music_duration = (TextView) v.findViewById(R.id.txt_music_duration);
             }
         }
 
@@ -165,9 +169,16 @@ public class SongEditActivity extends AppCompatActivity {
         public void onBindViewHolder(Holder holder, final int pos) {
             Log.d("LoadMusics", "Binding track: " + musicDatas.get(pos).track_displayName);
 
-            holder.radioMusicName.setText(((MusicData) this.musicDatas.get(pos)).track_displayName);
+            holder.txt_music_name.setText(((MusicData) this.musicDatas.get(pos)).track_displayName);
+            long durationMillis = musicDatas.get(pos).track_duration;
+            int seconds = (int) (durationMillis / 1000) % 60;
+            int minutes = (int) (durationMillis / (1000 * 60)) % 60;
+
+            String formatted = String.format("%02d:%02d", minutes, seconds);
+            holder.txt_music_duration.setText(formatted);
+            holder.txt_music_id.setText(SongEditActivity.this.getString(R.string.device_music));
             holder.radioMusicName.setChecked(this.booleanArray.get(pos, false));
-            holder.radioMusicName.setOnClickListener(new OnClickListener() {
+            holder.itemView.setOnClickListener(new OnClickListener() {
                 public void onClick(View arg0) {
                     MusicAdapter.this.booleanArray.clear();
                     MusicAdapter.this.booleanArray.put(pos, true);
@@ -246,7 +257,12 @@ public class SongEditActivity extends AppCompatActivity {
                 }, 500);
             }
         });
-
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
     }
 
@@ -319,10 +335,8 @@ public class SongEditActivity extends AppCompatActivity {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         this.mDensity = metrics.density;
-        this.mPlayButton = (ImageButton) findViewById(R.id.play);
-        this.appCompatImageView = (AppCompatImageView) findViewById(R.id.iv_done);
-        this.mPlayButton.setOnClickListener(this.mPlayListener);
-        enableDisableButtons();
+        this.appCompatImageView = (TextView) findViewById(R.id.iv_done_preview);
+        this.ivBack = (AppCompatImageView) findViewById(R.id.iv_back);
         this.mMaxPos = 0;
         this.mLastDisplayedStartPos = -1;
         this.mLastDisplayedEndPos = -1;
@@ -429,22 +443,11 @@ public class SongEditActivity extends AppCompatActivity {
         }.start();
     }
 
-    @SuppressLint({"ResourceType"})
-    private void enableDisableButtons() {
-        if (this.mIsPlaying) {
-            this.mPlayButton.setImageResource(17301539);
-            return;
-        }
-        this.mPlayButton.setImageResource(17301540);
-    }
-
-
     private synchronized void handlePause() {
         if (this.mPlayer != null && this.mPlayer.isPlaying()) {
             this.mPlayer.pause();
         }
         this.mIsPlaying = false;
-        enableDisableButtons();
     }
 
     private synchronized void onPlay(int startPosition) {
@@ -476,7 +479,6 @@ public class SongEditActivity extends AppCompatActivity {
                     this.mPlayer.seekTo(this.mPlayStartMsec);
                 }
                 this.mPlayer.start();
-                enableDisableButtons();
             } catch (Exception e2) {
             }
         }
@@ -516,5 +518,11 @@ public class SongEditActivity extends AppCompatActivity {
         }
         this.mPlayer = null;
         super.onDestroy();
+    }
+    protected void onPause() {
+        super.onPause();
+        if (this.mPlayer != null && this.mPlayer.isPlaying()) {
+            mPlayer.pause();
+        }
     }
 }

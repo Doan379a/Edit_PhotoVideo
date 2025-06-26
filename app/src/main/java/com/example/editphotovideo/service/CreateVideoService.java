@@ -81,7 +81,6 @@ public class CreateVideoService extends IntentService {
         float targetDurationSeconds = application.getDuration();
         int imageCount = application.videoImages.size();
         float durationPerImage = targetDurationSeconds / imageCount;
-        DecimalFormat df = new DecimalFormat("#.##");
         for (int i = 0; i < application.videoImages.size(); i++) {
             String path = application.videoImages.get(i);
             appendVideoLog("file '" + path + "'");
@@ -118,10 +117,14 @@ public class CreateVideoService extends IntentService {
                     bm.recycle(); System.gc();
                 } catch (Exception ignored) {}
             }
-            commandBuilder.append("-i ").append("\"").append(FileUtils.frameFile.getAbsolutePath()).append("\" ")
-                    .append("-filter_complex \"[0:v][2:v]overlay=0:0\" ");
+            if (this.application.getMusicData() != null) {
+                commandBuilder.append("-i ").append("\"").append(FileUtils.frameFile.getAbsolutePath()).append("\" ")
+                        .append("-filter_complex \"[0:v][2:v]overlay=0:0\" ");
+            }else {
+                commandBuilder.append("-i ").append("\"").append(FileUtils.frameFile.getAbsolutePath()).append("\" ")
+                        .append("-filter_complex \"[0:v][1:v]overlay=0:0\" ");
+            }
         }
-
 
         commandBuilder
                 .append("-vsync vfr ")
@@ -155,7 +158,7 @@ public class CreateVideoService extends IntentService {
             values.put("_size", fileSize);
             values.put("mime_type", "video/mp4");
             values.put("artist", getResources().getString(R.string.app_name));
-            values.put("duration", this.toatalSecond * 1000.0f);
+            values.put("duration", application.getDuration());
             getContentResolver().insert(Media.getContentUriForPath(videoPath), values);
         } catch (Exception ignored) {}
 
@@ -184,6 +187,12 @@ public class CreateVideoService extends IntentService {
     }
 
     private void joinAudio() {
+
+        if (this.application.getMusicData() == null || this.application.getMusicData().track_data == null) {
+            Log.d("FFmpegKit", "Không có nhạc nền, bỏ qua joinAudio()");
+            return;
+        }
+
         this.audioIp = new File(FileUtils.TEMP_DIRECTORY, "audio.txt");
         this.audioFile = new File(FileUtils.APP_DIRECTORY, "audio.mp3");
 

@@ -1,75 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:id="@+id/clickableView"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/clickableView"
     android:layout_width="75dp"
     android:layout_height="75dp"
-    android:background="@drawable/bg_width_radius_green_unselected"
     android:layout_marginEnd="10dp"
-    >
+    android:background="@drawable/bg_width_radius_green_unselected">
 
-        <ImageView
+    <ImageView
         android:id="@+id/ivThumb"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:src="@drawable/jalousie_bt"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        />
+        android:layout_margin="9dp"
+        android:src="@drawable/jalousie_bt" />
 
     <TextView
         android:id="@+id/tvThemeName"
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_margin="1.5dp"
-        android:layout_centerHorizontal="true"
         android:background="@drawable/bg_width_radius_bottom"
+        android:fontFamily="@font/polly_regular_400"
         android:gravity="center"
+        android:includeFontPadding="false"
         android:maxLines="1"
-        android:singleLine="true"
         android:paddingHorizontal="5dp"
         android:paddingBottom="2dp"
-        android:fontFamily="@font/polly_regular_400"
+        android:singleLine="true"
         android:textColor="@color/color_selector_tab"
         android:textSize="10sp"
         android:visibility="visible"
-        android:includeFontPadding="false"
 
         />
-</RelativeLayout>
-<!--<com.example.editphotovideo.ui.editmovie.ScaleCardLayout android:layout_width="fill_parent"-->
-<!--    android:layout_height="fill_parent"-->
-<!--    android:layout_marginBottom="2.0dip"-->
-<!--    android:layout_marginLeft="4.0dip"-->
-<!--    android:layout_marginRight="4.0dip"-->
-<!--    android:layout_marginTop="4.0dip"-->
-<!--    xmlns:android="http://schemas.android.com/apk/res/android">-->
+</RelativeLayout><!--<com.example.editphotovideo.ui.editmovie.ScaleCardLayout android:layout_width="fill_parent"-->
+    <!--    android:layout_height="fill_parent"-->
+    <!--    android:layout_marginBottom="2.0dip"-->
+    <!--    android:layout_marginLeft="4.0dip"-->
+    <!--    android:layout_marginRight="4.0dip"-->
+    <!--    android:layout_marginTop="4.0dip"-->
+    <!--    xmlns:android="http://schemas.android.com/apk/res/android">-->
 
-<!--    <ImageView-->
-<!--        android:id="@+id/ivThumb"-->
-<!--        android:layout_width="fill_parent"-->
-<!--        android:layout_height="fill_parent"-->
-<!--        android:background="@drawable/bg_card_transparent"-->
-<!--        android:clickable="true"-->
-<!--        android:scaleType="centerCrop" />-->
+    <!--    <ImageView-->
+    <!--        android:id="@+id/ivThumb"-->
+    <!--        android:layout_width="fill_parent"-->
+    <!--        android:layout_height="fill_parent"-->
+    <!--        android:background="@drawable/bg_card_transparent"-->
+    <!--        android:clickable="true"-->
+    <!--        android:scaleType="centerCrop" />-->
 
-<!--    <CheckBox-->
-<!--        android:id="@+id/cbSelect"-->
-<!--        android:layout_width="fill_parent"-->
-<!--        android:layout_height="fill_parent"-->
-<!--        android:layout_alignTop="@+id/imageView1"-->
-<!--        android:background="@drawable/bg_selection"-->
-<!--        android:button="@null"-->
-<!--        android:checked="true" />-->
+    <!--    <CheckBox-->
+    <!--        android:id="@+id/cbSelect"-->
+    <!--        android:layout_width="fill_parent"-->
+    <!--        android:layout_height="fill_parent"-->
+    <!--        android:layout_alignTop="@+id/imageView1"-->
+    <!--        android:background="@drawable/bg_selection"-->
+    <!--        android:button="@null"-->
+    <!--        android:checked="true" />-->
 
-<!--    <View-->
-<!--        android:id="@+id/clickableView"-->
-<!--        android:layout_width="fill_parent"-->
-<!--        android:layout_height="fill_parent"-->
-<!--        android:background="@drawable/bg_card_transparent"-->
-<!--        android:clickable="true" />-->
+    <!--    <View-->
+    <!--        android:id="@+id/clickableView"-->
+    <!--        android:layout_width="fill_parent"-->
+    <!--        android:layout_height="fill_parent"-->
+    <!--        android:background="@drawable/bg_card_transparent"-->
+    <!--        android:clickable="true" />-->
 
 
-<!--</com.example.editphotovideo.ui.editmovie.ScaleCardLayout>-->
+    <!--</com.example.editphotovideo.ui.editmovie.ScaleCardLayout>-->

@@ -31,6 +31,7 @@ import android.view.animation.Animation.AnimationListener;
 import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -72,6 +73,7 @@ import com.example.editphotovideo.ui.editmovie.themes.THEMES;
 import com.example.editphotovideo.ui.main.MainActivity;
 import com.example.editphotovideo.ui.save.KeyNewProject;
 import com.example.editphotovideo.ui.save.SaveVideoActivity;
+import com.example.editphotovideo.ui.songedit.SongDemoActivity;
 import com.example.editphotovideo.ui.songedit.SongEditActivity;
 import com.example.editphotovideo.ui.tools.speed.SpeedActivity;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -86,16 +88,17 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
 import gun0912.tedimagepicker.builder.TedImagePicker;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function0;
+import me.blankm.widget.IndicatorSeekBar;
+import me.blankm.widget.OnSeekChangeListener;
+import me.blankm.widget.SeekParams;
 
 
 public class PreviewActivity extends AppCompatActivity implements OnClickListener, OnSeekBarChangeListener, OnProgressReceiver {
-    private final int REQUEST_PICK_AUDIO = 101;
-    private final int REQUEST_PICK_EDIT = 103;
-    private final int REQUEST_PICK_IMAGES = 102;
     private MyApplication application;
     private ArrayList<ImageData> arrayList;
     private BottomSheetBehavior<View> behavior;
-    private Float[] duration = new Float[]{Float.valueOf(1.0f), Float.valueOf(1.5f), Float.valueOf(2.0f), Float.valueOf(2.5f), Float.valueOf(3.0f), Float.valueOf(3.5f), Float.valueOf(4.0f)};
     int f21i = 0;
     private View flLoader;
     int frame;
@@ -112,7 +115,6 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
     ArrayList<ImageData> lastData = new ArrayList();
     private LockRunnable lockRunnable = new LockRunnable();
     private MediaPlayer mPlayer;
-    private RecyclerView rvDuration;
     private RecyclerView rvFrame;
     private RecyclerView rvThemes;
     private float seconds = 2.0f;
@@ -124,7 +126,10 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
     private TextView btnAddPhoto, btnTransition, btnMusic,btnDuration,btnFrame,btnEditPhoto,tvTime,tvEndTime;
     private LinearLayout llMusic,ivDeviceMusic,ivDemoMusic;
     private MediaViewModel mediaViewModel;
-
+    private IndicatorSeekBar indicatorSeekBar;
+    private RelativeLayout rlDuration;
+    private LinearLayout llLoading;
+    private Boolean checkSave = false;
 
     class C05853 implements Runnable {
         C05853() {
@@ -137,6 +142,7 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
             Intent intent = new Intent(PreviewActivity.this.getApplicationContext(), ImageCreatorService.class);
             intent.putExtra(ImageCreatorService.EXTRA_SELECTED_THEME, PreviewActivity.this.application.getCurrentTheme());
             PreviewActivity.this.startService(intent);
+
         }
     }
 
@@ -179,38 +185,39 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
         public void run() {
             THEMES themes = PreviewActivity.this.application.selectedTheme;
             try {
-                FileUtils.TEMP_DIRECTORY_AUDIO.mkdirs();
-                File audioDir = new File(getExternalFilesDir(null), "Photo_Video_Edit/.temp_audio");
-                audioDir.mkdirs();
-                File tempFile = new File(audioDir, "temp.mp3");
-                if (tempFile.exists()) {
-                    FileUtils.deleteFile(tempFile);
-                }
-                InputStream in = PreviewActivity.this.getResources().openRawResource(themes.getThemeMusic());
-                FileOutputStream out = new FileOutputStream(tempFile);
-                byte[] buff = new byte[1024];
-                while (true) {
-                    int read = in.read(buff);
-                    if (read <= 0) {
-                        break;
-                    }
-                    out.write(buff, 0, read);
-                }
-                MediaPlayer player = new MediaPlayer();
-                player.setDataSource(tempFile.getAbsolutePath());
-                player.setAudioStreamType(3);
-                player.prepare();
-                final MusicData musicData = new MusicData();
-                musicData.track_data = tempFile.getAbsolutePath();
-                player.setOnPreparedListener(new OnPreparedListener() {
-                    public void onPrepared(MediaPlayer mp) {
-                        musicData.track_duration = (long) mp.getDuration();
-                        mp.start();
-                    }
-                });
-                musicData.track_Title = "temp";
-                PreviewActivity.this.application.setMusicData(musicData);
+//                FileUtils.TEMP_DIRECTORY_AUDIO.mkdirs();
+//                File audioDir = new File(getExternalFilesDir(null), "Photo_Video_Edit/.temp_audio");
+//                audioDir.mkdirs();
+//                File tempFile = new File(audioDir, "temp.mp3");
+//                if (tempFile.exists()) {
+//                    FileUtils.deleteFile(tempFile);
+//                }
+//                InputStream in = PreviewActivity.this.getResources().openRawResource(themes.getThemeMusic());
+//                FileOutputStream out = new FileOutputStream(tempFile);
+//                byte[] buff = new byte[1024];
+//                while (true) {
+//                    int read = in.read(buff);
+//                    if (read <= 0) {
+//                        break;
+//                    }
+//                    out.write(buff, 0, read);
+//                }
+//                MediaPlayer player = new MediaPlayer();
+//                player.setDataSource(tempFile.getAbsolutePath());
+//                player.setAudioStreamType(3);
+//                player.prepare();
+//                final MusicData musicData = new MusicData();
+//                musicData.track_data = tempFile.getAbsolutePath();
+//                player.setOnPreparedListener(new OnPreparedListener() {
+//                    public void onPrepared(MediaPlayer mp) {
+//                        musicData.track_duration = (long) mp.getDuration();
+//                        mp.start();
+//                    }
+//                });
+//                musicData.track_Title = "temp";
+//                PreviewActivity.this.application.setMusicData(musicData);
             } catch (Exception e) {
+
             }
             PreviewActivity.this.runOnUiThread(new C05892());
         }
@@ -328,58 +335,6 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
         }
     }
 
-    private class DurationAdapter extends Adapter<DurationAdapter.ViewHolder> {
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            CheckedTextView checkedTextView;
-
-            @SuppressLint({"ResourceType"})
-            public ViewHolder(View view) {
-                super(view);
-                this.checkedTextView = (CheckedTextView) view.findViewById(16908308);
-            }
-        }
-
-        private DurationAdapter() {
-        }
-
-        public int getItemCount() {
-            return PreviewActivity.this.duration.length;
-        }
-
-
-        public void onBindViewHolder(ViewHolder holder, int pos) {
-            boolean z = true;
-            final float dur = PreviewActivity.this.duration[pos].floatValue();
-            holder.checkedTextView.setText(String.format("%.1f Second", new Object[]{Float.valueOf(dur)}));
-            CheckedTextView checkedTextView = holder.checkedTextView;
-            if (dur != PreviewActivity.this.seconds) {
-                z = false;
-            }
-            checkedTextView.setChecked(z);
-            holder.checkedTextView.setOnClickListener(new OnClickListener() {
-                public void onClick(View v) {
-                    PreviewActivity.this.seconds = dur;
-                    PreviewActivity.this.application.setSecond(PreviewActivity.this.seconds);
-                    DurationAdapter.this.notifyDataSetChanged();
-                    PreviewActivity.this.lockRunnable.play();
-                }
-            });
-        }
-
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int type) {
-            return new ViewHolder(PreviewActivity.this.inflater.inflate(R.layout.duration_list_item, parent, false));
-        }
-    }
-
-    public View onCreateView(View view, String str, Context context, AttributeSet attributeSet) {
-        return super.onCreateView(view, str, context, attributeSet);
-    }
-
-    public View onCreateView(String str, Context context, AttributeSet attributeSet) {
-        return super.onCreateView(str, context, attributeSet);
-    }
-
     private void reinitMusic() {
         Exception e;
         MusicData musicData = this.application.getMusicData();
@@ -420,6 +375,7 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
         this.application.videoImages.clear();
         MyApplication.isBreak = false;
         application.setOnProgressReceiver(this);
+        PreviewActivity.this.application.setSecond(2.0f);
         Intent intent = new Intent(getApplicationContext(), ImageCreatorService.class);
         intent.putExtra(ImageCreatorService.EXTRA_SELECTED_THEME, this.application.getCurrentTheme());
         startService(intent);
@@ -442,7 +398,6 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
      //   this.llEdit = (LinearLayout) findViewById(R.id.llEdit);
         this.ivPlayPause =(ImageView) findViewById(R.id.ivPlayPause);
         this.rvThemes = (RecyclerView) findViewById(R.id.rvThemes);
-        this.rvDuration = (RecyclerView) findViewById(R.id.rvDuration);
         this.rvFrame = (RecyclerView) findViewById(R.id.rvFrame);
         this.ivDone = (TextView) findViewById(R.id.iv_done_preview);
         btnAddPhoto = (TextView) findViewById(R.id.ibAddImages);
@@ -454,14 +409,15 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
         llMusic = (LinearLayout) findViewById(R.id.llmusic);
         ivDeviceMusic = (LinearLayout) findViewById(R.id.iv_deviceMusic);
         ivDemoMusic = (LinearLayout) findViewById(R.id.iv_demoMusic);
+        indicatorSeekBar = (IndicatorSeekBar) findViewById(R.id.indicatorSeekBar);
+        rlDuration = (RelativeLayout) findViewById(R.id.rl_duration);
+        llLoading = (LinearLayout) findViewById(R.id.ll_loading);
     }
 
     private void init() {
-
         this.seconds = this.application.getSecond();
         this.inflater = LayoutInflater.from(this);
         this.glide = Glide.with((FragmentActivity) this);
-        this.application = MyApplication.getInstance();
         this.arrayList = this.application.getSelectedImages();
         this.seekBar.setMax((this.arrayList.size() - 1) * 30);
         int total = (int) (((float) (this.arrayList.size() - 1)) * this.seconds);
@@ -470,6 +426,25 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
         this.glide.load(((ImageData) this.application.getSelectedImages().get(0)).imagePath).into(this.ivPreview);
         setTheme();
         rvThemes.setVisibility(View.VISIBLE);
+
+        indicatorSeekBar.setOnSeekChangeListener(new OnSeekChangeListener() {
+            @Override
+            public void onSeeking(SeekParams p) {
+            }
+
+            @Override
+            public void onStartTrackingTouch(IndicatorSeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
+                float value = seekBar.getProgressFloat();
+                Log.d("SeekValue", "Current value: " + value);
+                PreviewActivity.this.seconds = value;
+                PreviewActivity.this.application.setSecond(PreviewActivity.this.seconds);
+                PreviewActivity.this.lockRunnable.play();
+            }
+        });
     }
 
     private void setUpThemeAdapter() {
@@ -483,9 +458,6 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
         this.rvFrame.setLayoutManager(gridLayoutManagerFrame);
         this.rvFrame.setItemAnimator(new DefaultItemAnimator());
         this.rvFrame.setAdapter(this.frameAdapter);
-        this.rvDuration.setHasFixedSize(true);
-        this.rvDuration.setLayoutManager(new LinearLayoutManager(this));
-        this.rvDuration.setAdapter(new DurationAdapter());
     }
 
     private void addListner() {
@@ -500,6 +472,7 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
         findViewById(R.id.ibAddTransition).setOnClickListener(this);
         findViewById(R.id.iv_deviceMusic).setOnClickListener(this);
         findViewById(R.id.iv_demoMusic).setOnClickListener(this);
+        findViewById(R.id.iv_back).setOnClickListener(this);
     }
 
     private synchronized void displayImage() {
@@ -564,6 +537,7 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
             resetButtonColors();
             btnDuration.setTextColor(getResources().getColor(R.color.color_selector_tab));
             btnDuration.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.ic_duration_editvideo,0,0);
+            rlDuration.setVisibility(View.VISIBLE);
            // this.behavior.setState(3);
         } else if (id == R.id.ibAddImages) {
             this.flLoader.setVisibility(View.GONE);
@@ -595,7 +569,7 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
             this.flLoader.setVisibility(View.GONE);
             loadSongSelection();
         }else if (id == R.id.iv_demoMusic){
-
+            startActivityForResult(new Intent(this, SongDemoActivity.class), 101);
         }
         else if (id == R.id.ibEditMode) {
             this.flLoader.setVisibility(View.GONE);
@@ -621,7 +595,10 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
                 this.lockRunnable.pause();
             }
         } else if (id == R.id.iv_done_preview) {
+            checkSave = true;
             loadProgress();
+        }else if (id == R.id.iv_back){
+            onBackPressed();
         }
     }
 
@@ -782,20 +759,37 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
 
     public void onBackPressed() {
         this.application.isEditModeEnable = false;
-//        if (this.behavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-//            this.behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-//        }
-//        else if (this.llEdit.getVisibility() != View.VISIBLE) {
-//            this.llEdit.setVisibility(View.VISIBLE);
-//            this.application.isEditModeEnable = false;
-//        }
-      //  else {
-              onBackDialog();
-       // }
+        if (checkSave){
+            return;
+        }
+        onBackDialog();
+        super.onBackPressed();
     }
 
     private void onBackDialog() {
-        new AlertDialog.Builder(this, R.style.Theme_MovieMaker_AlertDialog).setTitle((int) R.string.app_name).setMessage((CharSequence) "Are you sure ? \nYour video is not prepared yet!").setPositiveButton((CharSequence) "Go Back", new C05875()).setNegativeButton((CharSequence) "Stay here", null).create().show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            LayoutInflater inflater = getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.dialog_alert, null);
+            builder.setView(dialogView);
+
+            AlertDialog dialog = builder.create();
+
+            TextView btnCancel = dialogView.findViewById(R.id.tv_cancel);
+            TextView btnExit = dialogView.findViewById(R.id.tv_exit);
+
+            btnCancel.setOnClickListener(v -> dialog.dismiss());
+
+            btnExit.setOnClickListener(v -> {
+                if (mPlayer != null && mPlayer.isPlaying()) {
+                    mPlayer.stop();
+                    mPlayer.release();
+                }
+
+                finish();
+                dialog.dismiss();
+            });
+
+            dialog.show();
     }
 
     public void setTheme() {
@@ -844,13 +838,11 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
 
     @SuppressLint({"WrongConstant"})
     private void loadProgress() {
+        llLoading.setVisibility(View.VISIBLE);
         this.lockRunnable.stop();
         this.handler.removeCallbacks(this.lockRunnable);
         startService(new Intent(this, CreateVideoService.class));
         ImageCreatorService.isImageComplate = true;
-//        Intent intent2 = new Intent(this.application, ProgressActivity.class);
-//        intent2.setFlags(268468224);
-//        startActivity(intent2);
     }
 
     @Override
@@ -900,7 +892,10 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
         intent.putExtra("URI_VIDEO_INPUT", videoUri.toString());
         intent.putExtra("KEY_ACTIVITY", KeyNewProject.EDIT_VIDEO_ACTIVITY.name());
         startActivity(intent);
-
+        finish();
+        llLoading.setVisibility(View.GONE);
+        checkSave= false;
+        PreviewActivity.this.application.setMusicData(null);
         Log.d("loadProgress", videoPath);
     }
 
@@ -912,7 +907,7 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
              rvFrame.setVisibility(View.GONE);
              rvThemes.setVisibility(View.GONE);
              llMusic.setVisibility(View.GONE);
-
+            rlDuration.setVisibility(View.GONE);
             btnMusic.setTextColor(getResources().getColor(R.color.white));
             btnDuration.setTextColor(getResources().getColor(R.color.white));
             btnTransition.setTextColor(getResources().getColor(R.color.white));

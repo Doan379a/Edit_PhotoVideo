@@ -5,52 +5,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/black"
     >
 
     <RelativeLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@drawable/maingadient"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        >
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            app:srcCompat="@drawable/ic_back" />
 
         <TextView
             android:id="@+id/toolbar_title"
-            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_gravity="left"
-            android:text="arrange_images"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            />
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_done"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:text="arrange_images"
-            app:srcCompat="@drawable/img_chosse"
-            android:textColor="@color/black"
-            android:textSize="18sp"
+            android:layout_toEndOf="@+id/iv_back"
+            android:fontFamily="@font/polly_bold_700"
+            android:text="@string/device_music"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/iv_done_preview"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
             android:layout_alignParentEnd="true"
-            />
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/btn_done_button"
+            android:fontFamily="@font/polly_bold_700"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/import_song"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMusicList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.0" />
-    <ImageButton
-        android:id="@+id/play"
-        style="@android:style/MediaButton"
-        android:layout_width="71.0dip"
-        android:layout_height="52.0dip"
-        android:layout_marginBottom="6.0dip"
-        android:layout_marginTop="6.0dip"
-        android:background="@drawable/bg_card_transparent"
-        android:clickable="true"
-        android:src="@android:drawable/ic_media_play" />
+        android:layout_weight="1.0"
+        android:layout_marginHorizontal="15dp"
+        />
 </LinearLayout>

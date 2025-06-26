@@ -86,13 +86,6 @@
             <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Applying Theme"
-                android:textColor="?colorPrimary" />
         </LinearLayout>
     </com.example.editphotovideo.ui.editmovie.ScaleCardLayout>
 
@@ -202,7 +195,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginHorizontal="30dp"
+                android:layout_marginHorizontal="20dp"
                 android:layout_centerInParent="true"
                 android:visibility="gone"
                 >
@@ -220,7 +213,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/ic_device_music"
-                        android:layout_marginEnd="7dp"
+                        android:layout_marginEnd="5dp"
                         />
                     <TextView
                         android:layout_width="100dp"
@@ -248,7 +241,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/ic_demo_music"
-                        android:layout_marginEnd="7dp"
+                        android:layout_marginEnd="5dp"
                         />
                     <TextView
                         android:layout_width="100dp"
@@ -262,6 +255,102 @@
                         />
                 </LinearLayout>
             </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/rl_duration"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="15dp"
+                android:layout_centerVertical="true"
+                android:visibility="gone"
+                >
+
+                <LinearLayout
+                    android:id="@+id/linearLayout8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:minWidth="35dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/polly_regular_400"
+                        android:text="@string/slow"
+                        android:textColor="@color/color_E4E4E4"
+                        android:textSize="12sp"
+                        android:layout_gravity="center"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/polly_regular_400"
+                        android:text="1s"
+                        android:textColor="@color/color_E4E4E4"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <me.blankm.widget.IndicatorSeekBar
+                    android:id="@+id/indicatorSeekBar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@+id/linearLayout7"
+                    android:layout_toEndOf="@+id/linearLayout8"
+                    app:isb_indicator_text_size="10sp"
+                    app:isb_max="9"
+                    app:isb_min="1"
+                    app:isb_progress="2"
+                    app:isb_seek_smoothly="false"
+                    app:isb_show_indicator="rounded_rectangle"
+                    app:isb_show_tick_marks_type="oval"
+                    app:isb_show_tick_texts="false"
+                    app:isb_thumb_color="@color/color_selector_tab"
+                    app:isb_thumb_size="15dp"
+                    app:isb_tick_marks_drawable="@drawable/ellipse_48"
+                    app:isb_tick_marks_size="13dp"
+                    app:isb_ticks_count="6"
+                    app:isb_indicator_color="@color/black"
+                    app:isb_indicator_text_color="@color/white"
+                    app:isb_track_background_color="#626262"
+                    app:isb_track_background_size="3dp"
+                    app:isb_track_progress_color="@color/color_selector_tab"
+                    app:isb_track_progress_size="3dp"
+                    android:layout_alignParentBottom="true"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:orientation="vertical"
+                    android:minWidth="35dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/polly_regular_400"
+                        android:text="Fast"
+                        android:textColor="@color/color_E4E4E4"
+                        android:textSize="12sp"
+                        android:layout_gravity="center"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/polly_regular_400"
+                        android:text="10s"
+                        android:textColor="@color/color_E4E4E4"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </RelativeLayout>
+
         </RelativeLayout>
 
 
@@ -323,7 +412,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:drawableTop="@drawable/ic_add_photo_editvideo"
+                android:drawableTop="@drawable/ic_edit_photo_editvideo"
                 android:text="@string/edit_photo"
                 android:minWidth="65dp"
                 android:gravity="center"
@@ -387,6 +476,4 @@
                 android:includeFontPadding="false" />
         </LinearLayout>
     </HorizontalScrollView>
-
-
 </RelativeLayout>
