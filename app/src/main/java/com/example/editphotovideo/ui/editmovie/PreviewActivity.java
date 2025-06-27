@@ -896,6 +896,7 @@ public class PreviewActivity extends AppCompatActivity implements OnClickListene
         intent.putExtra("URI_VIDEO_INPUT", videoUri.toString());
         intent.putExtra("KEY_ACTIVITY", KeyNewProject.EDIT_VIDEO_ACTIVITY.name());
         startActivity(intent);
+        finish();
         llLoading.setVisibility(View.GONE);
         checkSave= false;
         PreviewActivity.this.application.setMusicData(null);

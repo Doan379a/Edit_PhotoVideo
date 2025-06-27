@@ -11,7 +11,6 @@ class AlertDialog(
     activity1: Activity,
     val title: String? = null,
     val iconBack: Int? = null,
-    private var actionClose: () -> Unit,
     private var actionExit: () -> Unit,
 ) : BaseDialog<DialogAlertBinding>(activity1, true) {
 
@@ -28,7 +27,6 @@ class AlertDialog(
     override fun bindView() {
         binding.apply {
             imgClose.tap {
-                actionClose.invoke()
                 dismiss()
             }
             tvExit.tap {

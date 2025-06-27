@@ -21,11 +21,15 @@
 
 
 
-    <!--    <ImageView-->
-    <!--        android:id="@+id/img_nodata"-->
-    <!--        android:layout_width="@dimen/_280sdp"-->
-    <!--        android:layout_height="@dimen/_300sdp"-->
-    <!--        android:layout_gravity="center"-->
-    <!--        android:visibility="gone"-->
-    <!--        android:src="@drawable/img_nodata" />-->
+    <ImageView
+        android:id="@+id/img_nodata"
+        android:layout_width="@dimen/_280sdp"
+        android:layout_height="@dimen/_300sdp"
+        android:layout_gravity="center"
+        android:src="@drawable/img_nodata"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

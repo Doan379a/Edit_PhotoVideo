@@ -24,6 +24,7 @@ class SectionAdapter(
         }
 
         init {
+
             binding.rvTemplates.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
                 adapter = templateAdapter
@@ -35,6 +36,11 @@ class SectionAdapter(
             binding.tvSectionTitle.text = section.title
             templateAdapter.setClickMeta(section.type, section.title)
             templateAdapter.submitList(section.templates)
+            binding.imgStart.setOnClickListener {
+                section.templates.firstOrNull()?.let { firstTemplate ->
+                    onTemplateClick(section.type, section.title, firstTemplate)
+                }
+            }
         }
     }
 
@@ -45,6 +51,13 @@ class SectionAdapter(
 
     override fun onBindViewHolder(holder: SectionViewHolder, position: Int) {
         holder.bind(sections[position])
+        val params = holder.binding.root.layoutParams as ViewGroup.MarginLayoutParams
+        if (position == itemCount - 1) {
+            params.bottomMargin = (100 * context.resources.displayMetrics.density).toInt()
+        } else {
+            params.bottomMargin = 0
+        }
+        holder.binding.root.layoutParams = params
     }
 
     override fun getItemCount() = sections.size

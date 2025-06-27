@@ -218,6 +218,7 @@
             android:background="@drawable/btn_done_button"
             android:fontFamily="@font/polly_bold_700"
             android:gravity="center"
+            android:layout_marginEnd="@dimen/_15sdp"
             android:includeFontPadding="false"
             android:text="@string/save"
             android:textColor="@color/white"

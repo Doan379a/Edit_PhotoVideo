@@ -49,6 +49,7 @@ class CompressVideoActivity : BaseActivity<ActivityCompressVideoBinding>() {
     private var originHeight: Int = 0
     private var originBitrate: Int = 0
     private val mediaViewModel: MediaViewModel by viewModels()
+    private var isDialogShowing = false
 
     override fun setViewBinding(): ActivityCompressVideoBinding {
         return ActivityCompressVideoBinding.inflate(layoutInflater)
@@ -158,7 +159,7 @@ class CompressVideoActivity : BaseActivity<ActivityCompressVideoBinding>() {
                             loadingView = binding.loadingProgress,
                             show = false
                         )
-
+                        finish()
 //                        Toast.makeText(
 //                            this@CompressVideoActivity,
 //                            "Xử lý video xong!",
@@ -208,17 +209,6 @@ class CompressVideoActivity : BaseActivity<ActivityCompressVideoBinding>() {
         binding.videoView.setVideoURI(Uri.parse(videoUri))
 
         binding.videoView.setOnPreparedListener { mp ->
-            val videoWidth = mp.videoWidth
-            val videoHeight = mp.videoHeight
-            val containerWidth = binding.parent.width
-            if (videoWidth > 0 && videoHeight > 0) {
-                val calculatedHeight = containerWidth * videoHeight / videoWidth
-                binding.videoView.layoutParams = binding.videoView.layoutParams.apply {
-                    width = ViewGroup.LayoutParams.MATCH_PARENT
-                    height = calculatedHeight
-                }
-            }
-
             binding.videoView.start()
             binding.btnPlayPause.setImageResource(R.drawable.ic_pause)
             isPlaying = true
@@ -276,7 +266,24 @@ class CompressVideoActivity : BaseActivity<ActivityCompressVideoBinding>() {
     private fun updateSeekBar() {
         handler.post(updateRunnable)
     }
+    override fun onBackPressed() {
+        if (binding.loadingProgress.visibility == View.VISIBLE && !isDialogShowing) {
+            showSaveDialog()
+        } else {
+            super.onBackPressed()
+        }
+    }
 
+    private fun showSaveDialog() {
+        isDialogShowing = true
+        com.example.editphotovideo.dialog.AlertDialog(this) {
+            isDialogShowing = false
+            finish()
+        }.apply {
+            setOnDismissListener { isDialogShowing = false }
+            show()
+        }
+    }
 
     override fun onDestroy() {
         super.onDestroy()

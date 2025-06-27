@@ -85,6 +85,8 @@
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/custom_radio"
                 android:text=""
+                android:clickable="false"
+                android:focusable="false"
                 android:layout_gravity="end" />
         </LinearLayout>
 
@@ -113,6 +115,8 @@
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/custom_radio"
                 android:text=""
+                android:clickable="false"
+                android:focusable="false"
                 android:layout_gravity="end" />
         </LinearLayout>
 
@@ -141,6 +145,8 @@
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/custom_radio"
                 android:text=""
+                android:clickable="false"
+                android:focusable="false"
                 android:layout_gravity="end" />
         </LinearLayout>
     </RadioGroup>

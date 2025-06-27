@@ -78,6 +78,7 @@ class SaveImageActivity : BaseActivity<ActivitySaveImageBinding>() {
                 }
 
                 startActivity(intent)
+                finish()
             }
     }
     override fun dataObservable() {

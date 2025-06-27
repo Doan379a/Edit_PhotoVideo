@@ -19,3 +19,19 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+#-keep class com.example.editphotovideo.library.removebackgr.** { *; }
+#-keepclassmembers class kotlinx.coroutines.flow.** { *; }
+#-keepclassmembers class kotlinx.coroutines.** { *; }
+#-keep class kotlinx.coroutines.flow.** { *; }
+# Giữ các class và method cần thiết cho coroutine Flow (nếu bạn vẫn sử dụng Flow)
+# Giữ tất cả class liên quan đến coroutines để coroutine hoạt động đúng
+# Giữ nguyên class/method native JNI
+# Giữ toàn bộ thư viện RemoveBg
+-keep class org.pytorch.** { *; }
+-keep class org.pytorch.torchvision.** { *; }
+-keep class com.facebook.jni.** { *; }
+-keepclassmembers class * {
+  native <methods>;
+}
+
+

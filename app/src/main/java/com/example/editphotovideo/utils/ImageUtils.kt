@@ -29,11 +29,11 @@ object ImageUtils {
             isDoubleTapEnabled = true
             isPanEnabled = true
             maxZoom = 5f
-            minZoom = 0.1f
+            minZoom = 0.3f
             setFitMethod(Settings.Fit.NONE)
             setBoundsType(Settings.Bounds.OUTSIDE)
             setGravity(Gravity.CENTER)
-            setImage(500, 500)
+            setImage(1000, 1000)
         }
     }
 

@@ -15,7 +15,9 @@ import com.example.editphotovideo.ui.editorimage.EditImageActivity
 import com.example.editphotovideo.ui.main.MainActivity
 import com.example.editphotovideo.ui.save.SaveImageActivity
 import com.example.editphotovideo.widget.getTagDebug
+import com.example.editphotovideo.widget.gone
 import com.example.editphotovideo.widget.tap
+import com.example.editphotovideo.widget.visible
 import dagger.hilt.android.AndroidEntryPoint
 import gun0912.tedimagepicker.builder.TedImagePicker
 
@@ -43,8 +45,14 @@ class ImageFragment : BaseFragment<FragmentImageBinding>() {
         mediaViewModel.mediaList.observe(requireActivity()) { mediaList ->
             val imageMedia =
                 mediaList.filter { it.mediaType == MediaType.IMAGE }.map { it.filePath }
-            Log.d(getTagDebug(), "image list: $imageMedia")
-            adapter.updateData(imageMedia)
+            if (imageMedia.isEmpty()) {
+                binding.imgNodata.visible()
+            } else {
+                binding.imgNodata.gone()
+                Log.d(getTagDebug(), "image list: $imageMedia")
+                adapter.updateData(imageMedia)
+            }
+
         }
 
     }

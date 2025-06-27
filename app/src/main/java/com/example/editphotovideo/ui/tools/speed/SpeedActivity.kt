@@ -51,6 +51,7 @@ class SpeedActivity : BaseActivity<ActivitySpeedBinding>() {
     private var speed = 1f
     private var mediaPlayer: MediaPlayer? = null
     private val mediaViewModel: MediaViewModel by viewModels()
+    private var isDialogShowing = false
 
     private val updateRunnable = object : Runnable {
         override fun run() {
@@ -142,16 +143,7 @@ class SpeedActivity : BaseActivity<ActivitySpeedBinding>() {
         binding.videoView.setVideoURI(Uri.parse(videoPath))
 
         binding.videoView.setOnPreparedListener { mp ->
-            val videoWidth = mp.videoWidth
-            val videoHeight = mp.videoHeight
-            val containerWidth = binding.parent.width
-            if (videoWidth > 0 && videoHeight > 0) {
-                val calculatedHeight = containerWidth * videoHeight / videoWidth
-                binding.videoView.layoutParams = binding.videoView.layoutParams.apply {
-                    width = ViewGroup.LayoutParams.MATCH_PARENT
-                    height = calculatedHeight
-                }
-            }
+
             mediaPlayer = mp
             videoDuration = mp.duration
             binding.tvEnd.text = formatTime(videoDuration)
@@ -275,6 +267,7 @@ class SpeedActivity : BaseActivity<ActivitySpeedBinding>() {
                         intent.putExtra("URI_VIDEO_INPUT", filePath)
                         intent.putExtra("KEY_ACTIVITY", KeyNewProject.SPEED_ACTIVITY.name)
                         startActivity(intent)
+                        finish()
 //                        showToast("speed xong: ${filePath}")
                         Log.d("ItemVideoPlayerFragment", "Video processed: $filePath")
                     }
@@ -292,7 +285,24 @@ class SpeedActivity : BaseActivity<ActivitySpeedBinding>() {
             }
         }
     }
+    override fun onBackPressed() {
+        if (binding.loadingProgress.visibility == View.VISIBLE && !isDialogShowing) {
+            showSaveDialog()
+        } else {
+            super.onBackPressed()
+        }
+    }
 
+    private fun showSaveDialog() {
+        isDialogShowing = true
+        com.example.editphotovideo.dialog.AlertDialog(this) {
+            isDialogShowing = false
+            finish()
+        }.apply {
+            setOnDismissListener { isDialogShowing = false }
+            show()
+        }
+    }
 
     override fun onDestroy() {
         super.onDestroy()

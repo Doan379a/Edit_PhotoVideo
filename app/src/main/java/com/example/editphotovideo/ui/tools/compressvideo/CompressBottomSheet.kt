@@ -59,6 +59,7 @@ class CompressBottomSheet(
         }
     }
 
+
     override fun bindView() {
 
     }

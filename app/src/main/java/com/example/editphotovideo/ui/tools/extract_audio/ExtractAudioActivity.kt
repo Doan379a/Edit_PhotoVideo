@@ -40,6 +40,7 @@ class ExtractAudioActivity:BaseActivity<ActivityExtractAudioBinding>() {
     private var isTracking = false
     private val handler = Handler(Looper.getMainLooper())
     private  val mediaViewModel: MediaViewModel by viewModels()
+    private var isDialogShowing = false
 
     private val updateRunnable = object : Runnable {
         override fun run() {
@@ -70,7 +71,6 @@ class ExtractAudioActivity:BaseActivity<ActivityExtractAudioBinding>() {
 
     override fun viewListener() {
         binding.imgBack.setOnClickListener {
-            showActivity(MainActivity::class.java)
             finish()
         }
         binding.parent.setOnClickListener {
@@ -132,6 +132,7 @@ class ExtractAudioActivity:BaseActivity<ActivityExtractAudioBinding>() {
                             intent.putExtra("AUDIO_URI", saved.first.toString())
                             intent.putExtra("KEY_ACTIVITY", KeyNewProject.EXTRACT_ACTIVITY.name)
                             startActivity(intent)
+                            finish()
                         } else {
 //                            showToast("Tách OK nhưng lưu thất bại")
                         }
@@ -157,16 +158,7 @@ class ExtractAudioActivity:BaseActivity<ActivityExtractAudioBinding>() {
         binding.videoView.setVideoURI(Uri.parse(videoUri))
 
         binding.videoView.setOnPreparedListener { mp ->
-            val videoWidth = mp.videoWidth
-            val videoHeight = mp.videoHeight
-            val containerWidth = binding.parent.width
-            if (videoWidth > 0 && videoHeight > 0) {
-                val calculatedHeight = containerWidth * videoHeight / videoWidth
-                binding.videoView.layoutParams = binding.videoView.layoutParams.apply {
-                    width = ViewGroup.LayoutParams.MATCH_PARENT
-                    height = calculatedHeight
-                }
-            }
+
 
             binding.videoView.start()
             binding.btnPlayPause.setImageResource(R.drawable.ic_pause)
@@ -210,7 +202,24 @@ class ExtractAudioActivity:BaseActivity<ActivityExtractAudioBinding>() {
         isPlaying = false
 
     }
+    override fun onBackPressed() {
+        if (binding.loadingProgress.visibility == View.VISIBLE && !isDialogShowing) {
+            showSaveDialog()
+        } else {
+            super.onBackPressed()
+        }
+    }
 
+    private fun showSaveDialog() {
+        isDialogShowing = true
+        com.example.editphotovideo.dialog.AlertDialog(this) {
+            isDialogShowing = false
+            finish()
+        }.apply {
+            setOnDismissListener { isDialogShowing = false }
+            show()
+        }
+    }
     override fun onDestroy() {
         super.onDestroy()
         handler.removeCallbacks(updateRunnable)

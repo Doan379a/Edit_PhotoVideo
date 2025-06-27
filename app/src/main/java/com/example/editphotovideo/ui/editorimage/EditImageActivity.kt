@@ -195,7 +195,7 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
                 }
 
                 is ImageFilterResult.Error -> {
-                    Toast.makeText(this, "Lỗi crop: ${result.message}", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this, "Lỗi crop: ${result.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -221,11 +221,11 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
                 }
 
                 is CropResult.Canceled -> {
-                    Toast.makeText(this, "Người dùng đã huỷ crop", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this, "Người dùng đã huỷ crop", Toast.LENGTH_SHORT).show()
                 }
 
                 is CropResult.Error -> {
-                    Toast.makeText(this, "Lỗi crop: ${result.message}", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this, "Lỗi crop: ${result.message}", Toast.LENGTH_SHORT).show()
                 }
             }
             mEditingToolsAdapter.resetSelection()
@@ -443,11 +443,6 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
     private fun showSaveDialog() {
         com.example.editphotovideo.dialog.AlertDialog(this, actionExit = {
             saveImage()
-        }, actionClose = {
-            showActivity(
-                MainActivity::class.java
-            )
-            finishAffinity()
         }).show()
     }
 

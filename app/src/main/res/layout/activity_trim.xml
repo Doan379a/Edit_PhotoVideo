@@ -52,6 +52,7 @@
             android:fontFamily="@font/polly_bold_700"
             android:gravity="center"
             android:includeFontPadding="false"
+            android:layout_marginEnd="@dimen/_15sdp"
             android:text="@string/save"
             android:textColor="@color/white"
             android:textSize="@dimen/_12ssp" />

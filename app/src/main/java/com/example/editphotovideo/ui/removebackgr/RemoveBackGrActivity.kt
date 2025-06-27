@@ -13,6 +13,7 @@ import android.widget.FrameLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -37,6 +38,8 @@ import com.example.editphotovideo.utils.ImageUtils.setUpZoomSettings
 import com.example.editphotovideo.utils.getBitmapFromAsset
 import com.example.editphotovideo.widget.getTagDebug
 import com.example.editphotovideo.widget.gone
+import com.example.editphotovideo.widget.showSnackBar
+import com.example.editphotovideo.widget.showToast
 import com.example.editphotovideo.widget.tap
 import com.example.editphotovideo.widget.visible
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,6 +51,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.IOException
 
 @AndroidEntryPoint
@@ -168,7 +172,10 @@ class RemoveBackGrActivity : BaseActivity<ActivityRemoveBackGrBinding>() {
         val imageUri: Uri? = intent.getParcelableExtra("URI_IMAGE_INPUT")
         if (imageUri != null) {
             imgUri = imageUri
-            val bitmap = getCorrectlyOrientedBitmap(this@RemoveBackGrActivity, imageUri)
+            val bitmap = getCorrectlyOrientedBitmap(this@RemoveBackGrActivity, imageUri).let {
+                Bitmap.createScaledBitmap(it, it.width / 2, it.height / 2, true)
+            }
+//            showSnackBar("bat dau")
             processImage(bitmap)
         } else {
             Log.e("RemoveBackGrActivity", "No image URI provided")
@@ -197,6 +204,7 @@ class RemoveBackGrActivity : BaseActivity<ActivityRemoveBackGrBinding>() {
                 }
         }
     }
+
 
     private fun selectImageBackgr() = binding.apply {
         TedImagePicker.with(this@RemoveBackGrActivity)

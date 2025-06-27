@@ -23,7 +23,6 @@ import com.example.editphotovideo.libffmpeg.FileUtils;
 import com.example.editphotovideo.ui.editmovie.OnProgressReceiver;
 import com.example.editphotovideo.ui.editmovie.themes.THEMES;
 import com.example.editphotovideo.utils.PermissionModelUtil;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -60,6 +59,8 @@ public class MyApplication extends Application {
         super.onCreate();
         instance = this;
         FileUtils.init(getApplicationContext());
+//        OpenCVLoader.initDebug();
+
         FFmpegKit.executeAsync("-codecs", session -> {
             String output = session.getOutput();
             if (output != null) {

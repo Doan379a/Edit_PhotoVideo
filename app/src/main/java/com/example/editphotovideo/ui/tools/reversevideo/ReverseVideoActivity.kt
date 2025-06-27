@@ -45,6 +45,7 @@ class ReverseVideoActivity : BaseActivity<ActivityReverseVideoBinding>() {
     private var isTracking = false
     private val handler = Handler(Looper.getMainLooper())
     private val mediaViewModel: MediaViewModel by viewModels()
+    private var isDialogShowing = false
 
     private val updateRunnable = object : Runnable {
         override fun run() {
@@ -150,6 +151,7 @@ class ReverseVideoActivity : BaseActivity<ActivityReverseVideoBinding>() {
                     intent.putExtra("URI_VIDEO_INPUT", output.path)
                     intent.putExtra("KEY_ACTIVITY", KeyNewProject.REVERSE_ACTIVITY.name)
                     startActivity(intent)
+                    finish()
 //                    showToast( "speed xong: ${output.path}")
                     Log.d("ItemVideoPlayerFragment", "Video processed: $output.path")
 //                    showToast( "Đã phát video ngược")
@@ -171,16 +173,7 @@ class ReverseVideoActivity : BaseActivity<ActivityReverseVideoBinding>() {
         binding.videoView.setVideoURI(Uri.parse(videoUri))
 
         binding.videoView.setOnPreparedListener { mp ->
-            val videoWidth = mp.videoWidth
-            val videoHeight = mp.videoHeight
-            val containerWidth = binding.parent.width
-            if (videoWidth > 0 && videoHeight > 0) {
-                val calculatedHeight = containerWidth * videoHeight / videoWidth
-                binding.videoView.layoutParams = binding.videoView.layoutParams.apply {
-                    width = ViewGroup.LayoutParams.MATCH_PARENT
-                    height = calculatedHeight
-                }
-            }
+
 
             binding.videoView.start()
             binding.btnPlayPause.setImageResource(R.drawable.ic_pause)
@@ -224,7 +217,24 @@ class ReverseVideoActivity : BaseActivity<ActivityReverseVideoBinding>() {
         isPlaying = false
 
     }
+    override fun onBackPressed() {
+        if (binding.loadingProgress.visibility == View.VISIBLE && !isDialogShowing) {
+            showSaveDialog()
+        } else {
+            super.onBackPressed()
+        }
+    }
 
+    private fun showSaveDialog() {
+        isDialogShowing = true
+        com.example.editphotovideo.dialog.AlertDialog(this) {
+            isDialogShowing = false
+            finish()
+        }.apply {
+            setOnDismissListener { isDialogShowing = false }
+            show()
+        }
+    }
     override fun onDestroy() {
         super.onDestroy()
         handler.removeCallbacks(updateRunnable)

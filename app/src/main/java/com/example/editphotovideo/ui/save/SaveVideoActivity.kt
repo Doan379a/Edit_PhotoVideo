@@ -51,7 +51,7 @@ class SaveVideoActivity : BaseActivity<ActivitySaveVideoBinding>() {
 
     override fun initView() {
         val activityName = intent.getStringExtra("KEY_ACTIVITY")
-        activity = KeyNewProject.valueOf(activityName ?:KeyNewProject.EDIT_VIDEO_ACTIVITY.name)
+        activity = KeyNewProject.valueOf(activityName ?: KeyNewProject.EDIT_VIDEO_ACTIVITY.name)
         videoUri = intent.getStringExtra("URI_VIDEO_INPUT")
         application = MyApplication.getInstance()
         if (videoUri != null) {
@@ -102,7 +102,7 @@ class SaveVideoActivity : BaseActivity<ActivitySaveVideoBinding>() {
             shareVideo(this, ShareUtils.KeyShare.WHATSAPP, Uri.parse(videoUri))
         }
         binding.tvNewProject.tap {
-            if (activity==KeyNewProject.EDIT_VIDEO_ACTIVITY){
+            if (activity == KeyNewProject.EDIT_VIDEO_ACTIVITY) {
                 TedImagePicker.with(this)
 
                     .cancelListener {
@@ -127,14 +127,16 @@ class SaveVideoActivity : BaseActivity<ActivitySaveVideoBinding>() {
                             val intent = Intent(this, ImageEditActivity::class.java)
                             intent.putParcelableArrayListExtra("selectedImages", ArrayList(uriList))
                             startActivity(intent)
-                            finishAffinity()
+                            finish()
+
                         }
                     }
-            }else{
+            } else {
                 selectVideoEdit()
             }
         }
     }
+
     private fun isVideoInprocess(): Boolean {
         return MyApplication.isMyServiceRunning(
             this,
@@ -156,21 +158,13 @@ class SaveVideoActivity : BaseActivity<ActivitySaveVideoBinding>() {
         }
         return path
     }
+
     private fun setupVideoView(videoPath: String) {
         Log.d("ItemVideoPlayerFragment", "Initializing video: $videoPath")
         binding.videoView.setVideoURI(Uri.parse(videoUri))
 
         binding.videoView.setOnPreparedListener { mp ->
-            val videoWidth = mp.videoWidth
-            val videoHeight = mp.videoHeight
-            val containerWidth = binding.parent.width
-            if (videoWidth > 0 && videoHeight > 0) {
-                val calculatedHeight = containerWidth * videoHeight / videoWidth
-                binding.videoView.layoutParams = binding.videoView.layoutParams.apply {
-                    width = ViewGroup.LayoutParams.MATCH_PARENT
-                    height = calculatedHeight
-                }
-            }
+
 
             binding.videoView.start()
             binding.btnPlayPause.setImageResource(R.drawable.ic_pause)
@@ -219,7 +213,8 @@ class SaveVideoActivity : BaseActivity<ActivitySaveVideoBinding>() {
                 }
 
                 startActivity(intent)
-                finishAffinity()
+                finish()
+
             }
     }
 

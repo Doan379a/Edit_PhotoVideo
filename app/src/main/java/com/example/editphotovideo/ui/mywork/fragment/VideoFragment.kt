@@ -14,6 +14,8 @@ import com.example.editphotovideo.databinding.FragmentVideoBinding
 import com.example.editphotovideo.ui.save.SaveImageActivity
 import com.example.editphotovideo.ui.save.SaveVideoActivity
 import com.example.editphotovideo.widget.getTagDebug
+import com.example.editphotovideo.widget.gone
+import com.example.editphotovideo.widget.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,8 +42,13 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>() {
         mediaViewModel.mediaList.observe(requireActivity()) { mediaList ->
             val videoMedia =
                 mediaList.filter { it.mediaType == MediaType.VIDEO }.map { it.filePath }
-            Log.d(getTagDebug(), "videolist: $videoMedia")
-            adapter.updateData(videoMedia)
+            if (videoMedia.isEmpty()) {
+                binding.imgNodata.visible()
+            } else {
+                binding.imgNodata.gone()
+                Log.d(getTagDebug(), "videolist: $videoMedia")
+                adapter.updateData(videoMedia)
+            }
         }
     }
 

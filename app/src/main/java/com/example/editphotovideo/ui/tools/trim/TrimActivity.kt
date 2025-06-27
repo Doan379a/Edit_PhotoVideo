@@ -24,6 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
+
 @AndroidEntryPoint
 class TrimActivity : BaseActivity<ActivityTrimBinding>(), VideoTrimmingListener {
 
@@ -32,7 +33,8 @@ class TrimActivity : BaseActivity<ActivityTrimBinding>(), VideoTrimmingListener 
 
     private val timeFormat = SimpleDateFormat("mm:ss", Locale.getDefault())
     private var durationSec: Long = 0
-    private  val mediaViewModel: MediaViewModel by viewModels()
+    private val mediaViewModel: MediaViewModel by viewModels()
+    private var isDialogShowing = false
 
     override fun setViewBinding() = ActivityTrimBinding.inflate(layoutInflater)
 
@@ -45,11 +47,12 @@ class TrimActivity : BaseActivity<ActivityTrimBinding>(), VideoTrimmingListener 
             return
         }
 
-        dstTrimmedFile = File(getTempMovieDir(this@TrimActivity), "trimmed_${System.currentTimeMillis()}.mp4")
+        dstTrimmedFile =
+            File(getTempMovieDir(this@TrimActivity), "trimmed_${System.currentTimeMillis()}.mp4")
         val retriever = MediaMetadataRetriever().apply {
             setDataSource(this@TrimActivity, inputUri)
         }
-        durationSec = retriever.extractMetadata(METADATA_KEY_DURATION)?.toLong()?: 0L
+        durationSec = retriever.extractMetadata(METADATA_KEY_DURATION)?.toLong() ?: 0L
         binding.videoTrimmerView.apply {
             setDestinationFile(dstTrimmedFile!!)
             setOnK4LVideoListener(this@TrimActivity)
@@ -71,18 +74,18 @@ class TrimActivity : BaseActivity<ActivityTrimBinding>(), VideoTrimmingListener 
         }
     }
 
-    override fun dataObservable() { }
+    override fun dataObservable() {}
 
     override fun onVideoPrepared() {
         binding.loadingProgress.post {
-            Toast.makeText(this, "Video sẵn sàng", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Video sẵn sàng", Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun onTrimStarted() {
         binding.videoTrimmerView.post {
             binding.loadingProgress.visibility = View.VISIBLE
-            Toast.makeText(this, "Bắt đầu cắt...", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Bắt đầu cắt...", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -112,6 +115,7 @@ class TrimActivity : BaseActivity<ActivityTrimBinding>(), VideoTrimmingListener 
             intent.putExtra("URI_VIDEO_INPUT", uri.toString())
             intent.putExtra("KEY_ACTIVITY", KeyNewProject.TRIM_ACTIVITY.name)
             startActivity(intent)
+            finish()
 //            Toast.makeText(
 //                this,
 //
@@ -125,16 +129,36 @@ class TrimActivity : BaseActivity<ActivityTrimBinding>(), VideoTrimmingListener 
     override fun onTrimFailed(exception: Exception?) {
         binding.loadingProgress.post {
             binding.loadingProgress.visibility = View.GONE
-            Toast.makeText(
-                this,
-                "Trim thất bại: ${exception?.message ?: "Không xác định"}",
-                Toast.LENGTH_LONG
-            ).show()
+//            Toast.makeText(
+//                this,
+//                "Trim thất bại: ${exception?.message ?: "Không xác định"}",
+//                Toast.LENGTH_LONG
+//            ).show()
+        }
+    }
+
+    override fun onBackPressed() {
+        if (binding.loadingProgress.visibility == View.VISIBLE && !isDialogShowing) {
+            showSaveDialog()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+    private fun showSaveDialog() {
+        isDialogShowing = true
+        com.example.editphotovideo.dialog.AlertDialog(this) {
+            isDialogShowing = false
+            finish()
+        }.apply {
+            setOnDismissListener { isDialogShowing = false }
+            show()
         }
     }
 
     override fun onErrorWhileViewingVideo(what: Int, extra: Int) {
-        Toast.makeText(this, "Lỗi khi xem video: what=$what, extra=$extra", Toast.LENGTH_LONG).show()
+//        Toast.makeText(this, "Lỗi khi xem video: what=$what, extra=$extra", Toast.LENGTH_LONG)
+//            .show()
     }
 
 }
