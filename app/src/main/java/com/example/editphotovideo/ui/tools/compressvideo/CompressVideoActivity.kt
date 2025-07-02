@@ -66,7 +66,6 @@ class CompressVideoActivity : BaseActivity<ActivityCompressVideoBinding>() {
 
     override fun viewListener() {
         binding.imgBack.tap {
-            showActivity(MainActivity::class.java)
             finish()
         }
         binding.tvCompress.tap {

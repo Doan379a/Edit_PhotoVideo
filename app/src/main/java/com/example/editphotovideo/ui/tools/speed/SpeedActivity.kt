@@ -92,7 +92,6 @@ class SpeedActivity : BaseActivity<ActivitySpeedBinding>() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun viewListener() {
         binding.imgBack.tap {
-            showActivity(MainActivity::class.java)
             finish()
         }
         binding.parent.setOnClickListener { togglePlayPause() }

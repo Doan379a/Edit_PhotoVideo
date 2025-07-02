@@ -80,7 +80,6 @@ class ReverseVideoActivity : BaseActivity<ActivityReverseVideoBinding>() {
 
     override fun viewListener() {
         binding.imgBack.setOnClickListener {
-            showActivity(MainActivity::class.java)
             finish()
         }
         binding.parent.setOnClickListener {

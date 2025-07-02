@@ -66,7 +66,6 @@ class TrimActivity : BaseActivity<ActivityTrimBinding>(), VideoTrimmingListener 
 
     override fun viewListener() {
         binding.imgBack.tap {
-            showActivity(MainActivity::class.java)
             finish()
         }
         binding.tvSave.setOnClickListener {

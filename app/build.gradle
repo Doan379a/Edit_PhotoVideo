@@ -13,7 +13,7 @@ android {
         minSdk 24
         targetSdk 34
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         def formattedDate = new Date().format('MM.dd.yyyy')
@@ -21,6 +21,9 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+//        ndk {
+//            abiFilters 'armeabi-v7a', 'arm64-v8a'
+//        }
     }
     splits {
         abi {
@@ -33,6 +36,7 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+//            debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -97,6 +101,8 @@ dependencies {
     ////remove backgr
     implementation "org.pytorch:pytorch_android_lite:1.13.1"
     implementation "org.pytorch:pytorch_android_torchvision_lite:1.13.1"
+
+
     //tolls video
     implementation 'com.github.yellowcath:VideoProcessor:2.4.2'
 //    implementation 'com.github.Amal92:Trimmy:1.0.6'
