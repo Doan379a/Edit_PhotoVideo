@@ -79,6 +79,7 @@
                     android:layout_marginHorizontal="10dp"
                     android:background="@android:color/transparent"
                     android:textColor="@color/black"
+                    android:fontFamily="@font/polly_bold_700"
                     android:gravity="center"
                     android:maxLines="2"
                     android:textAlignment="center"
@@ -96,6 +97,7 @@
                     android:background="@android:color/transparent"
                     android:gravity="center"
                     android:maxLines="2"
+                    android:fontFamily="@font/polly_regular_400"
                     android:paddingHorizontal="20dp"
                     android:textColor="@color/black"
                     android:textAlignment="center"
@@ -124,6 +126,7 @@
                         android:textColor="@color/white"
                         android:background="@drawable/bg_item_language_select"
                         android:textSize="18sp"
+                        android:backgroundTint="#325131"
                         android:gravity="center"
                         android:includeFontPadding="false" />
 
@@ -148,6 +151,7 @@
             android:layout_alignEnd="@+id/rtb"
             android:layout_alignParentBottom="true"
             android:visibility="visible"
+            android:src="@drawable/start_5"
             android:layout_gravity="center_horizontal"
             />
     </FrameLayout>

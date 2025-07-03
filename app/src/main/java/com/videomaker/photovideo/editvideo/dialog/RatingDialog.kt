@@ -103,38 +103,38 @@ class RatingDialog(activity: Activity, private val isFinishActivity: Boolean) :
             OnRatingBarChangeListener { _, rating, _ ->
                 when (rating) {
                     1f -> {
-//                        binding.tvTitle.text = activity.getText(R.string.oh_we_re_sorry)
-//                        binding.tvContent.text = activity.getText(R.string.your_feedback_is_welcome)
-//                        binding.ivContback.setImageResource(R.drawable.start_1)
-//                        binding.btnLater.visibility = View.VISIBLE
+                        binding.tvTitle.text = activity.getText(R.string.oh_we_re_sorry)
+                        binding.tvContent.text = activity.getText(R.string.your_feedback_is_welcome)
+                        binding.ivContback.setImageResource(R.drawable.start_1)
+                        binding.btnLater.visibility = View.VISIBLE
                     }
 
                     2f -> {
-//                        binding.tvTitle.text = activity.getText(R.string.oh_we_re_sorry)
-//                        binding.tvContent.text = activity.getText(R.string.your_feedback_is_welcome)
-//                        binding.ivContback.setImageResource(R.drawable.start_2)
-//                        binding.btnLater.visibility = View.VISIBLE
+                        binding.tvTitle.text = activity.getText(R.string.oh_we_re_sorry)
+                        binding.tvContent.text = activity.getText(R.string.your_feedback_is_welcome)
+                        binding.ivContback.setImageResource(R.drawable.start_2)
+                        binding.btnLater.visibility = View.VISIBLE
                     }
 
                     3f -> {
-//                        binding.tvTitle.text = activity.getText(R.string.oh_we_re_sorry)
-//                        binding.tvContent.text = activity.getText(R.string.your_feedback_is_welcome)
-//                        binding.ivContback.setImageResource(R.drawable.start_3)
-//                        binding.btnLater.visibility = View.VISIBLE
+                        binding.tvTitle.text = activity.getText(R.string.oh_we_re_sorry)
+                        binding.tvContent.text = activity.getText(R.string.your_feedback_is_welcome)
+                        binding.ivContback.setImageResource(R.drawable.start_3)
+                        binding.btnLater.visibility = View.VISIBLE
                     }
 
                     4f -> {
-//                        binding.tvTitle.text = activity.getText(R.string.much_appreciated)
-//                        binding.tvContent.text = activity.getText(R.string.your_support_is_our_biggest_motivation)
-//                        binding.ivContback.setImageResource(R.drawable.start_4)
-//                        binding.btnLater.visibility = View.GONE
+                        binding.tvTitle.text = activity.getText(R.string.much_appreciated)
+                        binding.tvContent.text = activity.getText(R.string.your_support_is_our_biggest_motivation)
+                        binding.ivContback.setImageResource(R.drawable.start_4)
+                        binding.btnLater.visibility = View.GONE
                     }
 
                     5f -> {
-//                        binding.tvTitle.text = activity.getText(R.string.much_appreciated)
-//                        binding.tvContent.text = activity.getText(R.string.your_support_is_our_biggest_motivation)
-//                        binding.ivContback.setImageResource(R.drawable.start_5)
-//                        binding.btnLater.visibility = View.GONE
+                        binding.tvTitle.text = activity.getText(R.string.much_appreciated)
+                        binding.tvContent.text = activity.getText(R.string.your_support_is_our_biggest_motivation)
+                        binding.ivContback.setImageResource(R.drawable.start_5)
+                        binding.btnLater.visibility = View.GONE
                     }
 
                     else -> {

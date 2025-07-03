@@ -536,4 +536,9 @@
     <string name="content_intro_3">Smart background removal &amp; pro frame blending.</string>
     <string name="title_intro_4">Complete Editing Tools</string>
     <string name="content_intro_4">Comprehensive, easy-to-use editing tools for many needs.</string>
+
+    <string name="much_appreciated">Much appreciated!</string>
+    <string name="your_support_is_our_biggest_motivation">Your support is our biggest motivation!</string>
+
+
 </resources>
