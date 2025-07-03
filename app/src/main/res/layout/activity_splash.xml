@@ -32,6 +32,7 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:gravity="center"
             android:includeFontPadding="false"
+            android:layout_marginHorizontal="@dimen/_5sdp"
             android:text="PicVideo: Photo Video Maker"
             android:fontFamily="@font/polly_bold_700"
             android:textColor="@color/color_selector_tab"

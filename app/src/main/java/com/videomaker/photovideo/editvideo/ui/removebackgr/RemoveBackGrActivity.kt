@@ -134,6 +134,7 @@ class RemoveBackGrActivity : BaseActivity<ActivityRemoveBackGrBinding>() {
             bitmap?.let {
                 Glide.with(this@RemoveBackGrActivity)
                     .load(it)
+                    .centerCrop()
                     .into(imgBackground)
             }
         }
