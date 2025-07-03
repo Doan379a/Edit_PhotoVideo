@@ -120,5 +120,16 @@
     <string name="import_song">Importar</string>
     <string name="none">Ninguno</string>
     <string name="Please_select_at_least_3_photos">Por favor, selecciona al menos 3 fotos.</string>
+    <string name="title_intro_1">Creador de Fotos y Videos</string>
+    <string name="content_intro_1">Convierte una galería de momentos en un video inolvidable.</string>
+
+    <string name="title_intro_2">Embellecer y Mejorar</string>
+    <string name="content_intro_2">Embellece fotos y rostros con solo un toque.</string>
+
+    <string name="title_intro_3">Explorar Plantillas de Imágenes</string>
+    <string name="content_intro_3">Eliminación inteligente de fondo y mezcla profesional de marcos.</string>
+
+    <string name="title_intro_4">Herramientas de Edición Completas</string>
+    <string name="content_intro_4">Herramientas completas y fáciles de usar para todo tipo de necesidades.</string>
 
 </resources>

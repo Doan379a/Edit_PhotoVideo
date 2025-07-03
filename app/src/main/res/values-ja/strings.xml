@@ -120,5 +120,16 @@
     <string name="import_song">インポート</string>
     <string name="none">なし</string>
     <string name="Please_select_at_least_3_photos">少なくとも3枚の写真を選択してください。</string>
+    <string name="title_intro_1">フォトビデオメーカー</string>
+    <string name="content_intro_1">思い出のギャラリーを忘れられない動画に変えましょう。</string>
+
+    <string name="title_intro_2">美化と強化</string>
+    <string name="content_intro_2">ワンタッチで写真や顔を美しく仕上げます。</string>
+
+    <string name="title_intro_3">画像テンプレートを探す</string>
+    <string name="content_intro_3">スマートな背景除去とプロレベルのフレーム合成。</string>
+
+    <string name="title_intro_4">完全な編集ツール</string>
+    <string name="content_intro_4">あらゆるニーズに対応する、使いやすい編集ツール。</string>
 
 </resources>

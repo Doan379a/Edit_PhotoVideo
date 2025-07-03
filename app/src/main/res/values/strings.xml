@@ -528,4 +528,12 @@
     <string name="import_song">Import</string>
     <string name="none">None</string>
     <string name="Please_select_at_least_3_photos">Please select at least 3 photos.</string>
+    <string name="title_intro_1">Photo Video Maker</string>
+    <string name="content_intro_1">Turn a gallery of moments into one unforgettable video.</string>
+    <string name="title_intro_2">Beautify &amp; Enhance</string>
+    <string name="content_intro_2">Beautify photos and faces with just one touch.</string>
+    <string name="title_intro_3">Explore Image Templates</string>
+    <string name="content_intro_3">Smart background removal &amp; pro frame blending.</string>
+    <string name="title_intro_4">Complete Editing Tools</string>
+    <string name="content_intro_4">Comprehensive, easy-to-use editing tools for many needs.</string>
 </resources>

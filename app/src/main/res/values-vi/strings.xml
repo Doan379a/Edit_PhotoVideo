@@ -120,5 +120,16 @@
     <string name="import_song">Nhập</string>
     <string name="none">Không có</string>
     <string name="Please_select_at_least_3_photos">Vui lòng chọn ít nhất 3 ảnh.</string>
+    <string name="title_intro_1">Trình Tạo Ảnh và Video</string>
+    <string name="content_intro_1">Biến bộ sưu tập khoảnh khắc thành video đáng nhớ.</string>
+
+    <string name="title_intro_2">Làm Đẹp &amp; Cải Thiện</string>
+    <string name="content_intro_2">Làm đẹp ảnh và khuôn mặt chỉ với một chạm.</string>
+
+    <string name="title_intro_3">Khám Phá Mẫu Ảnh</string>
+    <string name="content_intro_3">Xóa nền thông minh và hòa trộn khung chuyên nghiệp.</string>
+
+    <string name="title_intro_4">Công Cụ Chỉnh Sửa Toàn Diện</string>
+    <string name="content_intro_4">Công cụ chỉnh sửa toàn diện, dễ sử dụng cho nhiều nhu cầu khác nhau.</string>
 
 </resources>

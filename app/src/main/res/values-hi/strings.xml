@@ -120,5 +120,16 @@
     <string name="import_song">आयात करें</string>
     <string name="none">कोई नहीं</string>
     <string name="Please_select_at_least_3_photos">कृपया कम से कम 3 फ़ोटो चुनें।</string>
+    <string name="title_intro_1">फ़ोटो वीडियो मेकर</string>
+    <string name="content_intro_1">पलों की गैलरी को एक अविस्मरणीय वीडियो में बदलें।</string>
+
+    <string name="title_intro_2">सौंदर्यीकरण और सुधारें</string>
+    <string name="content_intro_2">सिर्फ एक स्पर्श से फ़ोटो और चेहरों को सुंदर बनाएं।</string>
+
+    <string name="title_intro_3">इमेज टेम्पलेट्स खोजें</string>
+    <string name="content_intro_3">स्मार्ट बैकग्राउंड हटाना और प्रो फ्रेम ब्लेंडिंग।</string>
+
+    <string name="title_intro_4">पूर्ण संपादन उपकरण</string>
+    <string name="content_intro_4">कई जरूरतों के लिए व्यापक और उपयोग में आसान संपादन उपकरण।</string>
 
 </resources>

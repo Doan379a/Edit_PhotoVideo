@@ -36,9 +36,9 @@ open class Fragment4 : Fragment() {
     private fun initView() {
         try {
             val data = IntroModel(
-                    1,
-              1,
-               1, type = 0
+                R.drawable.img_intro4,
+                R.string.title_intro_4,
+                R.string.content_intro_4,  type = 0
             )
             if (data.type == 0) {
                 binding.llContent.visible()

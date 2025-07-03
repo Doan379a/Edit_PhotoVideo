@@ -13,6 +13,7 @@
             android:id="@+id/ll_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingVertical="@dimen/_50sdp"
             android:orientation="vertical">
 
             <ImageView

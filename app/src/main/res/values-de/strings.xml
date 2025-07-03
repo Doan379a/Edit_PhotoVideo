@@ -120,5 +120,16 @@
     <string name="import_song">Importieren</string>
     <string name="none">Keine</string>
     <string name="Please_select_at_least_3_photos">Bitte wählen Sie mindestens 3 Fotos aus.</string>
+    <string name="title_intro_1">Foto-Video-Ersteller</string>
+    <string name="content_intro_1">Verwandle eine Galerie von Momenten in ein unvergessliches Video.</string>
+
+    <string name="title_intro_2">Verschönern &amp; Verbessern</string>
+    <string name="content_intro_2">Verschönere Fotos und Gesichter mit nur einer Berührung.</string>
+
+    <string name="title_intro_3">Bildvorlagen entdecken</string>
+    <string name="content_intro_3">Intelligente Hintergrundentfernung &amp; professionelle Rahmenüberblendung.</string>
+
+    <string name="title_intro_4">Umfassende Bearbeitungswerkzeuge</string>
+    <string name="content_intro_4">Umfassende, benutzerfreundliche Bearbeitungswerkzeuge für viele Anforderungen.</string>
 
 </resources>

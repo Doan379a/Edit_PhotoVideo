@@ -120,5 +120,16 @@
     <string name="import_song">Impor</string>
     <string name="none">Tidak ada</string>
     <string name="Please_select_at_least_3_photos">Silakan pilih setidaknya 3 foto.</string>
+    <string name="title_intro_1">Pembuat Foto &amp; Video</string>
+    <string name="content_intro_1">Ubah galeri momen menjadi video yang tak terlupakan.</string>
+
+    <string name="title_intro_2">Percantik &amp; Tingkatkan</string>
+    <string name="content_intro_2">Percantik foto dan wajah hanya dengan satu sentuhan.</string>
+
+    <string name="title_intro_3">Jelajahi Template Gambar</string>
+    <string name="content_intro_3">Penghapusan latar belakang cerdas &amp; pencampuran bingkai profesional.</string>
+
+    <string name="title_intro_4">Alat Pengeditan Lengkap</string>
+    <string name="content_intro_4">Alat pengeditan lengkap dan mudah digunakan untuk berbagai kebutuhan.</string>
 
 </resources>
