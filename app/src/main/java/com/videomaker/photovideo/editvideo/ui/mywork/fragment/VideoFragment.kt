@@ -1,0 +1,60 @@
+package com.videomaker.photovideo.editvideo.ui.mywork.fragment
+
+import android.content.Intent
+import android.net.Uri
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import com.videomaker.photovideo.editvideo.base.BaseFragment
+import com.videomaker.photovideo.editvideo.data.entity.MediaType
+import com.videomaker.photovideo.editvideo.data.viewmodel.MediaViewModel
+import com.videomaker.photovideo.editvideo.databinding.FragmentVideoBinding
+import com.videomaker.photovideo.editvideo.ui.save.SaveImageActivity
+import com.videomaker.photovideo.editvideo.ui.save.SaveVideoActivity
+import com.videomaker.photovideo.editvideo.widget.getTagDebug
+import com.videomaker.photovideo.editvideo.widget.gone
+import com.videomaker.photovideo.editvideo.widget.visible
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
+class VideoFragment : BaseFragment<FragmentVideoBinding>() {
+    private val mediaViewModel: MediaViewModel by activityViewModels()
+    private lateinit var adapter: MediaAdapter
+
+    override fun setViewBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentVideoBinding {
+        return FragmentVideoBinding.inflate(layoutInflater)
+    }
+
+    override fun initView() {
+        adapter = MediaAdapter(mutableListOf()) {path->
+            Log.d(getTagDebug(), "path: $path")
+            val intent = Intent(requireActivity(), SaveVideoActivity::class.java)
+            intent.putExtra("URI_VIDEO_INPUT", path)
+            startActivity(intent)
+        }
+        binding.recyclerView.layoutManager = GridLayoutManager(requireActivity(),2)
+        binding.recyclerView.adapter = adapter
+        mediaViewModel.mediaList.observe(requireActivity()) { mediaList ->
+            val videoMedia =
+                mediaList.filter { it.mediaType == MediaType.VIDEO }.map { it.filePath }
+            if (videoMedia.isEmpty()) {
+                binding.imgNodata.visible()
+            } else {
+                binding.imgNodata.gone()
+                Log.d(getTagDebug(), "videolist: $videoMedia")
+                adapter.updateData(videoMedia)
+            }
+        }
+    }
+
+    override fun viewListener() {
+    }
+
+    override fun dataObservable() {
+    }
+}

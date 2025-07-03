@@ -55,7 +55,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
-        <com.example.editphotovideo.library.zoomimg.views.GestureImageView
+        <com.videomaker.photovideo.editvideo.library.zoomimg.views.GestureImageView
             android:id="@+id/img_result"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

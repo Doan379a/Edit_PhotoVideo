@@ -36,7 +36,7 @@
         android:visibility="visible"
 
         />
-</RelativeLayout><!--<com.example.editphotovideo.ui.editmovie.ScaleCardLayout android:layout_width="fill_parent"-->
+</RelativeLayout><!--<com.videomaker.photovideo.editvideo.ui.editmovie.ScaleCardLayout android:layout_width="fill_parent"-->
     <!--    android:layout_height="fill_parent"-->
     <!--    android:layout_marginBottom="2.0dip"-->
     <!--    android:layout_marginLeft="4.0dip"-->
@@ -69,4 +69,4 @@
     <!--        android:clickable="true" />-->
 
 
-    <!--</com.example.editphotovideo.ui.editmovie.ScaleCardLayout>-->
+    <!--</com.videomaker.photovideo.editvideo.ui.editmovie.ScaleCardLayout>-->

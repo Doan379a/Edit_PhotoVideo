@@ -19,7 +19,7 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
-#-keep class com.example.editphotovideo.library.removebackgr.** { *; }
+#-keep class com.videomaker.photovideo.editvideo.library.removebackgr.** { *; }
 #-keepclassmembers class kotlinx.coroutines.flow.** { *; }
 #-keepclassmembers class kotlinx.coroutines.** { *; }
 #-keep class kotlinx.coroutines.flow.** { *; }

@@ -1,0 +1,298 @@
+package com.videomaker.photovideo.editvideo.ui.tools.compressvideo
+
+import android.content.Intent
+import android.media.MediaMetadataRetriever
+import android.media.MediaMetadataRetriever.METADATA_KEY_DURATION
+import android.media.MediaScannerConnection
+import android.net.Uri
+import android.os.Environment
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
+import android.view.View
+import android.view.ViewGroup
+import android.widget.SeekBar
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.videomaker.photovideo.editvideo.R
+import com.videomaker.photovideo.editvideo.base.BaseActivity
+import com.videomaker.photovideo.editvideo.data.entity.MediaEntity
+import com.videomaker.photovideo.editvideo.data.entity.MediaType
+import com.videomaker.photovideo.editvideo.data.viewmodel.MediaViewModel
+import com.videomaker.photovideo.editvideo.databinding.ActivityCompressVideoBinding
+import com.videomaker.photovideo.editvideo.ui.main.MainActivity
+import com.videomaker.photovideo.editvideo.ui.save.KeyNewProject
+import com.videomaker.photovideo.editvideo.ui.save.SaveVideoActivity
+import com.videomaker.photovideo.editvideo.utils.ImageUtils.getRealPathFromUri
+import com.videomaker.photovideo.editvideo.utils.ImageUtils.getTempMovieDir
+import com.videomaker.photovideo.editvideo.utils.ViewUtils.createSeekBarChangeListener
+import com.videomaker.photovideo.editvideo.utils.ViewUtils.formatTime
+import com.videomaker.photovideo.editvideo.utils.ViewUtils.showLoadingView
+import com.videomaker.photovideo.editvideo.widget.tap
+import com.videomaker.photovideo.editvideo.widget.visible
+import com.hw.videoprocessor.VideoProcessor
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
+
+@AndroidEntryPoint
+class CompressVideoActivity : BaseActivity<ActivityCompressVideoBinding>() {
+    private var videoUri: String? = null
+    private var isPlaying = false
+    private var isTracking = false
+    private val handler = Handler(Looper.getMainLooper())
+    private var durationSec: Long = 0
+    private var originWidth: Int = 0
+    private var originHeight: Int = 0
+    private var originBitrate: Int = 0
+    private val mediaViewModel: MediaViewModel by viewModels()
+    private var isDialogShowing = false
+
+    override fun setViewBinding(): ActivityCompressVideoBinding {
+        return ActivityCompressVideoBinding.inflate(layoutInflater)
+    }
+
+    override fun initView() {
+        videoUri = intent.getStringExtra("URI_VIDEO_INPUT")
+        if (videoUri != null) {
+            Log.d("URI_VIDEO_INPUT", videoUri!!)
+            setupVideoView(videoUri!!)
+        }
+        getVideoMetadata(Uri.parse(videoUri))
+    }
+
+    override fun viewListener() {
+        binding.imgBack.tap {
+            finish()
+        }
+        binding.tvCompress.tap {
+            CompressBottomSheet(
+                this@CompressVideoActivity,
+                durationSec,
+                originWidth,
+                originHeight,
+                originBitrate
+            ) { w, h, bitrate ->
+                executeScaleVideo(w, h, bitrate, 0, (durationSec * 1000).toInt())
+            }.show(supportFragmentManager, "CompressBottomSheet")
+        }
+        binding.parent.setOnClickListener {
+            togglePlayPause()
+        }
+        binding.btnPlayPause.setOnClickListener { togglePlayPause() }
+        binding.seekBar.setOnSeekBarChangeListener(
+            createSeekBarChangeListener(
+                videoView = binding.videoView,
+                onStart = { isTracking = true },
+                onStop = { isTracking = false }
+            )
+        )
+
+    }
+
+    private fun executeScaleVideo(
+        outWidth: Int,
+        outHeight: Int,
+        bitrate: Int,
+        startMs: Int,
+        endMs: Int
+    ) {
+        showLoadingView(
+            loadingView = binding.loadingProgress,
+            show = true
+        )
+
+        handler.removeCallbacks(updateRunnable)
+        pauseVideo()
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                try {
+                    val moviesDir = getTempMovieDir(this@CompressVideoActivity)
+                    val filePrefix = "Compressed_${System.currentTimeMillis()}"
+                    val fileExtn = ".mp4"
+                    var dest = File(moviesDir, "$filePrefix$fileExtn")
+                    var fileNo = 0
+                    while (dest.exists()) {
+                        fileNo++
+                        dest = File(moviesDir, "$filePrefix$fileNo$fileExtn")
+                    }
+                    val filePath = dest.absolutePath
+
+                    val realPath =
+                        getRealPathFromUri(this@CompressVideoActivity, Uri.parse(videoUri))
+                            ?: return@withContext
+
+                    VideoProcessor.processor(this@CompressVideoActivity)
+                        .input(realPath)
+                        .output(filePath)
+                        .outWidth(outWidth)
+                        .outHeight(outHeight)
+                        .startTimeMs(startMs)
+                        .endTimeMs(endMs)
+                        .bitrate(bitrate)
+                        .process()
+
+                    withContext(Dispatchers.Main) {
+//                        startPreviewActivity(filePath)
+                        MediaScannerConnection.scanFile(
+                            this@CompressVideoActivity,
+                            arrayOf(filePath),
+                            arrayOf("video/mp4"),
+                            null
+                        )
+                        Log.d("ItemVideoPlayerFragment", "Video processed: $filePath")
+                        val entity = MediaEntity(
+                            filePath = filePath,
+                            mediaType = MediaType.VIDEO
+                        )
+                        mediaViewModel.insertMedia(entity)
+                        val intent =
+                            Intent(this@CompressVideoActivity, SaveVideoActivity::class.java)
+                        intent.putExtra("URI_VIDEO_INPUT", filePath)
+                        intent.putExtra("KEY_ACTIVITY", KeyNewProject.COMPRESS_ACTIVITY.name)
+                        startActivity(intent)
+                        showLoadingView(
+                            loadingView = binding.loadingProgress,
+                            show = false
+                        )
+                        finish()
+//                        Toast.makeText(
+//                            this@CompressVideoActivity,
+//                            "Xử lý video xong!",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    withContext(Dispatchers.Main) {
+//                        postError()
+                    }
+                } finally {
+                    withContext(Dispatchers.Main) {
+                        showLoadingView(
+                            loadingView = binding.loadingProgress,
+                            show = false
+                        )
+
+                    }
+                }
+            }
+        }
+    }
+
+
+    override fun dataObservable() {
+    }
+
+    private fun getVideoMetadata(uri: Uri) {
+        val retriever = MediaMetadataRetriever().apply {
+            setDataSource(this@CompressVideoActivity, uri)
+        }
+        durationSec = retriever.extractMetadata(METADATA_KEY_DURATION)?.toLong()?.div(1000) ?: 0L
+        originWidth =
+            retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH)?.toInt() ?: 0
+        originHeight =
+            retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT)?.toInt()
+                ?: 0
+        originBitrate =
+            retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE)?.toInt() ?: 0
+        retriever.release()
+
+    }
+
+    private fun setupVideoView(videoPath: String) {
+        Log.d("ItemVideoPlayerFragment", "Initializing video: $videoPath")
+        binding.videoView.setVideoURI(Uri.parse(videoUri))
+
+        binding.videoView.setOnPreparedListener { mp ->
+            binding.videoView.start()
+            binding.btnPlayPause.setImageResource(R.drawable.ic_pause)
+            isPlaying = true
+            binding.tvEnd.text = formatTime(mp.duration)
+            updateSeekBar()
+        }
+
+        binding.videoView.setOnCompletionListener {
+            isPlaying = false
+            binding.btnPlayPause.setImageResource(R.drawable.ic_play)
+            binding.btnPlayPause.visible()
+            binding.seekBar.progress = 0
+        }
+    }
+
+    private fun togglePlayPause() {
+        if (isPlaying) {
+            pauseVideo()
+        } else {
+            playVideo()
+        }
+    }
+
+    private fun playVideo() {
+        binding.videoView.start()
+        binding.btnPlayPause.setImageResource(R.drawable.ic_pause)
+        isPlaying = true
+        binding.btnPlayPause.visible()
+        updateSeekBar()
+    }
+
+    private fun pauseVideo() {
+        binding.videoView.pause()
+        binding.btnPlayPause.setImageResource(R.drawable.ic_play)
+        binding.btnPlayPause.visibility = View.VISIBLE
+        isPlaying = false
+
+    }
+
+    private val updateRunnable = object : Runnable {
+        override fun run() {
+            if (binding.videoView.isPlaying && !isTracking) {
+                val position = binding.videoView.currentPosition
+                val duration = binding.videoView.duration
+                if (duration > 0) {
+                    val progress = (position * 100) / duration
+                    binding.seekBar.progress = progress
+                    binding.tvStart.text = formatTime(position)
+                }
+            }
+            handler.postDelayed(this, 500)
+        }
+    }
+
+    private fun updateSeekBar() {
+        handler.post(updateRunnable)
+    }
+    override fun onBackPressed() {
+        if (binding.loadingProgress.visibility == View.VISIBLE && !isDialogShowing) {
+            showSaveDialog()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+    private fun showSaveDialog() {
+        isDialogShowing = true
+        com.videomaker.photovideo.editvideo.dialog.AlertDialog(this) {
+            isDialogShowing = false
+            finish()
+        }.apply {
+            setOnDismissListener { isDialogShowing = false }
+            show()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacks(updateRunnable)
+        pauseVideo()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        handler.removeCallbacks(updateRunnable)
+        pauseVideo()
+    }
+}

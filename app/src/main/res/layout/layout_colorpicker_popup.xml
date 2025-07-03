@@ -115,7 +115,7 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_hue_colorpicker" />
 
-            <com.example.editphotovideo.library.colorpicker.ColorPickerView
+            <com.videomaker.photovideo.editvideo.library.colorpicker.ColorPickerView
                 android:id="@+id/colorPickerView"
                 android:layout_width="215dp"
                 android:layout_height="215dp"

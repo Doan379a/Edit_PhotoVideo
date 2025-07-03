@@ -50,7 +50,7 @@
             android:textSize="12sp" />
     </RelativeLayout>
 
-    <com.example.editphotovideo.ui.editmovie.ScaleCardLayout
+    <com.videomaker.photovideo.editvideo.ui.editmovie.ScaleCardLayout
         android:id="@+id/scaleCard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -58,7 +58,7 @@
         android:layout_marginTop="15dp"
         android:orientation="vertical">
 
-        <com.example.editphotovideo.ui.editmovie.PreviewImageView
+        <com.videomaker.photovideo.editvideo.ui.editmovie.PreviewImageView
             android:id="@+id/previewImageView1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -87,7 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-    </com.example.editphotovideo.ui.editmovie.ScaleCardLayout>
+    </com.videomaker.photovideo.editvideo.ui.editmovie.ScaleCardLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout3"

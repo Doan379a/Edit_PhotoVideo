@@ -55,7 +55,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
-        <com.example.editphotovideo.library.zoomimg.views.GestureFrameLayout
+        <com.videomaker.photovideo.editvideo.library.zoomimg.views.GestureFrameLayout
             android:id="@+id/gestureFrameLayout2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -78,7 +78,7 @@
 
             </FrameLayout>
 
-        </com.example.editphotovideo.library.zoomimg.views.GestureFrameLayout>
+        </com.videomaker.photovideo.editvideo.library.zoomimg.views.GestureFrameLayout>
     </androidx.cardview.widget.CardView>
 
     <LinearLayout

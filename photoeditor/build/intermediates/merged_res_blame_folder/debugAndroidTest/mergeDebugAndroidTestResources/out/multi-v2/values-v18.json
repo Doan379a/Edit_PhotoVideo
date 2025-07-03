@@ -4,17 +4,7 @@
             "outputFile": "ja.burhanrashid52.photoeditor.test.photoeditor-mergeDebugAndroidTestResources-22:/values-v18/values-v18.xml",
             "map": [
                 {
-                    "source": "/Users/macbook/.gradle/caches/transforms-4/cb9c05503805061f85da2d9e07677c6a/transformed/appcompat-1.7.0/res/values-v18/values-v18.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "48",
-                        "endOffsets": "99"
-                    }
-                },
-                {
-                    "source": "/Users/macbook/.gradle/caches/transforms-4/8b589ba3c003108a8fc934d320b04723/transformed/jetified-core-1.6.1/res/values-v18/values.xml",
+                    "source": "C:\\Users\\doan3\\.gradle\\caches\\transforms-4\\be33b5605efdc41f970ba23781fe9850\\transformed\\jetified-core-1.6.1\\res\\values-v18\\values.xml",
                     "from": {
                         "startLines": "4,12",
                         "startColumns": "0,0",
@@ -30,6 +20,16 @@
                         "endLines": "10,18",
                         "endColumns": "8,8",
                         "endOffsets": "519,937"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\doan3\\.gradle\\caches\\transforms-4\\b4d2bdf5a04af2b8a6688539fd8cdae5\\transformed\\appcompat-1.7.0\\res\\values-v18\\values-v18.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "48",
+                        "endOffsets": "99"
                     }
                 }
             ]

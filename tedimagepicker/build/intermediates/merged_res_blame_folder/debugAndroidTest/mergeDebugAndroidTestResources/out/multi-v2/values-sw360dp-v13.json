@@ -4,7 +4,7 @@
             "outputFile": "gun0912.tedimagepicker.test.tedimagepicker-mergeDebugAndroidTestResources-29:/values-sw360dp-v13/values-sw360dp-v13.xml",
             "map": [
                 {
-                    "source": "/Users/macbook/.gradle/caches/transforms-4/3abf6743d0fad06b168bbded747e2ebb/transformed/material-1.1.0-alpha07/res/values-sw360dp-v13/values-sw360dp-v13.xml",
+                    "source": "C:\\Users\\doan3\\.gradle\\caches\\transforms-4\\d7606b6a6d3ec939fdae04c0aad010a8\\transformed\\material-1.1.0-alpha07\\res\\values-sw360dp-v13\\values-sw360dp-v13.xml",
                     "from": {
                         "startLines": "2,3",
                         "startColumns": "4,4",

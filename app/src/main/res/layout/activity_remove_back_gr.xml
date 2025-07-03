@@ -61,7 +61,7 @@
             android:background="@drawable/img_bg_remove"
             android:scaleType="centerCrop" />
 
-        <com.example.editphotovideo.library.zoomimg.views.GestureImageView
+        <com.videomaker.photovideo.editvideo.library.zoomimg.views.GestureImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

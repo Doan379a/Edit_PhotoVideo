@@ -4,18 +4,7 @@
             "outputFile": "ja.burhanrashid52.photoeditor.test.photoeditor-mergeDebugAndroidTestResources-22:/values-v28/values-v28.xml",
             "map": [
                 {
-                    "source": "/Users/macbook/.gradle/caches/transforms-4/cb9c05503805061f85da2d9e07677c6a/transformed/appcompat-1.7.0/res/values-v28/values-v28.xml",
-                    "from": {
-                        "startLines": "2,3,4,8",
-                        "startColumns": "4,4,4,4",
-                        "startOffsets": "55,130,217,397",
-                        "endLines": "2,3,7,11",
-                        "endColumns": "74,86,12,12",
-                        "endOffsets": "125,212,392,584"
-                    }
-                },
-                {
-                    "source": "/Users/macbook/.gradle/caches/transforms-4/8b589ba3c003108a8fc934d320b04723/transformed/jetified-core-1.6.1/res/values-v28/values.xml",
+                    "source": "C:\\Users\\doan3\\.gradle\\caches\\transforms-4\\be33b5605efdc41f970ba23781fe9850\\transformed\\jetified-core-1.6.1\\res\\values-v28\\values.xml",
                     "from": {
                         "startLines": "4,13",
                         "startColumns": "0,0",
@@ -31,6 +20,17 @@
                         "endLines": "20,29",
                         "endColumns": "8,8",
                         "endOffsets": "1067,1548"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\doan3\\.gradle\\caches\\transforms-4\\b4d2bdf5a04af2b8a6688539fd8cdae5\\transformed\\appcompat-1.7.0\\res\\values-v28\\values-v28.xml",
+                    "from": {
+                        "startLines": "2,3,4,8",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,130,217,397",
+                        "endLines": "2,3,7,11",
+                        "endColumns": "74,86,12,12",
+                        "endOffsets": "125,212,392,584"
                     }
                 }
             ]

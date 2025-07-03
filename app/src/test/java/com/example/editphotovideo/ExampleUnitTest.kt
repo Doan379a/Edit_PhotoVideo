@@ -1,4 +1,4 @@
-package com.example.editphotovideo
+package com.videomaker.photovideo.editvideo
 
 import org.junit.Test
 

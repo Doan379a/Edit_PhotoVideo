@@ -33,7 +33,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btn_rollback" />
 
-    <com.example.editphotovideo.library.freehandcropper.SomeView
+    <com.videomaker.photovideo.editvideo.library.freehandcropper.SomeView
         android:id="@+id/someView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -55,7 +55,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_rollback">
 
-        <com.example.editphotovideo.library.zoomimg.views.GestureImageView
+        <com.videomaker.photovideo.editvideo.library.zoomimg.views.GestureImageView
             android:id="@+id/imageResult"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
