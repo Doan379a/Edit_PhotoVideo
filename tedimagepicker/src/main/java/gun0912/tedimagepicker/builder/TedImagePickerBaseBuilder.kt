@@ -84,10 +84,10 @@ open class TedImagePickerBaseBuilder<out B : TedImagePickerBaseBuilder<B>>(
 
 
     @IgnoredOnParcel
-    protected var onSelectedListener: OnSelectedListener? = null
+    var onSelectedListener: OnSelectedListener? = null
 
     @IgnoredOnParcel
-    protected var onMultiSelectedListener: OnMultiSelectedListener? = null
+    var onMultiSelectedListener: OnMultiSelectedListener? = null
 
     @IgnoredOnParcel
     protected var onErrorListener: OnErrorListener? = null

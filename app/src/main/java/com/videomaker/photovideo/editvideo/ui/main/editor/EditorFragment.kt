@@ -20,6 +20,7 @@ import com.videomaker.photovideo.editvideo.ui.removebackgr.RemoveBackGrActivity
 import com.videomaker.photovideo.editvideo.ui.tools.ToolsActivity
 import com.videomaker.photovideo.editvideo.widget.tap
 import gun0912.tedimagepicker.builder.TedImagePicker
+import gun0912.tedimagepicker.builder.TedImagePickerDialog
 
 class EditorFragment : BaseFragment<FragmentEditorBinding>() {
     private lateinit var application: MyApplication
@@ -98,8 +99,8 @@ class EditorFragment : BaseFragment<FragmentEditorBinding>() {
     }
 
     private fun removeBackGround() {
-        TedImagePicker.with(requireActivity())
-            .cancelListener {
+        TedImagePickerDialog.with(requireActivity())
+            .cancelListener{
                 Log.d("TedImagePicker", "Người dùng đã hủy chọn ảnh")
             }
             .errorListener {
